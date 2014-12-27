@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ipod>
+  <playlist>
+    <name>All</name>
+    <contents><song><title>78bcca7f78ff</title><artist>Unknown Artist</artist><album>Unknown Album</album><year>0</year><url>hui/78bcca7f78ff.mp3</url><urlOfArt>hui/artwork/78bcca7f78ff.mp3.jpg</urlOfArt></song><song><title>78bcca7f78ff</title><artist>Unknown Artist</artist><album>Unknown Album</album><year>0</year><url>hui/78bcca7f78ff.mp3</url><urlOfArt>hui/artwork/78bcca7f78ff.mp3.jpg</urlOfArt></song>
+      <song>
+        <title>Rainfall</title>
+        <artist>Magomedov</artist>
+        <album>cloudbeats</album>
+        <year>2013</year>
+        <url>http://cloudbeats.net/Rainfall.mp3</url>
+        <urlOfArt>http://cloudbeats.net/Rainfall.jpg</urlOfArt>
+      </song>
+    </contents>
+  </playlist>
+  <playlist>
+    <name>energeticMusic</name>
+  </playlist>
+  <playlist>
+    <name>calmMusic</name>
+  </playlist>
+</ipod>

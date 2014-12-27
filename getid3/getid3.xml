@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ipod>
+<playlist>
+<name>All</name>
+<contents>
+<song>
+<title>Rainfall</title>
+<artist>Magomedov</artist>
+<album>cloudbeats</album>
+<year>2013</year>
+<url>http://cloudbeats.net/Rainfall.mp3</url>
+<urlOfArt>http://cloudbeats.net/Rainfall.jpg</urlOfArt>
+</song>
+</contents>
+</playlist>
+<playlist><name>energeticMusic</name></playlist><playlist><name>calmMusic</name></playlist></ipod>

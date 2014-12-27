@@ -1,0 +1,28 @@
+
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  unlink(0ffaa031de.mp3): No such file or directory in /home/cloudbea/public_html/hui/waveform/wf.php on line 76
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fopen(0ffaa031de.wav): failed to open stream: No such file or directory in /home/cloudbea/public_html/hui/waveform/wf.php on line 101
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 103
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 104
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 105
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 106
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 107
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 108
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 109
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 110
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 111
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 112
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 113
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 114
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 115
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  filesize(): stat failed for 0ffaa031de.wav in /home/cloudbea/public_html/hui/waveform/wf.php on line 128
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagecreatetruecolor(): Invalid image dimensions in /home/cloudbea/public_html/hui/waveform/wf.php on line 137
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagesavealpha() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 142
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagecolorallocatealpha() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 143
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagefill() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 144
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  feof() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 151
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 206
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  unlink(0ffaa031de.wav): No such file or directory in /home/cloudbea/public_html/hui/waveform/wf.php on line 209
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagesx() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 223
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagesy() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 223
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagecopyresampled() expects parameter 2 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 223
+[15-Oct-2014 21:07:26 UTC] PHP Warning:  imagedestroy() expects parameter 1 to be resource, boolean given in /home/cloudbea/public_html/hui/waveform/wf.php on line 230

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Large_230x36_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="215px" height="35.75px" viewBox="0 0 215 35.75" style="enable-background:new 0 0 215 35.75;"
+	 xml:space="preserve">
+<g id="Blue_shape_xA0_Image_1_">
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="107.4995" y1="0" x2="107.4995" y2="35.75">
+		<stop  offset="0" style="stop-color:#7396CC"/>
+		<stop  offset="1" style="stop-color:#4D7AB7"/>
+	</linearGradient>
+	<path style="fill:url(#SVGID_1_);" d="M215,29.534c0,3.433-2.167,6.216-4.844,6.216H4.842C2.168,35.75,0,32.966,0,29.534V6.217
+		C0,2.784,2.168,0,4.842,0h205.314C212.833,0,215,2.784,215,6.217V29.534z"/>
+</g>
+<g id="Connect_using_Facebook_xA0_Image_1_">
+	<rect x="42.667" y="12.194" style="fill:none;" width="168.333" height="14.455"/>
+	<text transform="matrix(1 0 0 1 42.6665 25.1362)"><tspan x="0" y="0" style="fill:#FFFFFF; font-family:'Helvetica'; font-size:16;">Sign up with </tspan><tspan x="91.609" y="0" style="fill:#FFFFFF; font-family:'Helvetica-Bold'; font-size:16;">Facebook</tspan><tspan x="166.296" y="0" style="fill:#FFFFFF; font-family:'Helvetica'; font-size:18;">               </tspan></text>
+</g>
+<g id="f">
+	<text transform="matrix(1 0 0 1 9.4043 32.4326)" style="fill:#FFFFFF; font-family:'FacebookLetterFaces'; font-size:33;">f</text>
+</g>
+<g id="separator_xA0_Image_1_">
+	<rect x="35.235" style="fill:#4D7A9D;" width="1.015" height="35.75"/>
+	<rect x="34.352" style="opacity:0.4;fill:#E3F5FF;" width="0.962" height="35.75"/>
+</g>
+</svg>

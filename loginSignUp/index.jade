@@ -1,0 +1,60 @@
+doctype html
+html(lang='en')
+ head
+  meta(charset='utf-8')
+  title#title "DigitPocket"
+  script(src='http://code.jquery.com/jquery-latest.min.js')
+  script(src='index.js')
+  script(src='pseudo.js')
+  script(src='blur.js')
+  link(rel='stylesheet', href='clear.css')
+  link(rel='stylesheet', href='index.css')
+  link(rel='stylesheet', href='flip.css')
+ body
+   //-div#mainContainer
+   div#dimScreen
+   div#logo
+    img(src='../images/enginious.png') 
+   div#document
+    div#form
+      h3#signUpHeader Sign up
+      span.relative
+        span.icon-user
+          //-check the input below
+        input.icon-user#emailInput(placeholder='Type your email here, please')
+      div#emailErrorsDisplayer
+       span#emailErrorsSpan
+      span.relative
+        span.icon-pass
+        input.icon-pass#passwordInput(type='password',placeholder='Password here...')
+      div#passwordErrorsDisplayer
+       span#passwordErrorsSpan
+      span.relative
+        span.icon-pass
+        input.icon-pass#confirmPasswordInput(type='password', placeholder='Retype it here...')
+      div#confirmPasswordErrorsDisplayer
+       span#confirmPasswordErrorsSpan
+      div#submitButton Sign up
+      div#orSignInWrapper 
+       h4
+        span Or 
+         a#orSignIn(href="#")  sign in
+      
+    div#formLogin
+      h3#signUpHeader Sign in
+      span.relative
+        span.icon-user
+          //-check the input below
+        input.icon-user#emailInputLogin(placeholder='Type your email here, please')
+      div#emailErrorsDisplayerLogin
+       span#emailErrorsSpanLogin
+      span.relative
+        span.icon-pass
+        input.icon-pass#passwordInputLogin(type='password',placeholder='Password here...')
+      div#passwordErrorsDisplayerLogin
+       span#passwordErrorsSpanLogin
+      div#submitButtonLogin(class='buttonActiveBlue') Sign in
+      div#orSignUpWrapper 
+       h4
+        span Or 
+         a#orSignUp(href="#")  sign up
