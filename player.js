@@ -270,9 +270,9 @@ function getUser()
 //get the user
       $.ajax({
 		 url : "/getJson.php",
-		//data: args,
-		type: "GET",
-		success: function(data)
+		 headers: { "Accept-Encoding" : "gzip" },
+		 type: "GET",
+		 success: function(data)
 		 {
         getFromJSON(data);
 		 }  

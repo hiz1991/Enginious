@@ -67,7 +67,7 @@ $songs='';
 $songs=json_encode($final);
 $songs=str_replace('\\u0000', "", $songs);
 $playls=str_replace('\\u0000', "", $playls);
-//$str=explode("\u0000", $str);
+//$str=explode("\u0000", $str);//gzencode
 echo '{   "Songs":'.$songs.'  , "Playlists":['.$playls.'], "User":['.'{"user":"'.$user.'", "type":"'.$_SESSION['userType'].'"}'.']}';
 //echo $secondTime-$firstTime;
 ?>
