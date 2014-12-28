@@ -171,6 +171,12 @@ function extractInfo($filePath)
 		      return round(count($output)/($seconds/60));
 		      // var_dump($output);
 		}
+		function getVolume($filePath)
+		{
+			   exec('sox/sox '.escapeshellarg($filePath).' -n stat 2>&1 1> /dev/null', $output, $return_var);
+               $outputTempSplit = explode(': ', $output[6]);
+               return $outputTempSplit[1]*1000000;
+		}
 		$mp3file=new MP3_data(); 
 		$mp3file->getid3($filename);
 		$getID3 = new getID3;  
@@ -210,13 +216,14 @@ function extractInfo($filePath)
 		$mp3file->genre=mysql_real_escape_string(utf8_encode(getGenre(hexdec($mp3file->genre))));
 		$mp3file->year=mysql_real_escape_string(utf8_encode($mp3file->year));
 		//save average value
-		$file=file_get_contents('sample.json');
-		$json=json_decode($file);
-		for ($i=0; $i < count($json->data); $i++) 
-		{ 
-			$json->data[$i]=abs($json->data[$i]);
-		}
-		$averageVolume=round(array_sum($json->data)/count($json->data));
+		// $file=file_get_contents('sample.json');
+		// $json=json_decode($file);
+		// for ($i=0; $i < count($json->data); $i++) 
+		// { 
+		// 	$json->data[$i]=abs($json->data[$i]);
+		// }
+		// $averageVolume=round(array_sum($json->data)/count($json->data));
+		$averageVolume = getVolume($targetFile);
 		//echo ' --------------------------'.$averageVolume;
 		//echo ' --------------------------'.count($json->data);
 	    //save average value

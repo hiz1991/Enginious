@@ -183,6 +183,7 @@
   //   // echo "  ".count($json->data);
    // createThumb( "100001430183965/artwork/02 My Kind Of Love.mp3.jpg", "100001430183965/artwork/thumb/", 80 );   
    exec('sox/sox '.escapeshellarg($filePath).' -n stat 2>&1 1> /dev/null', $output, $return_var);
-   echo $output[6];
+   $outputTempSplit = explode(': ', $output[6]);
+               echo $outputTempSplit[1]*1000000;
 
 ?>
