@@ -3,6 +3,7 @@ session_start();
 $user=$_SESSION['user'];
 $connection = mysql_connect("localhost", "root", "19910728Aa")
 or die('Could not connect: ' . mysql_error());
+mysql_set_charset('utf8',$connection);
 mysql_select_db("kura_users", $connection)
 or die('Could not select database');
 if($_GET['action']=="just_user")
@@ -47,6 +48,7 @@ or die('error At Music'.mysql_error());
   	  array_push($final, $ur); 
   	  //}        
 	}
+
 	$data = mysql_query("SELECT * FROM `songsInPlaylists` WHERE `songsInPlaylists`.`username`='".$user1."';")
     or die('error '.mysql_error());
 	while($info = mysql_fetch_array( $data ))

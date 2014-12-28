@@ -1,4 +1,4 @@
-<?php
+<?php 
 // class MP3_data 
 // { 
 //      var $title;var $artist;var $album;var $year;var $comment;var $genre; 
@@ -160,7 +160,7 @@
   //     $mp3file=new MP3_data(); 
   //   $mp3file->getid3($filename);
   //   $getID3 = new getID3; 
-    $filePath = "/Applications/MAMP/htdocs/store/Closer.mp3"; 
+    //$filePath = "/Applications/MAMP/htdocs/store/Знакводолея.mp3"; 
   //   $ThisFileInfo = $getID3->analyze($targetFile); 
 
   //   // getCover($upload_directory_url.$name, $img);
@@ -182,8 +182,10 @@
   //   // echo $averageVolume;
   //   // echo "  ".count($json->data);
    // createThumb( "100001430183965/artwork/02 My Kind Of Love.mp3.jpg", "100001430183965/artwork/thumb/", 80 );   
-   exec('sox/sox '.escapeshellarg($filePath).' -n stat 2>&1 1> /dev/null', $output, $return_var);
-   $outputTempSplit = explode(': ', $output[6]);
-               echo $outputTempSplit[1]*1000000;
-
+   // exec('sox/sox '.escapeshellarg($filePath).' -n stat 2>&1 1> /dev/null', $output, $return_var);
+   // $outputTempSplit = explode(': ', $output[6]);
+   //             echo $outputTempSplit[1]*1000000;
+error_log($_GET['key']);
+exec('/usr/local/bin/eyed3 '.escapeshellarg($_GET['key']).' | grep :',$output, $return_var);
+var_dump($output);
 ?>

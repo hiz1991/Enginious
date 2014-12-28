@@ -1,4 +1,4 @@
-<?php
+<?php header("Content-Type: text/html; charset=utf-8");
 include("getGenre.php");
 include("db.php");
 class MP3_data 
@@ -181,7 +181,8 @@ function extractInfo($filePath)
 		$mp3file->getid3($filename);
 		$getID3 = new getID3;  
 		$ThisFileInfo = $getID3->analyze($targetFile); 
-
+        // error_log(iconv('windows-1251', 'CP866//TRANSLIT//IGNORE', $mp3file->title));
+        error_log($mp3file->title);
 		getCover($upload_directory_url.$name, $img);
 		$len= @$ThisFileInfo['playtime_string'];  //echo @$ThisFileInfo['audio']['sample_rate'];//print_r(@$ThisFileInfo);
 		$split = explode(':', $len);
@@ -190,6 +191,7 @@ function extractInfo($filePath)
 		$pitch = getPitch($targetFile);
 		$tempo = getTempo($targetFile, $seconds);
         cutMP3($targetFile,$user, $seconds);
+        $averageVolume = getVolume($targetFile);
 
 	    $mp3file->title=utf8_encode(trim($mp3file->title, " \t\n\r\0\x0B "));
 	    $mp3file->title=mysql_real_escape_string($mp3file->title);//removes whitespaces
@@ -215,6 +217,7 @@ function extractInfo($filePath)
 		//$mp3file->album=utf8_encode(trim($mp3file->album, " \t\n\r\0\x0B "));
 		$mp3file->genre=mysql_real_escape_string(utf8_encode(getGenre(hexdec($mp3file->genre))));
 		$mp3file->year=mysql_real_escape_string(utf8_encode($mp3file->year));
+		error_log($mp3file->title);
 		//save average value
 		// $file=file_get_contents('sample.json');
 		// $json=json_decode($file);
@@ -223,7 +226,6 @@ function extractInfo($filePath)
 		// 	$json->data[$i]=abs($json->data[$i]);
 		// }
 		// $averageVolume=round(array_sum($json->data)/count($json->data));
-		$averageVolume = getVolume($targetFile);
 		//echo ' --------------------------'.$averageVolume;
 		//echo ' --------------------------'.count($json->data);
 	    //save average value
