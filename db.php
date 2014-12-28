@@ -4,6 +4,7 @@ $connection = mysql_connect("localhost", "root", "19910728Aa")
 mysql_select_db("kura_users", $connection)
     or die('Could not select database');
 mysql_set_charset('utf8',$connection);
+
 function updateDB($tableName='music', $toUpdateArray, $toUpdateValuesArray, $user)
 {//echo $user;
    $string="`".$toUpdateArray[0]."` = '".$toUpdateValuesArray[0]."'";

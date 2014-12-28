@@ -69,7 +69,7 @@ class getID3
 {
 	// public: Settings
 	public $encoding        = 'UTF-8';        // CASE SENSITIVE! - i.e. (must be supported by iconv()). Examples:  ISO-8859-1  UTF-8  UTF-16  UTF-16BE
-	public $encoding_id3v1  = 'ISO-8859-1';   // Should always be 'ISO-8859-1', but some tags may be written in other encodings such as 'EUC-CN' or 'CP1252'
+	public $encoding_id3v1  = 'UTF-8';   // Should always be 'ISO-8859-1', but some tags may be written in other encodings such as 'EUC-CN' or 'CP1252'
 
 	// public: Optional tag checks - disable for speed.
 	public $option_tag_id3v1         = true;  // Read and process ID3v1 tags
@@ -1184,7 +1184,7 @@ class getID3
 				'zip'       => array('zip'           , 'ISO-8859-1'),
 				'riff'      => array('riff'          , 'ISO-8859-1'),
 				'lyrics3'   => array('lyrics3'       , 'ISO-8859-1'),
-				'id3v1'     => array('id3v1'         , $this->encoding_id3v1),
+				'id3v1'     => array('id3v1'         , 'UTF-8'),
 				'id3v2'     => array('id3v2'         , 'UTF-8'), // not according to the specs (every frame can have a different encoding), but getID3() force-converts all encodings to UTF-8
 				'ape'       => array('ape'           , 'UTF-8'),
 				'cue'       => array('cue'           , 'ISO-8859-1'),

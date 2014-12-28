@@ -180,9 +180,11 @@ function extractInfo($filePath)
 		$mp3file=new MP3_data(); 
 		$mp3file->getid3($filename);
 		$getID3 = new getID3;  
-		$ThisFileInfo = $getID3->analyze($targetFile); 
-        // error_log(iconv('windows-1251', 'CP866//TRANSLIT//IGNORE', $mp3file->title));
-        error_log($mp3file->title);
+		$ThisFileInfo = $getID3->analyze($targetFile);
+		error_log($mp3file->title); 
+        error_log(utf8_encode($mp3file->title));
+        error_log(utf8_decode($mp3file->title));
+        // echo $mp3file->title;
 		getCover($upload_directory_url.$name, $img);
 		$len= @$ThisFileInfo['playtime_string'];  //echo @$ThisFileInfo['audio']['sample_rate'];//print_r(@$ThisFileInfo);
 		$split = explode(':', $len);
@@ -235,7 +237,7 @@ function extractInfo($filePath)
             $temporArray=[$filename, $mp3file->artist, $mp3file->title, $img, $mp3file->genre, $mp3file->year, $user ," ", $averageVolume, $pitch, $tempo];
             $addingUser=recordInDB("music", ["url", "artist", "title", "urlOfArt", "genre", "year", "username", "wave", "volume", "pitch", "tempo"], $temporArray, $user);
             mysql_query($addingUser); //or die (' error'. mysql_error());
-            error_log(mysql_error());
+            // error_log(mysql_error());
 		    if ($addingUser)
 			 {//echo "success";
 			    mysql_close();

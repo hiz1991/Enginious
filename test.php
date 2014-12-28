@@ -185,7 +185,7 @@
    // exec('sox/sox '.escapeshellarg($filePath).' -n stat 2>&1 1> /dev/null', $output, $return_var);
    // $outputTempSplit = explode(': ', $output[6]);
    //             echo $outputTempSplit[1]*1000000;
-error_log($_GET['key']);
-exec('/usr/local/bin/eyed3 '.escapeshellarg($_GET['key']).' | grep :',$output, $return_var);
+// error_log($_GET['key']);
+exec('/usr/local/bin/eyed3 /Applications/MAMP/htdocs/store/Знакводолея.mp3 | grep :',$output, $return_var);
 var_dump($output);
 ?>
