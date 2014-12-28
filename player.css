@@ -202,9 +202,9 @@ background-color:rgba(155, 155, 155, 0.2);
   background: rgba(0,0,0, 0.7);
   z-index: 1000000000;
 }
-#stats
+#uploadFrameDisplayer
 {
-  /*display:block;*/
+  display:block;
 }
 /*#bgChanger
 {
