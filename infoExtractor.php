@@ -180,10 +180,14 @@ function extractInfo($filePath)
 		$mp3file=new MP3_data(); 
 		$mp3file->getid3($filename);
 		$getID3 = new getID3;  
+		// $firstTime=microtime();
 		$ThisFileInfo = $getID3->analyze($targetFile);
-		error_log($mp3file->title); 
-        error_log(utf8_encode($mp3file->title));
-        error_log(utf8_decode($mp3file->title));
+		// $secondTime=microtime();
+		// error_log($secondTime-$firstTime);
+		// error_log(mb_detect_encoding($mp3file->title));
+		// error_log($mp3file->title); 
+        // error_log(utf8_encode($mp3file->title));
+        // error_log(utf8_decode($mp3file->title));
         // echo $mp3file->title;
 		getCover($upload_directory_url.$name, $img);
 		$len= @$ThisFileInfo['playtime_string'];  //echo @$ThisFileInfo['audio']['sample_rate'];//print_r(@$ThisFileInfo);
@@ -199,7 +203,7 @@ function extractInfo($filePath)
 	    $mp3file->title=mysql_real_escape_string($mp3file->title);//removes whitespaces
 	    $mp3file->artist=utf8_encode(trim($mp3file->artist, " \t\n\r\0\x0B "));
 	    $mp3file->artist=mysql_real_escape_string($mp3file->artist);//removes whitespaces
-		if($mp3file->title==null||strlen($mp3file->title)==0)
+		if($mp3file->title==null||strlen($mp3file->title)==0 || (!preg_match('/[a-z]+/', $mp3file->title)))
 			{
 				$mp3file->title=mysql_real_escape_string($fileParts['filename']);
 			} 
@@ -207,7 +211,7 @@ function extractInfo($filePath)
 			{
 				$mp3file->title=utf8_encode($mp3file->title);
 			}
-		if($mp3file->artist==null||strlen($mp3file->artist)==0)
+		if($mp3file->artist==null||strlen($mp3file->artist)==0 || (!preg_match('/[a-z]+/', $mp3file->title)))
 			{
 				$mp3file->artist="Unknown Artist";
 			} 
