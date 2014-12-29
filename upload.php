@@ -10,7 +10,7 @@ if (!isset($_SESSION))
 //set_time_limit(90); 
 require('UploadHandler.php');
 // require("infoExtractor.php");
-$upload_handler = new UploadHandler(["upload_dir" => $user.'/']);
+$upload_handler = new UploadHandler(['upload_dir' => $user.'/', 'upload_url'=>'../'.$user.'/' ]);
 //echo $_FILES['userfile']['name'];
 // file_put_contents("output.txt", $upload_handler => get_file_name());
 exit(0);

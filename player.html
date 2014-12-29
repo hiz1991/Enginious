@@ -101,7 +101,7 @@
               <div id="VKConnectbutton" class="button" onclick="initiateVKButton();"><span>Connect to VK</span></div>
 <!--               <div id="Upload" class="button" onclick="pickFlash();"><span>Upload Music</span></div> -->
               <div id="Upload" class="button" onclick="$('#uploadFrameDisplayer').show();"><span>Upload Music</span></div>
-              <div id="logout" class="button" onclick="logout();"><span>Logout</span></div>
+              <div id="logout" class="button" onclick="logout();" style="border-left: 1px dotted white;"><span>Logout</span></div>
               <div style="display:inline-block;" onclick="showbg()" class="button">
                 <img src="images/settings.svg" height="16px" />
               </div>
@@ -193,7 +193,7 @@
                   <iframe id = "uploadFrame" src="/uploader/index.html" FRAMEBORDER=0 style="position:absolute; width:100%; height:90%; "> </iframe>
              </div>  
              <div>
-             <div class="button" style="position:absolute; bottom:21%;right:25%;color:white; background:#39c5ec;z-index:1001" onclick='$("#uploadFrameDisplayer").hide();renewPlaylist();'>Ok</div>                 
+             <div class="button" style="position:absolute; bottom:11%;right:25%;color:white; background:#39c5ec;z-index:1001" onclick='$("#uploadFrameDisplayer").hide();renewPlaylist();'>Hide</div>                 
           </div>
           
 <!--           <div class="facebook">

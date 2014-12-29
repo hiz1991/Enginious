@@ -11,17 +11,32 @@
  */
 
 body {
-  padding-top: 60px;
+    padding-top: 20px;
 }
 .btn {
-color: #616161;
-background-color: #FFFFFF;
-border-color: #454545;
+	color: #616161;
+	background-color: #FFFFFF;
+	border-color: #454545;
 }
 .files .name {
-width: 200px !important;
-word-wrap: break-word;
+	width: 200px !important;
+	word-wrap: break-word;
 }
 .files .name a{
-  color: black !important;	
+    color: black !important;	
+}
+#dragHere {
+	background: whitesmoke;
+	height:300px; 
+	border: 2px dashed grey; 
+	border-radius:10px;
+	margin: 20px;
+}
+#dragHere p{
+	font-size: 20px;
+	color: rgb(124, 123, 123);
+    margin-top: 130px;
+	/*display: table-cell;*/
+    vertical-align:middle;
+    text-align:center;
 }

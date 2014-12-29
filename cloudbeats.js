@@ -79,7 +79,10 @@ function updateIcon(state, name)
 }//player
 function changeBackground()
 {
-	$("body").css("background", "url('"+$("#urlInput").val()+"')");
+	if ($("#urlInput").val()!="")
+	{
+		$("body").css("background", "url('"+$("#urlInput").val()+"')");
+	}
 }
 function showbg()
 {
