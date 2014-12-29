@@ -193,7 +193,7 @@ function extractInfo($filePath)
 		$len= @$ThisFileInfo['playtime_string'];  //echo @$ThisFileInfo['audio']['sample_rate'];//print_r(@$ThisFileInfo);
 		$split = explode(':', $len);
 		$seconds=(($split[0]*60)+$split[1]); //echo "playtime ".$seconds;
-		getWaveform(@$ThisFileInfo['audio']['sample_rate'], $seconds, $targetFile);
+		// getWaveform(@$ThisFileInfo['audio']['sample_rate'], $seconds, $targetFile);
 		$pitch = getPitch($targetFile);
 		$tempo = getTempo($targetFile, $seconds);
         cutMP3($targetFile,$user, $seconds);
