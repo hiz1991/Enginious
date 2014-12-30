@@ -49,6 +49,13 @@ function extractInfo($filePath)
 		$filename=$filePath;
 		//echo strlen($tempFile);
 		//=null;
+		function getWithExiftools($fileName)
+		{
+			exec('/usr/local/bin/exiftool '.escapeshellarg($fileName),$output, $return_var);
+			$outputEnd =  str_replace('Artist                          : ', '', $output[25]);
+			$outputEnd1= str_replace('Title                           : ', '', $output[24]);
+			return ['artist'=>$outputEnd, 'title'=>$outputEnd1];
+		}
 		function cutMP3($fileReceieved, $user, $seconds)
 		{
 			$fileParts = pathinfo($fileReceieved);
@@ -223,7 +230,11 @@ function extractInfo($filePath)
 		//$mp3file->album=utf8_encode(trim($mp3file->album, " \t\n\r\0\x0B "));
 		$mp3file->genre=mysql_real_escape_string(utf8_encode(getGenre(hexdec($mp3file->genre))));
 		$mp3file->year=mysql_real_escape_string(utf8_encode($mp3file->year));
-		error_log($mp3file->title);
+		$resultFromExiftools = getWithExiftools($targetFile);
+		if ((!$resultFromExiftools['artist']==null) &&(!$resultFromExiftools['title']==null)) {
+			$mp3file->artist = $resultFromExiftools['artist'];
+			$mp3file->title = $resultFromExiftools['title'];
+		}
 		//save average value
 		// $file=file_get_contents('sample.json');
 		// $json=json_decode($file);

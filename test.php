@@ -186,6 +186,9 @@
    // $outputTempSplit = explode(': ', $output[6]);
    //             echo $outputTempSplit[1]*1000000;
 // error_log($_GET['key']);
-exec('/usr/local/bin/eyed3 /Applications/MAMP/htdocs/store/Знакводолея.mp3 | grep :',$output, $return_var);
-var_dump($output);
+exec('/usr/local/bin/exiftool /Applications/MAMP/htdocs/store/Знакводолея.mp3',$output, $return_var);
+$outputEnd =  str_replace('Artist                          : ', '', $output[25]);
+$outputEnd1= str_replace('Title                           : ', '', $output[24]);
+error_log($outputEnd);
+error_log($outputEnd1);
 ?>
