@@ -52,8 +52,14 @@ function extractInfo($filePath)
 		function getWithExiftools($fileName)
 		{
 			exec('/usr/local/bin/exiftool '.escapeshellarg($fileName),$output, $return_var);
-			$outputEnd =  str_replace('Artist                          : ', '', $output[25]);
-			$outputEnd1= str_replace('Title                           : ', '', $output[24]);
+			for ($i=0; $i <count($output) ; $i++) { 
+				if (strpos($output[$i], "Artist")!== false) {
+					$outputEnd =  str_replace('Artist                          : ', '', $output[$i]);
+				}
+				elseif (strpos($output[$i], "Title")!== false) {
+					$outputEnd1= str_replace('Title                           : ', '', $output[$i]);
+				}
+			}
 			return ['artist'=>$outputEnd, 'title'=>$outputEnd1];
 		}
 		function cutMP3($fileReceieved, $user, $seconds)
