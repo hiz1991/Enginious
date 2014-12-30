@@ -81,7 +81,7 @@ function extractInfo($filePath)
 			}
 			else 
 			{
-				error_log($output, $input);
+				// error_log($output, $input);
 				require_once './class.mp3.php';
 				$mp3 = new mp3;
 				$mp3->cut_mp3($input, $output, 0, -1, 'second', false);
