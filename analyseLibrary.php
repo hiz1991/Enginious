@@ -27,7 +27,7 @@ if(mysql_num_rows($musicData))
 }
 $result = selectAllDB('libraryAnalysis', $user);
 //mysql_query("SELECT * FROM `libraryAnalysis` WHERE `username`=".$user.";");
-function cn($value)
+function cn($value)//check if number
 {
    if ($value == NULL) {
    	return "null";
