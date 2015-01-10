@@ -324,7 +324,7 @@ class UploadHandler
             return array();
         }
         return array();
-        // return array_values(array_filter(array_map(
+        // return array_values(array_filter(array_map(----------------------------------
         //     array($this, $iteration_method),
         //     scandir($upload_dir)
         // )));
