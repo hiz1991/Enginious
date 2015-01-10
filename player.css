@@ -999,7 +999,7 @@ opacity:0.1;
     /*@margin-top: 5px;*/
   }
   .tagsSearchImage {
-   background:rgba(255,255,255,0.1) url(http://cloudbeats.net/images/search-small.svg) no-repeat;
+   background:rgba(255,255,255,0.1) url(images/search-small.svg) no-repeat;
    padding:4px 4px 4px 0px;
    height:13px;
  }
@@ -1053,6 +1053,6 @@ opacity:0.1;
 }
 #tags:focus {
   outline-width: 0;
-  background:rgba(255,255,255,1) url(http://cloudbeats.net/images/search-small.svg) no-repeat;
+  background:rgba(255,255,255,1) url(images/search-small.svg) no-repeat;
 
 }
