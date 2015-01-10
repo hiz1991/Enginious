@@ -4,6 +4,7 @@ getUser();
 initKplayer();
 if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volumeOfPlayer"));}
  //remoteIni();
+ // chhuio();
 }); 
 //variables-----------------------------------------
     var controls = 

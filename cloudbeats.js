@@ -174,3 +174,50 @@ function remoteIni()
 	      }
   }
 }
+function chhuio()
+{
+	$( ".player" ).mouseleave(function() {
+
+		  $( "#seekbar, #volume" ).animate({
+		    // opacity: 1,
+		    bottom: "15px",
+		    height: "6px"
+		    // margin-top: "15px"
+		  }, 80, function() {
+		    // Animation complete.
+		  });
+
+			$( "#played, #level" ).animate({
+		    // opacity: 1,
+		    // bottom: "15px",
+		    height: "6px"
+		    // margin-top: "15px"
+		  }, 80, function() {
+		    // Animation complete.
+		  });
+
+
+    }).mouseenter(function() {
+
+		  $( "#seekbar, #volume" ).animate({
+		    // opacity: 1,
+		    bottom: "0px",
+		    height: "30px"
+		    // margin-top: "15px"
+		  }, 80, function() {
+		    // Animation complete.
+		  });
+
+			$( "#played, #level" ).animate({
+		    // opacity: 1,
+		    // bottom: "15px",
+		    height: "30px"
+		    // margin-top: "15px"
+		  }, 80, function() {
+		    // Animation complete.
+		  });
+
+    });
+    // height: 6px;
+// margin-top: 15px;
+}

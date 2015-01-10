@@ -53,10 +53,10 @@ function extractInfo($filePath)
 		{
 			exec('/usr/local/bin/exiftool '.escapeshellarg($fileName),$output, $return_var);
 			for ($i=0; $i <count($output) ; $i++) { 
-				if (strpos($output[$i], "Artist")!== false) {
+				if (strpos($output[$i], "Artist                          : ")!== false) {
 					$outputEnd =  str_replace('Artist                          : ', '', $output[$i]);
 				}
-				elseif (strpos($output[$i], "Title")!== false) {
+				elseif (strpos($output[$i], "Title                           : ")!== false) {
 					$outputEnd1= str_replace('Title                           : ', '', $output[$i]);
 				}
 			}
