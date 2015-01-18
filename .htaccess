@@ -13,6 +13,9 @@ AddOutputFilterByType DEFLATE application/x-javascript
 <files *.html>
 SetOutputFilter DEFLATE
 </files>
+<files *.svg>
+SetOutputFilter DEFLATE
+</files>
 
 SetEnv   LC_ALL  nl_NL.UTF-8
 

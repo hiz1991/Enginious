@@ -223,19 +223,19 @@
             // send: function (e, data) {}, // .bind('fileuploadsend', func);
 
             // Callback for successful uploads:
-            done: function (e, data) {console.log("all uploaded")}, // .bind('fileuploaddone', func);
+            // done: function (e, data) {console.log("done")}, // .bind('fileuploaddone', func);
 
             // Callback for failed (abort or error) uploads:
             // fail: function (e, data) {}, // .bind('fileuploadfail', func);
 
             // Callback for completed (success, abort or error) requests:
-            // always: function (e, data) {}, // .bind('fileuploadalways', func);
+            // always: function (e, data) {console.log("always")}, // .bind('fileuploadalways', func);
 
             // Callback for upload progress events:
             // progress: function (e, data) {}, // .bind('fileuploadprogress', func);
 
             // Callback for global upload progress events:
-            // progressall: function (e, data) {}, // .bind('fileuploadprogressall', func);
+            progressall: function (e, data) {console.log("progressall");}, // .bind('fileuploadprogressall', func);
 
             // Callback for uploads start, equivalent to the global ajaxStart event:
             // start: function (e) {}, // .bind('fileuploadstart', func);
@@ -363,6 +363,8 @@
         },
 
         _onProgress: function (e, data) {
+            // console.log(e);
+            // if (e.total==e.loaded) {console.log("all")};
             if (e.lengthComputable) {
                 var now = ((Date.now) ? Date.now() : (new Date()).getTime()),
                     loaded;
@@ -399,6 +401,7 @@
                 );
                 // Trigger a global progress event for all current file uploads,
                 // including ajax calls queued for sequential file uploads:
+
                 this._trigger(
                     'progressall',
                     $.Event('progressall', {delegatedEvent: e}),
