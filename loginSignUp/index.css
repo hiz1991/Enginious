@@ -1,7 +1,7 @@
 @charset "UTF-8";
 body {
     background: #4e4e4e;
-    background-image:url(../images/bg.jpg);
+    background-image:url(../images/bgs/bg.jpg);
 }
 #fLoginButton
 {

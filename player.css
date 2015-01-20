@@ -2,7 +2,7 @@ body
 {
   min-width: 950px;
   overflow: hidden;
-  background-image:url('images/bg.jpg');
+  background-image:url('images/bgs/sky-background.svg');
   /*http://development.huntingdonprimary.cambs.sch.uk/wp-content/uploads/2014/01/light-grey-background-pattern-i32.jpg*/
   /*background-image:url('images/green-background-pictures-17225-17781-hd-wallpapers.jpg');*/
   //background-image:url('http://www.utepprintstore.com/wp-content/uploads/3D-Computer-Wallpaper-White-Headset-1024x819.jpg');
@@ -421,7 +421,14 @@ background-color: rgba(131, 131, 131, 0.6);
     font-size: 20pt;
     text-align: center;
   }
-
+  #bgsThumbsContainer
+  {
+    display: inline-block;
+    margin: 3%;
+    margin-left: 3%;
+    position: absolute;
+    width: 40%;
+  }
 .player img:hover
 {
   opacity: 0.8 !important;
@@ -999,7 +1006,7 @@ opacity:0.1;
     /*@margin-top: 5px;*/
   }
   .tagsSearchImage {
-   background:rgba(255,255,255,0.1) url(images/search-small.svg) no-repeat;
+   background:rgba(255,255,255,0.1) url(images/sear/*c*/h-small.svg) no-repeat;
    padding:4px 4px 4px 0px;
    height:13px;
  }
