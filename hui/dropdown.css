@@ -57,6 +57,9 @@
     display: inline-block;
 
 }
+.wrapper-demo.active{
+    background: white;
+}
 /*for context menu to be on top*/
 .ui-menu-icons
 {
@@ -118,7 +121,7 @@
 }
 #addNewPlaylist
 {
-    background: rgba(255, 255, 255, 0.51);
+    background: rgba(255, 255, 255, 1);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding-bottom: 5px;
@@ -130,6 +133,7 @@
 }
 #newPlaylistName
 {
+    vertical-align: sub;
     width:70px;
     font-family: myFirstFont;
     font-size: 13pt;  
@@ -205,4 +209,16 @@
 .no-opacity       .wrapper-dropdown-3.active .dropdown,
 .no-pointerevents .wrapper-dropdown-3.active .dropdown {
     display: block;
+}
+#ui-id-1
+{
+  width: 189px !important;
+  background: rgba(255, 255,255, 0.9); 
+  border-radius: 10px;
+  padding: 5px;
+}
+.ui-menu .ui-menu-item
+{
+  font-size: 16px;
+  margin-top: 5px;
 }

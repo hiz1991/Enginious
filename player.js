@@ -127,7 +127,7 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     
     var playerScroll= document;//.getElementsByClassName('player')[0];
     mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
-    $(".playlist").on(mousewheelevt, function(e){e.stopPropagation();});
+    $(".playlist, #youtube, #stats, #bgChanger, #uploadFrameDisplayer").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".lyricsHolder").on(mousewheelevt, function(e){e.stopPropagation();});
     $("#youtube").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".facebook").on(mousewheelevt, function(e){e.stopPropagation();});
@@ -192,13 +192,16 @@ var googleImagesReplacementfound=false;
 var googleImagesUrlOfArt;
 function updateArtwork()
 {
-  $("#signature").html(fileData.artist[fileNumber]);
-    var img = new Image() ||document.createElement('img');
-     console.log("error loading");
-     img.src =fileData.urlOfArt[fileNumber];
-     img.id='artworkBig';
+  // $("#signature").html(fileData.artist[fileNumber]);
+    // var img = new Image() ||document.createElement('img');//24/01/2015
+     // console.log("error loading");
+     // img.src =fileData.urlOfArt[fileNumber];//24/07/2015
+     // img.id='artworkBig';//24/07/2015
+     var img = fileData.urlOfArt[fileNumber];
+     $(".artHolder").css("background", "url('"+img+"') center center");
+     $(".artHolder").css("background-size", "contain");
      // img.style.display="none"; //signature.style.display="none";
-     $(".artHolder > img").replaceWith(img);
+     // $(".artHolder > img").replaceWith(img);//24/01/2015
   // var img = new Image() ||document.createElement('img'); img.onload = function() {
   // // $('.artHolder > img').css("margin-top", ((Number($(".artHolder").height())-Number($(".artHolder > img").height()))/2)+"px"); 
   // //$('#signature').css("width", $(".artHolder > img").width());// $('#signature').css("height", $(".artHolder > img").height());
@@ -312,6 +315,23 @@ function syncServer(id, command, indexInPlaylist)
       }  
             });
      break;
+     case "fetchBgs":
+     var arr=[];
+     // $.ajax({ url : "/syncServer.php"+"?command=fetchBgs",    type: "GET",
+     //  success: function(data)
+     //  {
+     //    fetchBgsCallBack(data);
+     //  }  
+     //        });
+     $.getJSON("/syncServer.php"+"?command=fetchBgs", function(data){
+          $("#bgsThumbsContainer > div").empty();
+          $.each(data, function (index, value) {
+              // arr.push(value);
+              $("#bgsThumbsContainer > div").append("<img src='"+value+"' alt='bg' onclick='bgsThumbsClick(this)'></img>")
+          });
+              });
+     fetchBgsCallBack(arr);
+     break;
 
   }
 }
@@ -319,8 +339,8 @@ function renewPlaylist()
 {
     
   $.get( "/getJson.php", function( data ) {
-  $(".playlist").empty(); getFromJSON(data);
-                                          });
+    $(".playlist").empty(); getFromJSON(data);
+  });
 }
 function removeFromFileData(index)
 {
@@ -360,6 +380,11 @@ function removeFromFileData(index)
     file = $.parseJSON(file);//alert(file.User[0].user);
     if(file.User[0].user==""){window.location.replace("/loginSignUp/");}
     if(file.User[0].type=="Facebook"){facebookIni(file.User[0].user);}//alert(user);}
+    if(file.User[0].bg){    $("body").css("background", "url('"+file.User[0].bg+"')"); 
+    $("body").css("background-size", "cover");
+    $("body").css("background-repeat", "initial initial");
+    }//=========================fade in
+    $("#container").fadeIn();
     for (var u = 0; u < file.Songs.length; u++)
     {
       var filet = file.Songs[u]; //alert(u);
@@ -520,7 +545,7 @@ function initiateDropDownEvents()
                      });
                   }
                 // timeEnd = (new Date()).getTime();
-                lengthOfJsonObject=fileData.url.length; pauseButton();
+                lengthOfJsonObject=fileData.url.length; //pauseButton();
                 // console.log(timeEnd-timeStart);
                 $(".playlist").empty();
                 console.log("Here fileData");console.log(fileData);

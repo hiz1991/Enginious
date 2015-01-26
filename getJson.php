@@ -70,6 +70,6 @@ $songs=json_encode($final);
 $songs=str_replace('\\u0000', "", $songs);
 $playls=str_replace('\\u0000', "", $playls);
 //$str=explode("\u0000", $str);//gzencode
-echo '{   "Songs":'.$songs.'  , "Playlists":['.$playls.'], "User":['.'{"user":"'.$user.'", "type":"'.$_SESSION['userType'].'"}'.']}';
+echo '{   "Songs":'.$songs.'  , "Playlists":['.$playls.'], "User":['.'{"user":"'.$user.'", "type":"'.$_SESSION['userType'].'", "bg":"'.$_SESSION['bg'].'"}'.']}';
 //echo $secondTime-$firstTime;
 ?>

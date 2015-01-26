@@ -1,6 +1,7 @@
 <?php
-function getGenre($value=0)
+function getGenre($value)
 {
+	// error_log($value);
   $array=[
 "0" => "Blues",
 "1" => "Classic Rock",
@@ -83,7 +84,8 @@ function getGenre($value=0)
 "78" => "Rock & Roll",
 "79" => "Hard Rock"
   ];
-  return $array[$value];
+  if($value<100){return $array[$value];}
+  else {return null;}
   // return "frfr";
 }
 // include("getid3/get",i"d3" => "php");

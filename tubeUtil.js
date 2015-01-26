@@ -381,7 +381,7 @@ jQTubeUtil.init({
     key: "AI39si7DGbcdv6vuKW5HkcD2NVNK0c5wy8cs5CnW8X2wMvUYMcQXXErGH-TTh-Rx1kFkI6C6nWclgY8ZRxEyBvDCEoXBHIUgUQ",
     orderby: "relevance",  // *optional -- "viewCount" is set by default
     time: "all_time",   // *optional -- "this_month" is set by default
-    maxResults: 10   // *optional -- defined as 10 results by default
+    maxResults: 8   // *optional -- defined as 10 results by default
   });
 youtubeVideoId='f-7Y5XOhGrg';
 $(document).ready(function(){
@@ -435,7 +435,7 @@ jQTubeUtil.search(titileAndArtist, function(response){ console.log(response);
 	                  	});
 	                  }
 	                  //$("#youtube").append("<div id='youtubeContainer'></div>");
-	                  $("#youtubeThumbsContainer").css("width", response.videos.length*145+"px"); //resize the containre to avoid redundant scrolling
+	                  // $("#youtubeThumbsContainer").css("width", response.videos.length*145+"px"); //resize the containre to avoid redundant scrolling================removed the size from youtube container
 	                   //setTimeout(function(){ getFromYoutube("youtubeContainer",response.videos[0].videoId,0);} , 500);
 	                    if(response.videos.length>0) 
 	                    	{

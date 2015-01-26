@@ -12,7 +12,7 @@ function updateDB($tableName='music', $toUpdateArray, $toUpdateValuesArray, $use
    { 
    	$string=$string.' , '."`".$toUpdateArray[$y]."` = '".$toUpdateValuesArray[$y]."'";
    }
-   // echo $string;
+   error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    $result = mysql_query("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    return $result;
 }

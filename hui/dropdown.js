@@ -20,6 +20,7 @@ function DropDown(el) {
 						$(this).toggleClass('active');
 						toggleSlideDownUp();
 						//$("#addNewPlaylist").toggleClass('active');
+            $(".wrapper-demo").toggleClass('active');
 						 toggleOpacity();
 						return false;
 					});
@@ -49,7 +50,9 @@ function DropDown(el) {
 						$("#dd").toggleClass('active');
 						$("#dropdownSlider").slideUp(50);
 						toggleSlideDownUpBoolean=false;
-						removeOpacity();}
+						removeOpacity();
+            $(".wrapper-demo").toggleClass('active');
+          }
 				});
 			});
 
@@ -58,13 +61,13 @@ function toggleOpacity()
   if(!clicked)
   {
   clicked=true;
-    $('.playlist').css({ opacity: 0.5 });
+    // $('.playlist').css({ opacity: 0.5 }); ==========================en/dis opacity
   //var filterVal = 'blur(3px)';
   // $('.playlist') // .css('filter',filterVal)  // .css('webkitFilter',filterVal)  // .css('mozFilter',filterVal)  // .css('oFilter',filterVal)  // .css('msFilter',filterVal);
   }
   else
   {
-    clicked=false; $(".playlist").removeAttr('style');
+    // clicked=false; $(".playlist").removeAttr('style');==============
   }
 }
 function toggleSlideDownUp()

@@ -32,6 +32,7 @@ while($info = mysql_fetch_array( $data ))
   $_SESSION['user']=$info['username'];
   // if($info['accountType']=='facebook'){$_SESSION['userType']='Facebook';}
   $_SESSION['userType'] = $info['accountType'];
+  $_SESSION['bg'] = $info['theme'];
   echo 'success';
   $correct=true;
 }

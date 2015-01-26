@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="1920px" height="1080px" viewBox="-909.999 -490 1920 1080" enable-background="new -909.999 -490 1920 1080"
+	 xml:space="preserve">
+<circle fill="none" stroke="#00AEEF" stroke-width="5" stroke-miterlimit="10" stroke-dasharray="49" cx="50.001" cy="50" r="250">
+<animateTransform  fill="remove" type="rotate" attributeType="XML" attributeName="transform" to="360 50 50" from="0 50 50" dur="8s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always">
+	</animateTransform>
+</circle>
+<circle fill="#00AEEF" cx="50.001" cy="50.002" r="203.63"/>
+<path fill="#FFFFFF" d="M-20.283,94.254c0,7.188-5.826,13.016-13.015,13.016l0,0c-7.189,0-13.017-5.827-13.017-13.016V5.749
+	c0-7.189,5.827-13.016,13.017-13.016l0,0c7.188,0,13.015,5.827,13.015,13.016V94.254z">
+<animateTransform  fill="remove" type="translate" attributeType="XML" attributeName="transform" dur="3s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always" id="anskljdf" values="0,8;0,-8;0,8">
+		</animateTransform>
+</path>
+<path fill="#FFFFFF" d="M21.367,94.254c0,7.188-5.827,13.016-13.017,13.016l0,0c-7.188,0-13.016-5.827-13.016-13.016V5.749
+	c0-7.189,5.827-13.016,13.016-13.016l0,0c7.189,0,13.017,5.827,13.017,13.016V94.254z">
+<animateTransform  fill="remove" type="translate" attributeType="XML" attributeName="transform" dur="5s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always" id="anskljdf" values="0,12;0,-12;0,12" begin=".1">
+		</animateTransform>
+</path>
+<path fill="#FFFFFF" d="M63.017,94.254c0,7.188-5.826,13.016-13.016,13.016l0,0c-7.189,0-13.017-5.827-13.017-13.016V5.749
+	c0-7.189,5.827-13.016,13.017-13.016l0,0c7.188,0,13.016,5.827,13.016,13.016V94.254z">
+<animateTransform  fill="remove" type="translate" attributeType="XML" attributeName="transform" dur="2s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always" id="anskljdf" values="0,8;0,-8;0,8" begin=".2">
+		</animateTransform>
+</path>
+<path fill="#FFFFFF" d="M104.666,94.254c0,7.188-5.826,13.016-13.017,13.016l0,0c-7.188,0-13.016-5.827-13.016-13.016V5.749
+	c0-7.189,5.827-13.016,13.016-13.016l0,0c7.189,0,13.017,5.827,13.017,13.016V94.254z">
+<animateTransform  fill="remove" type="translate" attributeType="XML" attributeName="transform" dur="3.5s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always" id="anskljdf" values="0,8;0,-8;0,8" begin=".1">
+		</animateTransform>
+</path>
+<path fill="#FFFFFF" d="M146.315,94.254c0,7.188-5.826,13.016-13.016,13.016l0,0c-7.188,0-13.016-5.827-13.016-13.016V5.749
+	c0-7.189,5.826-13.016,13.016-13.016l0,0c7.188,0,13.016,5.827,13.016,13.016V94.254z">
+<animateTransform  fill="remove" type="translate" attributeType="XML" attributeName="transform" dur="4s" calcMode="linear" additive="replace" repeatCount="indefinite" accumulate="none" restart="always" id="anskljdf" values="0,9;0,-9;0,9" begin=".4">
+		</animateTransform>
+</path>
+</svg>

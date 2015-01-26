@@ -1,0 +1,9 @@
+.svg
+{
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    width: 120px;
+    border-radius: 17px;
+    /* heigth: 31px !important; */
+    height: 30px;
+    background: rgba(0, 0, 0, 0.05);
+}

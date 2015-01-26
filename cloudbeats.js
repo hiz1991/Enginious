@@ -79,14 +79,33 @@ function updateIcon(state, name)
 }//player
 function changeBackground()
 {
-	if ($("#urlInput").val()!="")
+	var receivedValue=$("#urlInput").val();
+	if (receivedValue!="")
 	{
-		$("body").css("background", "url('"+$("#urlInput").val()+"')");
+		$("body").css("background", "url('"+receivedValue+"')");
+		$("body").css("background-size", "cover");
+		  // background-repeat: no-repeat;
+        $.ajax({
+		    url : "syncServer.php?command=saveBg&argument="+receivedValue,
+		    type: "GET",
+		    success: function(data)
+		     {		     }  
+        });// http://localhost:8888/syncServer.php?command=saveBg&argument=images
 	}
 }
 function showbg()
 {
 	$("#bgChanger").show();
+	fetchBgs();
+}
+function fetchBgs()
+{
+   syncServer(null, "fetchBgs", null);
+}
+function bgsThumbsClick(data)
+{
+	$("#urlInput").val(data.src);
+	// console.log(data.src);
 }
 function changeFavicon(src)
 {
@@ -133,11 +152,15 @@ function statsShow(dataPassed)
       smth = $.parseJSON(dataPassed);
       $("#statsPane").empty();
       $("#statsPane").append('<p id="statsPaneLabel">Library analysis results:</p>'); 
+      var i=0;
       for(var k in smth.Response)// alert(k);
       {
-          $("#statsPane").append('<div> <div><p>'+k+'</p></div> <div>'+smth.Response[k]+'</div> </div>');
+          $("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+k+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
+          $("#container"+i).append("    <svg class='svg' id='"+"svg"+i+"' style='width: "+$("#container"+i).width()+"px'/></svg>");
+          populateSvg('svg'+i, (smth.Response[k]<=100&&smth.Response[k]!=null)?smth.Response[k]:0);
+          i++;
       }
-      $("#stats").show();
+      $("#stats").fadeIn();
 }
 function remoteIni()
 {
@@ -174,7 +197,7 @@ function remoteIni()
 	      }
   }
 }
-function chhuio()
+function animatePlayerOnHover()
 {
 	$( ".player" ).mouseleave(function() {
 
@@ -220,4 +243,21 @@ function chhuio()
     });
     // height: 6px;
 // margin-top: 15px;
+}
+function populateSvg(svgId, percent)
+{
+	// console.log(container);
+	// console.log(svgId);
+	var rect = Snap("#"+svgId).rect(0, 0, 1, 30);
+	rect.attr({
+		fill: "orange",
+		rx: "15",
+	    ry: "15"
+	})
+	Snap.animate(0, 10, function (val) {
+	rect.animate(val, mina.easein);
+	}, 0, mina.easein);
+
+	// in given context is equivalent to
+	rect.animate({width:$("#"+svgId).width()*(percent/100), height:30}, 2000, mina.easein);
 }
