@@ -149,7 +149,7 @@ body
 {
   border-top: 1px dotted  rgba(255,255,255,0.3);
   /* z-index:150; */
-  /*   margin: 0px auto; */
+     margin-top: -5px; 
   width:auto;
 /*margin-left: 25px;
 margin-right: 25px !important;*/
@@ -563,7 +563,7 @@ background-color: rgba(131, 131, 131, 0.6);
   overflow: hidden;
   /*overflow-y: auto;*/
   /*position: absolute;*/
-  width: 400px;
+  width: 405px;
   min-width: 400px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -627,7 +627,6 @@ background-color: rgba(131, 131, 131, 0.6);
  //margin-right: 30px;
  //border: 1px solid #000000;
 }   
-
 .artInPlaylist img
 {
   //margin-left: 10px;
@@ -743,8 +742,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 .art{
   width: auto;
-  /*     max-height: 80%; */
   display: inline-block;
+  margin-left: -5px;
 
 }
 .artHolder
