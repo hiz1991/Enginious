@@ -1,11 +1,12 @@
 <?php
 session_start();
 $user=$_SESSION['user'];
-$connection = mysql_connect("localhost", "root", "19910728Aa")
-or die('Could not connect: ' . mysql_error());
-mysql_set_charset('utf8',$connection);
-mysql_select_db("kura_users", $connection)
-or die('Could not select database');
+include("db.php");
+// $connection = mysql_connect("localhost", "root", "19910728Aa")
+// or die('Could not connect: ' . mysql_error());
+// mysql_set_charset('utf8',$connection);
+// mysql_select_db("kura_users", $connection)
+// or die('Could not select database');
 if($_GET['action']=="just_user")
 {
 	echo '{"user":"'.$user.'", "type":"'.$_SESSION['userType'].'"}';
@@ -19,7 +20,14 @@ if(!isset($_SESSION['user']))
 $playlists=array();
 //$firstTime=microtime();
 $data = mysql_query("SELECT * FROM `playlists` WHERE `username`='".$user."';")
+// selectAllDB('playlists',$user);
 //$data = mysql_query("SELECT * FROM `playlists` WHERE `username`="."store".";");
+// mysql_query($data); //or die (' error'. mysql_error());
+// 
+// if (!$data)
+// {
+//  	error_log(mysql_error());
+// }
 or die('error At Playlists'.mysql_error());
 //$info = mysql_fetch_array($data);
 while($info = mysql_fetch_array( $data ))
@@ -31,6 +39,7 @@ while($info = mysql_fetch_array( $data ))
 $final=array();
 $ids=array();
 $data = mysql_query("SELECT * FROM `music` WHERE `music`.`username`='".$user."'  ORDER BY `music`.`id` DESC;")
+// selectAllDB('music', $user);
 or die('error At Music'.mysql_error());
 //$info = mysql_fetch_array($data);
 	while($info = mysql_fetch_array( $data ))
@@ -50,6 +59,7 @@ or die('error At Music'.mysql_error());
 	}
 
 	$data = mysql_query("SELECT * FROM `songsInPlaylists` WHERE `songsInPlaylists`.`username`='".$user1."';")
+	// selectAllDB('songsInPlaylists', $user);//
     or die('error '.mysql_error());
 	while($info = mysql_fetch_array( $data ))
 	{

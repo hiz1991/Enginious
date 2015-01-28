@@ -79,6 +79,8 @@ body
       opacity 0.8 !important
     &:active
       opacity 1 !important
+      
+.flip {    -webkit-backface-visibility:hidden;    -webkit-transform:translateX(0);     -moz-backface-visibility:hidden;    -moz-transform:translateX(0);}.flip.out {    -webkit-transform: rotateY(-90deg) scale(.9);    -webkit-animation-name: flipouttoleft;    -webkit-animation-duration: 175ms;    -moz-transform: rotateY(-90deg) scale(.9);    -moz-animation-name: flipouttoleft;    -moz-animation-duration: 175ms;}.flip.in {    -webkit-animation-name: flipintoright;    -webkit-animation-duration: 225ms;    -moz-animation-name: flipintoright;    -moz-animation-duration: 225ms;}.flip.out.reverse {    -webkit-transform: rotateY(90deg) scale(.9);    -webkit-animation-name: flipouttoright;    -moz-transform: rotateY(90deg) scale(.9);    -moz-animation-name: flipouttoright;}.flip.in.reverse {    -webkit-animation-name: flipintoleft;    -moz-animation-name: flipintoleft;}@-webkit-keyframes flipouttoleft {    from { -webkit-transform: rotateY(0); }    to { -webkit-transform: rotateY(-90deg) scale(.9); }}@-moz-keyframes flipouttoleft {    from { -moz-transform: rotateY(0); }    to { -moz-transform: rotateY(-90deg) scale(.9); }}@-webkit-keyframes flipouttoright {    from { -webkit-transform: rotateY(0) ; }    to { -webkit-transform: rotateY(90deg) scale(.9); }}@-moz-keyframes flipouttoright {    from { -moz-transform: rotateY(0); }    to { -moz-transform: rotateY(90deg) scale(.9); }}@-webkit-keyframes flipintoleft {    from { -webkit-transform: rotateY(-90deg) scale(.9); }    to { -webkit-transform: rotateY(0); }}@-moz-keyframes flipintoleft {    from { -moz-transform: rotateY(-90deg) scale(.9); }    to { -moz-transform: rotateY(0); }}@-webkit-keyframes flipintoright {    from { -webkit-transform: rotateY(90deg) scale(.9); }    to { -webkit-transform: rotateY(0); }}@-moz-keyframes flipintoright {    from { -moz-transform: rotateY(90deg) scale(.9); }    to { -moz-transform: rotateY(0); }}
 
 #container
   display none
@@ -159,7 +161,7 @@ body
 #level
   overflow hidden
   //keep level in border
- position absolute
+  position absolute
   z-index 2
   width 0%
   border-radius 10px
@@ -184,7 +186,7 @@ body
   margin-bottom 5px
 
 #indicator, #volumeIndicator
-  display none
+  // display none
   position absolute
   z-index 3
   width 2%
@@ -678,11 +680,11 @@ body
   margin-left 165px
   margin-top 0.2px
   height 22px
-  borderleft-radius 20px !important
+  border-left-radius 20px !important
   border-top-left-radius 20px !important
   border-bottom-left-radius 20px !important
-  borderright-radius 0px !important
-  borderright-radius 0px !important
+  border-right-radius 0px !important
+  border-right-radius 0px !important
   border-top-right-radius 0px !important
   border-bottom-right-radius 0px !important
   border-right 0px solid white !important
@@ -708,9 +710,6 @@ body
   width 145px
   right 0px !important
   padding-left 30px
-  // @box-shadow -1px -1px 8px rgba(50, 50, 50, 0.16)
-  // @box-shadow -1px -1px 8px rgba(50, 50, 50, 0.16)
-  // @box-shadow -1px -1px 8px rgba(50, 50, 50, 0.16)
   border-radius 20px
   border-radius 20px
   //border 1px solid #61c419
@@ -738,5 +737,12 @@ body
   right 5px !important
   display inline-block
   font-size 12pt !important
+  
+.svg
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 120px;
+  border-radius: 17px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.05);
 
 
