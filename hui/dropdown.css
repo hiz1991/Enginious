@@ -49,16 +49,16 @@
 .wrapper-demo {
     /*background: white;*/
     position: absolute;
-    @*zoom: 1;
+    /*@*zoom: 1;*/
     font-family: myFirstFont;
-    @font-weight: 400;
+    /*@font-wei÷ght: 400;*/
     width:130px;
     z-index: 50000;
     display: inline-block;
 
 }
 .wrapper-demo.active{
-    background: white;
+    /*background: white;*/
 }
 /*for context menu to be on top*/
 .ui-menu-icons
@@ -75,23 +75,23 @@
 .wrapper-dropdown-3 > span{display: inline-block;}
 .wrapper-dropdown-3 {
     /* Size and position */
-        //padding-bottom: 200px !important;
+        /*//padding-bottom: 200px !important;*/
     position: relative;
-    @width: 200px;
+    /*@width: 200px;*/
     margin: 0 auto;
-    @padding: 10px;
+    /*@padding: 10px;*/
 
     /* Styles */
-    @background: #fff;
+    /*@background: #fff;*/
     border-radius: 7px;
-    @border: 1px solid rgba(0,0,0,0.15);
-    @box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+    /*@border: 1px solid rgba(0,0,0,0.15);*/
+    /*@box-shadow: 0 1px 1px rgba(50,50,50,0.1);*/
     cursor: pointer;
     outline: none;
 
     /* Font settings */
-    @font-weight: bold;
-    @color: #525252;
+    /*@font-weight: bold;*/
+    /*@color: #525252;*/
     /*color: #525252;*/
     color: white;
 }
@@ -103,7 +103,7 @@
     /*right: 0;*/
 
     /* Styles */
-    background: white;
+    /*background: white;*/
     border-bottom: 1px solid rgba(0,0,0,0.17);
     border-top: 1px solid rgba(0,0,0,0.17);
     /*box-shadow: 0 0 5px rgba(0,0,0,0.1);*/
@@ -161,7 +161,7 @@
     padding: 10px;
     text-decoration: none;
     color: #525252;
-    border-bottom: 1px solid #e6e8ea;
+    border-bottom: 1px solid rgba(230, 232, 234, 0.42);;
     box-shadow: inset 0 1px 0 rgba(255,255,255,1);
 
 }
@@ -210,6 +210,8 @@
 .no-pointerevents .wrapper-dropdown-3.active .dropdown {
     display: block;
 }
+
+/*for autocomplete*/
 #ui-id-1
 {
   width: 189px !important;
@@ -221,4 +223,138 @@
 {
   font-size: 16px;
   margin-top: 5px;
+}
+/*for autocomplete*/
+.morph-shape svg path {
+fill: #FFFFFF;
+}
+.morph-shape, .morph-shape svg {
+position: absolute;
+width: 100%;
+top: 0;
+left: 0;
+}
+.morph-shape {
+height: 30px;
+-webkit-transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.morph-shape svg {
+height: 100%;
+}
+.menu {
+  border-radius: 4px;
+width: 154px;
+height: 30px;
+/*margin: 2em auto;*/
+position: absolute;
+/*text-align: left;*/
+cursor: pointer;
+z-index: 0;
+margin-left: -12px;
+margin-top: -4px;
+}
+
+.menu .fa {
+  vertical-align: top;
+  line-height: 1.25;
+  margin-right: 0.65em;
+  font-size: 1.15em;
+}
+
+.menu__inner {
+  list-style: none;
+  padding: 0 1.25em;
+  font-size: 1.3em;
+  margin: 0;
+  position: absolute;
+  overflow: hidden;
+  height: 0;
+  -webkit-transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.menu.menu--open .menu__inner {
+  height: 310px;
+}
+
+.menu__inner li a {
+  display: block;
+  padding: 0.53em 0;
+  line-height: 1.2;
+  opacity: 0;
+  color: #727476;
+  pointer-events: none;
+  outline: none;
+  -webkit-transform: translate3d(0, -20px, 0);
+  transform: translate3d(0, -20px, 0);
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.menu__inner li a:hover {
+  color: #45484A;
+}
+
+.menu--open .menu__inner li a {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.menu--open .menu__inner li:nth-child(2) a {
+  -webkit-transition-delay: 0.04s;
+  transition-delay: 0.04s;
+}
+
+.menu--open .menu__inner li:nth-child(3) a {
+  -webkit-transition-delay: 0.08s;
+  transition-delay: 0.08s;
+}
+
+.menu--open .menu__inner li:nth-child(4) a {
+  -webkit-transition-delay: 0.12s;
+  transition-delay: 0.12s;
+}
+
+.menu--open .menu__inner li:nth-child(5) a {
+  -webkit-transition-delay: 0.16s;
+  transition-delay: 0.16s;
+}
+
+.menu--open .menu__inner li:nth-child(6) a {
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+
+.morph-shape,
+.morph-shape svg {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.morph-shape {
+  height: 30px;
+  -webkit-transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.morph-shape svg {
+  border-radius: 4px;
+  height: 100%;
+}
+
+.menu.menu--open .morph-shape {
+  height: 500px;
+}
+
+.morph-shape svg path {
+  fill: #FFFFFF;
+}
+.shadowless
+{
+  box-shadow: none;
 }
