@@ -19,7 +19,20 @@
         <link rel="stylesheet" type="text/css" href="player.css">
         <link rel="stylesheet" type="text/css" href="hui/dropdown.css">
         <link type="text/css" rel="stylesheet" href="hui/jquery-ui.css" />
-        <style>  .ui-autocomplete {     font-family: myFirstFont; font-size:14pt;max-width:20%;max-height: 600px;    overflow-y: auto;    overflow-x: hidden;  }  * html .ui-autocomplete {    height: 600px;  }  </style>
+        <style>  .ui-autocomplete 
+          {
+           font-family: myFirstFont;
+           font-size:14pt;
+           max-width:20%;
+           max-height: 591px;
+           overflow-y: auto; 
+           overflow-x: hidden; 
+         }  
+         * html .ui-autocomplete 
+         {   
+          height: 600px;  
+         }  
+        </style>
         <script src="player.js"></script>
         <script src="hui/dropdown.js"></script> 
         <script src="cloudbeats.js"></script>
@@ -301,8 +314,8 @@
       classie.add( self.el, 'menu--open' );
     }
 
-    this.pathEl.stop().animate( { 'path' : this.paths.open }, 150, mina.easeinout, function() {
-      self.pathEl.stop().animate( { 'path' : self.paths.reset }, 150, mina.elastic );
+    this.pathEl.stop().animate( { 'path' : this.paths.open }, 500, mina.easeinout, function() {
+      self.pathEl.stop().animate( { 'path' : self.paths.reset }, 300, mina.elastic );
     } );
 
     this.isOpen = !this.isOpen; 

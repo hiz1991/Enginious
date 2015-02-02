@@ -437,34 +437,12 @@ function removeFromFileData(index)
       //initiateVK();
     }
     });
-    initiateDropdown(file);
+    initiateDropdown(Playlists);
     //initialise playlist
     playlist();
 
 }
-function initiateDropdown(file)
-{
-  //console.log(file);
-      //initiate dropdown for playlists
-      $(".dropdown").empty();
-      $(".dropdown").append('<li><a href="#"></i>All Music</a></li>');
-      if(Playlists.length>0)
-      {
 
-        $.each(Playlists, function( index, value)
-        {
-          $(".dropdown").append('<li><a href="#">'+Playlists[index]+'</a></li>');
-        });
-        try
-        {
-          delete dd; delete DropDown; $('#dd').off('click'); $('ul.dropdown > li').off('click'); 
-        }
-        catch(e){}
-        var dd = new DropDown( $('#dd') );
-      }
-    //poluted
-    initiateDropDownEvents();
-}
 function setCurrentPlaylist(playlistReceived)
 {
   switch(playlistReceived)

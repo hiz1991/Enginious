@@ -40,6 +40,7 @@ $final=array();
 $ids=array();
 $data = mysql_query("SELECT * FROM `music` WHERE `music`.`username`='".$user."'  ORDER BY `music`.`id` DESC;")
 // selectAllDB('music', $user);
+//TODO:switch to db.php
 or die('error At Music'.mysql_error());
 //$info = mysql_fetch_array($data);
 	while($info = mysql_fetch_array( $data ))

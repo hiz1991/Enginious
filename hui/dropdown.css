@@ -121,7 +121,7 @@
 }
 #addNewPlaylist
 {
-    background: rgba(255, 255, 255, 1);
+    /*background: rgba(255, 255, 255, 1);*/
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding-bottom: 5px;
@@ -347,7 +347,10 @@ margin-top: -4px;
   height: 100%;
 }
 
-.menu.menu--open .morph-shape {
+/*.menu.menu--open .morph-shape {
+  height: 500px;
+}*/
+.morph-shape-open{
   height: 500px;
 }
 

@@ -1,5 +1,5 @@
 <?php header("Content-Type: text/html; charset=utf-8");
-include("getGenre.php");
+// include("getGenre.php");
 include("db.php");
 class MP3_data 
 { 
@@ -51,16 +51,24 @@ function extractInfo($filePath)
 		//=null;
 		function getWithExiftools($fileName)
 		{
+			$outputGenre='';
 			exec('/usr/local/bin/exiftool '.escapeshellarg($fileName),$output, $return_var);
-			for ($i=0; $i <count($output) ; $i++) { 
-				if (strpos($output[$i], "Artist                          : ")!== false) {
-					$outputEnd =  str_replace('Artist                          : ', '', $output[$i]);
+			for ($i=0; $i <count($output) ; $i++)
+			{ 
+				if (strpos($output[$i], "Artist                          : ")!== false) 
+				{
+					$outputArtist =  str_replace('Artist                          : ', '', $output[$i]);
 				}
-				elseif (strpos($output[$i], "Title                           : ")!== false) {
-					$outputEnd1= str_replace('Title                           : ', '', $output[$i]);
+				elseif (strpos($output[$i], "Title                           : ")!== false)
+				{
+					$outputTitle= str_replace('Title                           : ', '', $output[$i]);
+				}
+				elseif(strpos($output[$i], "Genre                           : ")!== false)
+				{
+					$outputGenre= str_replace("Genre                           : ", '', $output[$i]);
 				}
 			}
-			return ['artist'=>$outputEnd, 'title'=>$outputEnd1];
+			return ['artist'=>$outputArtist, 'title'=>$outputTitle, 'genre'=>$outputGenre];
 		}
 		function cutMP3($fileReceieved, $user, $seconds)
 		{
@@ -143,12 +151,20 @@ function extractInfo($filePath)
 		function getWaveform($sample_rate, $playtime, $filePath)
 		{
 		// echo $filePath;
-			$filePath=escapeshellarg($filePath);//str_replace(" ", "\ ", $filePath);
+			//str_replace(" ", "\ ", $filePath);
 			//error_log($filePath);
 			$sample_per_second=round($playtime/(1000/$sample_rate));
 			//echo '  '.$sample_per_second;
-			exec('/usr/local/bin/audiowaveform -i '.$filePath.' -o sample.json -z '.$sample_per_second.' --background-color ffffff --waveform-color EF8800  --no-axis-labels -w 1000', $output, $return_var);
-			exec('/usr/local/bin/audiowaveform -i '.$filePath.' -o sample.png -z '.$sample_per_second.' --background-color ffffff00 --waveform-color EF8800  --no-axis-labels -w 1000 -h 30', $output, $return_var);
+		    $path_partsTemp = pathinfo($filePath);
+            $dirForWave = $path_partsTemp['dirname'].'/waveforms/'.$path_partsTemp['filename'].'.json';
+            $dirForWave=escapeshellarg($dirForWave);
+            $filePath=escapeshellarg($filePath);
+            // error_log($dirForWave);
+            // error_log('/usr/local/bin/audiowaveform -i '.$filePath.' -o '.$dirForWave.' -z '.$sample_per_second.' --background-color ffffff --waveform-color EF8800  --no-axis-labels -w 1000');
+			exec('/usr/local/bin/audiowaveform -i '.$filePath.' -o '.$dirForWave.' -z '.$sample_per_second.' --background-color ffffff --waveform-color EF8800  --no-axis-labels -w 1000', $output, $return_var);
+			exec('distributionExtractor/distrExtractor '.$dirForWave, $output1, $return_var);
+			// error_log('distributionExtractor/distrExtractor '.$dirForWave);
+			return $output1[0];
 
 		}
 		function getPitch($filePath)
@@ -195,6 +211,7 @@ function extractInfo($filePath)
 		$getID3 = new getID3;  
 		// $firstTime=microtime();
 		$ThisFileInfo = $getID3->analyze($targetFile);
+		//TODO:delete this
 		// $secondTime=microtime();
 		// error_log($secondTime-$firstTime);
 		// error_log(mb_detect_encoding($mp3file->title));
@@ -206,7 +223,8 @@ function extractInfo($filePath)
 		$len= @$ThisFileInfo['playtime_string'];  //echo @$ThisFileInfo['audio']['sample_rate'];//print_r(@$ThisFileInfo);
 		$split = explode(':', $len);
 		$seconds=(($split[0]*60)+$split[1]); //echo "playtime ".$seconds;
-		// getWaveform(@$ThisFileInfo['audio']['sample_rate'], $seconds, $targetFile);
+		$wave = getWaveform(@$ThisFileInfo['audio']['sample_rate'], $seconds, $targetFile);
+		// error_log($wave);
 		$pitch = getPitch($targetFile);
 		$tempo = getTempo($targetFile, $seconds);
         cutMP3($targetFile,$user, $seconds);
@@ -234,13 +252,11 @@ function extractInfo($filePath)
 			}
 		//$mp3file->album=utf8_encode($mp3file->album);
 		//$mp3file->album=utf8_encode(trim($mp3file->album, " \t\n\r\0\x0B "));
-		$mp3file->genre=mysql_real_escape_string(utf8_encode(getGenre(hexdec($mp3file->genre))));
 		$mp3file->year=mysql_real_escape_string(utf8_encode($mp3file->year));
 		$resultFromExiftools = getWithExiftools($targetFile);
-		if ((!$resultFromExiftools['artist']==null) &&(!$resultFromExiftools['title']==null)) {
-			$mp3file->artist = $resultFromExiftools['artist'];
-			$mp3file->title = $resultFromExiftools['title'];
-		}
+		$mp3file->genre=$resultFromExiftools['genre'];
+		$mp3file->artist = (!$resultFromExiftools['artist']==null)?$resultFromExiftools['artist']:$mp3file->artist;
+		$mp3file->title = (!$resultFromExiftools['title']==null)?$resultFromExiftools['title']:$mp3file->title;
 		//save average value
 		// $file=file_get_contents('sample.json');
 		// $json=json_decode($file);
@@ -255,7 +271,7 @@ function extractInfo($filePath)
         if (isset($_SESSION))
         {    
             // $addingUser="INSERT INTO music(url, artist, title, urlOfArt, genre, year, username, wave, volume) VALUES('". mysql_real_escape_string($filename) ."', '". mysql_real_escape_string($mp3file->artist) ."', '". mysql_real_escape_string($mp3file->title) ."', '". mysql_real_escape_string($img) ."' ,'". mysql_real_escape_string($mp3file->genre) ."','". mysql_real_escape_string($mp3file->year) ."', '". mysql_real_escape_string($user) ."', '". mysql_real_escape_string($file)."', '".mysql_real_escape_string($averageVolume)."')";
-            $temporArray=[$filename, $mp3file->artist, $mp3file->title, $img, $mp3file->genre, $mp3file->year, $user ," ", $averageVolume, $pitch, $tempo];
+            $temporArray=[$filename, $mp3file->artist, $mp3file->title, $img, $mp3file->genre, $mp3file->year, $user ,$wave, $averageVolume, $pitch, $tempo];
             $addingUser=recordInDB("music", ["url", "artist", "title", "urlOfArt", "genre", "year", "username", "wave", "volume", "pitch", "tempo"], $temporArray, $user);
             mysql_query($addingUser); //or die (' error'. mysql_error());
             // error_log(mysql_error());
