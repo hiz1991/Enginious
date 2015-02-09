@@ -101,6 +101,7 @@ function extractInfo($filePath)
 		
 		function getCover($fileReceieved, $pathReceived)
 		{
+			//TODO:artwork thumb dir not created
 		    // $fileReceieved=utf8_encode(trim($fileReceieved, " \t\n\r\0\x0B "));
 		    $fileReceieved=mysql_real_escape_string($fileReceieved);
 			require_once('getid3/getid3.php');

@@ -103,9 +103,12 @@ function toggleSlideDownUp()
   if(!toggleSlideDownUpBoolean)
   {
   toggleSlideDownUpBoolean=true;
+  // $(".menu").show();
+    document.querySelector(".menu").style.opacity = "1";
     $(".wrapper-demo").addClass('shadowless');
     $(".morph-shape").addClass("morph-shape-open");
-    $(".morph-shape-open").css("height", dropDownHeight+"px");
+    $(".morph-shape-open").css("height", dropDownHeight+20+"px");
+
     dropDownBackground.open();
     // $("#dropdownSlider").delay(600).fadeIn();
     $("#dropdownSlider").slideDown(600);
@@ -124,6 +127,7 @@ function toggleSlideDownUpClose()
     dropDownBackground.close();
     $("#dropdownSlider").slideUp(300, function(){$(".wrapper-demo").removeClass('shadowless');
     // $("#dropdownSlider").slideUp(600);
+    document.querySelector(".menu").style.opacity = "0";
 });
 }
 function removeOpacity()

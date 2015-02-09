@@ -134,6 +134,7 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     $(".ui-autocomplete").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".playlist").on("dblclick", function(e){e.stopPropagation();});
     $(".facebook").on("dblclick", function(e){e.stopPropagation();});
+    $(".settings").on("dblclick", function(e){e.stopPropagation();});
     $("#addNewPlaylist").on("click", function(e){e.stopPropagation();});
     if (playerScroll.attachEvent && scrollVolumeOn)
     playerScroll.attachEvent("on"+mousewheelevt, volumeScroll)
@@ -380,9 +381,11 @@ function removeFromFileData(index)
     file = $.parseJSON(file);//alert(file.User[0].user);
     if(file.User[0].user==""){window.location.replace("/loginSignUp/");}
     if(file.User[0].type=="Facebook"){facebookIni(file.User[0].user);}//alert(user);}
-    if(file.User[0].bg){    $("body").css("background", "url('"+file.User[0].bg+"')"); 
-    $("body").css("background-size", "cover");
-    $("body").css("background-repeat", "initial initial");
+    if(file.User[0].bg)
+    {
+       $("body").css("background", "url('"+file.User[0].bg+"')"); 
+       $("body").css("background-size", "cover");
+       $("body").css("background-repeat", "initial initial");
     }//=========================fade in
     $("#container").fadeIn();
     for (var u = 0; u < file.Songs.length; u++)
@@ -407,7 +410,8 @@ function removeFromFileData(index)
      //parse playlists
      var mystring=JSON.stringify(file.Playlists[0]);
      mystring=mystring.replace(/"/g , "");
-     playlistList=new Array(); playlistList=mystring.split("]");
+     playlistList=new Array(); 
+     playlistList=mystring.split("]");
      var arr=new Array();
      $.each(playlistList, function( index, value)
        {
@@ -421,7 +425,8 @@ function removeFromFileData(index)
        // playlistList.pop();
       );
       playlistList.pop();//deletes { at the end 
-     delete arr; delete mystring;
+     delete arr;
+     delete mystring;
      /* fileData.title = file.title;fileData.artist = file.artist;fileData.album = file.album;fileData.year = file.year;fileData.url =file.Songs.url;fileData.urlOfArt = file.urlOfArt;*/
     currentFile.setAttribute("src", fileData.url[0]);
     lengthOfJsonObject = fileData.url.length;
@@ -587,6 +592,14 @@ function initiateDropDownEvents()
   {
     if (playlistOn)
     {
+      if(fileData.url.length==0)
+      {
+        $(".playlist").append('<div><span>You do not have any music uploaded yet.</span><span id="noSongsPlaceholder" style="color:blue;">Upload music</span> </div>');
+        $("#noSongsPlaceholder").on("click", function()
+        {
+          $('#uploadFrameDisplayer').show();
+        });
+      }
       var i;
       if (fileData.url.length>30) 
       {

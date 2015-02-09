@@ -104,9 +104,11 @@
 
     /* Styles */
     /*background: white;*/
-    border-bottom: 1px solid rgba(0,0,0,0.17);
-    border-top: 1px solid rgba(0,0,0,0.17);
+/*    border-bottom: 1px solid rgba(0,0,0,0.17);
+    border-top: 1px solid rgba(0,0,0,0.17);*/
     /*box-shadow: 0 0 5px rgba(0,0,0,0.1);*/
+    border: 1px solid rgba(196, 196, 196, 0.17);
+    border-radius: 5px;
     font-weight: normal;
     -webkit-transition: all 0.05s linear;
     -moz-transition: all 0.05s linear;
@@ -133,20 +135,16 @@
 }
 #newPlaylistName
 {
-    vertical-align: sub;
-    width:70px;
-    font-family: myFirstFont;
-    font-size: 13pt;  
-    border:solid 1px rgba(50, 50, 50, 0.3);
-    height: 22px;
-    margin-left: 5px;
-    @-webkit-box-shadow: -1px -1px 8px rgba(50, 50, 50, 0.16);
-    @-moz-box-shadow:    -1px -1px 8px rgba(50, 50, 50, 0.16);
-    @box-shadow:         -1px -1px 8px rgba(50, 50, 50, 0.16);
-    -webkit-border-radius: 5px;
-    -moz-border-radius:5px;
-    //border:1px solid #61c419;
-    border-radius:5px;
+  vertical-align: sub;
+  width: 74px;
+  font-family: myFirstFont;
+  font-size: 13pt;
+  border: solid 1px rgba(205, 205, 205, 1);
+  height: 22px;
+  margin-left: 0px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 #newPlaylistName:focus {
     outline-width: 0;
@@ -256,7 +254,8 @@ transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
 height: 100%;
 }
 .menu {
-  border-radius: 4px;
+  opacity: 0;
+border-radius: 4px;
 width: 154px;
 height: 30px;
 /*margin: 2em auto;*/
