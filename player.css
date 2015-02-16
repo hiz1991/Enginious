@@ -460,6 +460,7 @@ body {
   transition: 0.3s;
   outline: none;
   overflow-x: hidden;
+  overflow-y: scroll !important;
   overflow: hidden;
   width: 405px;
   min-width: 400px;
@@ -626,6 +627,8 @@ body {
   font-family: myFirstFont, "Times", serif;
   overflow: auto;
   color: rgba(0,0,0,0.7);
+  overflow-y: scroll !important;
+  overflow-x: scroll !important;
 }
 #containterYoutubeOutMost {
   overflow-x: scroll;
@@ -651,7 +654,7 @@ body {
 }
 .youtubeResultContainer > span {
   text-align: center;
-  font-size: 12pt !important;
+  font-size: 10pt !important;
   height: 40px;
   font-family: myFirstFont;
   overflow: hidden;

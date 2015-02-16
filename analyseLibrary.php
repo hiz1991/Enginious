@@ -2,29 +2,32 @@
 session_start();
 $user=$_SESSION['user'];
 include 'db.php';
+include 'transl.php';
+$bs=getTransBase();
 //analyse volume
 $musicData = selectAllDB("music", $user);
 if(mysql_num_rows($musicData))
 {
 	// var_dump($row=mysql_fetch_array($musicData));
 	$i=0;
-	$sum=0;
-	$tempArray=[];
+	$sumVolume=0;
+	$tempArrayVolume=[];
     while($row=mysql_fetch_array($musicData))
     {
-        $sum=$sum+calculatePercentTo($row['volume'], 30000);
+        $sumVolume=$sumVolume+calculatePercentTo($row['volume'], 300000);
         $i++;
-        array_push($tempArray, calculatePercentTo($row['volume'], 30000));
+        array_push($tempArrayVolume, calculatePercentTo($row['volume'], 300000));
     	// echo calculatePercentTo($row['volume'], 30000);
     }
-    $mean =round($sum/$i);
-    // var_dump(calcDeviation($mean,$tempArray));
+    $meanVolume =round($sumVolume/$i);
+    // var_dump(calcDeviation($meanVolume,$tempArrayVolume));
     $toUpdate=['volume', 'volumeAccuracy'];
-    $finalAccuracy=100-calculatePercentTo(calcDeviation($mean,$tempArray), 25);
-    $toUpdateValues=[$mean, $finalAccuracy];
+    $finalAccuracy=100-calculatePercentTo(calcDeviation($meanVolume,$tempArrayVolume), 25);
+    $toUpdateValues=[$meanVolume, $finalAccuracy];
     // var_dump(updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user));
     updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user);
 }
+
 $result = selectAllDB('libraryAnalysis', $user);
 //mysql_query("SELECT * FROM `libraryAnalysis` WHERE `username`=".$user.";");
 function cn($value)//check if number
@@ -55,22 +58,22 @@ if(mysql_num_rows($result)){
     	echo '{
 	"Response":
 	{
-			"volume":'.cn($row['volume']).',
-			"tempo":'.cn($row['tempo']).',
-			"genre": '.cn($row['genre']).',
-			"year": '.cn($row['year']).',
-			"pitch":'.cn($row['pitch']).',
-			"rhythm": '.cn($row['rhythm']).',
-			"popularity": '.cn($row['popularity']).',
-			"distribution": '.cn($row['distribution']).',
-			"volumeConfidence": '.cn($row['volumeAccuracy']).',
-			"tempoConfidence": '.cn($row['tempoAccuracy']).',
-			"genreConfidence": '.cn($row['genreAccuracy']).',
-			"yearConfidence": '.cn($row['yearAccuracy']).',
-			"pitchConfidence": '.cn($row['pitchAccuracy']).',
-			"rhythmConfidence": '.cn($row['rhythmAccuracy']).',
-			"popularityConfidence": '.cn($row['popularityAccuracy']).',
-			"distributionConfidence": '.cn($row['distributionAccuracy']).'
+			"'.trans("volume", $bs).'":'.cn($row['volume']).',
+			"'.trans("tempo", $bs).'":'.cn($row['tempo']).',
+			"'.trans("genre", $bs).'": '.cn($row['genre']).',
+			"'.trans("year", $bs).'": '.cn($row['year']).',
+			"'.trans("pitch", $bs).'":'.cn($row['pitch']).',
+			"'.trans("rhythm", $bs).'": '.cn($row['rhythm']).',
+			"'.trans("popularity", $bs).'": '.cn($row['popularity']).',
+			"'.trans("distribution", $bs).'": '.cn($row['distribution']).',
+			"'.trans("volume confidence", $bs).'": '.cn($row['volumeAccuracy']).',
+			"'.trans("tempo confidence", $bs).'": '.cn($row['tempoAccuracy']).',
+			"'.trans("genre confidence", $bs).'": '.cn($row['genreAccuracy']).',
+			"'.trans("year confidence", $bs).'": '.cn($row['yearAccuracy']).',
+			"'.trans("pitch confidence", $bs).'": '.cn($row['pitchAccuracy']).',
+			"'.trans("rhythm confidence", $bs).'": '.cn($row['rhythmAccuracy']).',
+			"'.trans("popularity confidence", $bs).'": '.cn($row['popularityAccuracy']).',
+			"'.trans("distribution confidence", $bs).'": '.cn($row['distributionAccuracy']).'
 	}
 }';
 			// "username": '.cn($row['username']).',
@@ -96,7 +99,8 @@ function calculatePercentTo($givenValue, $maxValue)
 function calcDeviation($meanReceived, $arrayReceived)
 {
   $sumDistance=0;
-  for ($x=0; $x <count($arrayReceived) ; $x++) { 
+  for ($x=0; $x <count($arrayReceived) ; $x++)
+  { 
      $sumDistance=$sumDistance+abs($arrayReceived[$x]-$meanReceived); 
   }
   return round($sumDistance/count($arrayReceived));

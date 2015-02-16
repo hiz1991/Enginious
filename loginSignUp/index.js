@@ -11,7 +11,7 @@ $( document ).ready(function() {
         url : "../autolog.php",
         success: function(check) {
         if (check=="true")
-          window.open ('../player.html','_self',false);
+          window.open ('../player.php','_self',false);
         }
              });
     //autologin
@@ -109,7 +109,7 @@ $( document ).ready(function() {
                    musicPreferences: 0 }
           })
             .done(function( msg ) {
-              if (msg=="success") {window.location.href="/player.html"}
+              if (msg=="success") {window.location.href="/player.php"}
                 else if(msg=="taken"){alert("Email already registered!")}
                   else{alert("Input values incorrect")}
               console.log( "Data Saved: " + msg );
@@ -248,7 +248,7 @@ function logEnter() {
                  showError("#emailErrorsDisplayerLogin", "redColor", "The username or password is wrong!", "#emailErrorsSpanLogin");
                }
           }
-          else {window.open ('/player.html','_self',false);}
+          else {window.open ('/player.php','_self',false);}
       }
     });
                   }//logEnter

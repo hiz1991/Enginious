@@ -6,7 +6,7 @@ if (!$_SESSION["user"]) {
 }
 else
 {
-    header('Location: player.html');
+    header('Location: player.php');
     die;
 }
 ?>

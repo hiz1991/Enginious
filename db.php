@@ -12,13 +12,29 @@ function updateDB($tableName='music', $toUpdateArray, $toUpdateValuesArray, $use
    { 
    	$string=$string.' , '."`".$toUpdateArray[$y]."` = '".$toUpdateValuesArray[$y]."'";
    }
-   error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
+   // error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    $result = mysql_query("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    return $result;
 }
-function selectAllDB($tableName='music', $user)
+function selectAllDB($tableName='music', $user, $order)
 {
-   return mysql_query("SELECT * FROM `".$tableName."` WHERE `username`=".$user.";");
+   $return="default";
+   if($order)//ORDER BY `music`.`id` DESC;
+   {
+      // error_log("order");
+      // error_log("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";");
+      // return mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";");
+      $return= mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";")
+      or die('error At selectAllDB'.mysql_error());
+
+   }
+   else
+   {
+
+      $return =($user)?mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."';"):mysql_query("SELECT * FROM `".$tableName."`;")
+      or die('error At selectAllDB'.mysql_error());
+   }   
+   return $return;
 }
 function recordInDB($tableName='music', $toRecordArray, $toRecordValuesArray, $user)
 {
