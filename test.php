@@ -191,25 +191,30 @@
 // $outputEnd1= str_replace('Title                           : ', '', $output[24]);
 // error_log($outputEnd);
 // error_log($outputEnd1);
-include "getJson.php";
+// include "getJson.php";
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 switch ($lang){
     case "fr":
-        echo "PAGE FR";
+        // echo "PAGE FR";
         // include("index_fr.php");//include check session FR
         break;
     case "it":
-        echo "PAGE IT";
+        // echo "PAGE IT";
         // include("index_it.php");
         break;
     case "en":
-        echo "PAGE EN";
+        // echo "PAGE EN";
         // include("index_en.php");
         break;        
     default:
-        echo "PAGE EN - Setting Default";
+        // echo "PAGE EN - Setting Default";
         // include("index_en.php");//include EN in all other cases of different lang detection
         break;
 }
+include 'db.php';
+include 'transl.php';
+$bs=getTransBase();
+$json = getTransJson($bs);
+echo $json;
 
 ?>

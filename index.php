@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!$_SESSION["user"]) {
-    header('Location: loginSignUp/index.html');
+    header('Location: loginSignUp/index.php');
     die;
 }
 else

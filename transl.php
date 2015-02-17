@@ -42,6 +42,15 @@ function trans($text, $received)
    }
 	return $text;
 }
+function getTransJson($bs)
+{
+	mysql_data_seek($bs, 0);
+ $rs = array();
+ while($rs[] = mysql_fetch_object($bs)) {
+    // you don´t really need to do anything here.
+  }
+     return json_encode($rs);
+}
 
 
 

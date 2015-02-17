@@ -1,3 +1,8 @@
+<?php include '../db.php';
+include '../transl.php';
+$bs=getTransBase();
+$clientLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+error_log($clientLang);?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,18 +17,25 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="flip.css">
     <link rel="stylesheet" href="../lang/languageswitcher.css">
+    <script type="text/javascript">
+     $( document ).ready(function() {  
+      var translObj = JSON.parse('<?php  $json = getTransJson($bs);
+echo $json;?>') ;  
+      console.log(translObj);
+     });
+    </script>
   </head>
   <body>
-   <div id="container" style="position:absolute; width: auto; right:30px; top:30px;">
+   <div id="langContainer" style="position:absolute; width: auto; right:30px; top:30px;">
       <!-- begin language switcher -->
         <div id="polyglotLanguageSwitcher">
         <form action="#">
           <select id="polyglot-language-options">
-            <option id="en" value="en" selected>English</option>
-            <option id="fr" value="fr">Fran&ccedil;ais</option>
-            <option id="de" value="de">Deutsch</option>
-            <option id="ru" value="ru">Русский</option>
-            <option id="zh-TW" value="zh-TW">中國傳統</option>
+            <option <?php if($clientLang=="ru") echo 'selected="selected"'; ?> id="ru" value="ru">Русский</option>
+            <option <?php if($clientLang=="en") echo 'selected="selected"'; ?> id="en" value="en">English</option>
+            <option <?php if($clientLang=="fr") echo 'selected="selected"'; ?> id="fr" value="fr">Fran&ccedil;ais</option>
+            <option <?php if($clientLang=="de") echo 'selected="selected"'; ?> id="de" value="de">Deutsch</option>
+            <option <?php if($clientLang=="zh-TW") echo 'selected="selected"'; ?> id="zh-TW" value="zh-TW">中國傳統</option>
           </select>
         </form>
       </div>
