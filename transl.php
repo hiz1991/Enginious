@@ -2,6 +2,41 @@
 session_start();
 $user=$_SESSION['user'];
 // include 'db.php';
+function my_ucfirst($string, $e ='utf-8') 
+{ 
+    if (function_exists('mb_strtoupper') && function_exists('mb_substr') && !empty($string)) 
+    { 
+        // $string = mb_strtolower($string, $e); 
+        $upper = mb_strtoupper($string, $e); 
+        preg_match('#(.)#us', $upper, $matches); 
+        $string = $matches[1] . mb_substr($string, 1, mb_strlen($string, $e), $e); 
+    } 
+    else
+    { 
+        $string = ucfirst($string); 
+    } 
+    return $string; 
+} 
+function my_lcfirst($string, $e ='utf-8') 
+{ 
+    if (function_exists('mb_strtolower') && function_exists('mb_substr') && !empty($string)) 
+    { 
+        // $string = mb_strtolower($string, $e); 
+        $lower = mb_strtolower($string, $e); 
+        preg_match('#(.)#us', $lower, $matches); 
+        $string = $matches[1] . mb_substr($string, 1, mb_strlen($string, $e), $e);  
+    } 
+    else 
+    { 
+        $string = ucfirst($string); 
+    } 
+    return $string; 
+} 
+function starts_with_upper($str) 
+{
+    $chr = mb_substr ($str, 0, 1, "UTF-8");
+    return mb_strtolower($chr, "UTF-8") != $chr;
+}
 function getTransBase()
 {
 	 $data = selectAllDB("langs");
@@ -9,36 +44,22 @@ function getTransBase()
 }
 function trans($text, $received)
 {
+   $uppercase = starts_with_upper($text);
    mysql_data_seek($received, 0);
    $base=$received;
    $lang = $_SESSION['lang'];
    if(mysql_num_rows($base))
    {
-	    // echo '{"testData":{';
-
-	    // $first = true;
-	    // $row=mysql_fetch_assoc($result);
-   	    // error_log($text);
 	    while($row=mysql_fetch_array($base))
 	    {
-	    	error_log($row['en']); 
-	    	error_log($text);
-	    	// error_log($text);
-            // for ($i=0; $i <count($row['en']) ; $i++) 
-            // { 
 	            if($row['en']==$text)
 	            {
-	            		    	// error_log("$");
-		    	// error_log($text);
 	            	if(!$row[$lang][$i]==null)
 	            	{
-	            		// error_log($_SESSION['lang']);
-	            		return $row[$lang];
+	            		return ($uppercase==1)?my_ucfirst($row[$lang]):my_lcfirst($row[$lang]);
 	            	}
 	            }
-	        // }
 	    }
-	    // error_log("-----------");
    }
 	return $text;
 }
@@ -51,19 +72,5 @@ function getTransJson($bs)
   }
      return json_encode($rs);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

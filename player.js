@@ -1,4 +1,4 @@
-$(document).ready(function() 
+$(document).ready(function()//TODO:file upload front end testing 
 {
 getUser();
 initKplayer();
@@ -275,7 +275,6 @@ function getUser()
 //get the user
       $.ajax({
 		 url : "/getJson.php",
-		 headers: { "Accept-Encoding" : "gzip" },
 		 type: "GET",
 		 success: function(data)
 		 {

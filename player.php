@@ -1,5 +1,11 @@
-<?php include 'db.php';
+<?php 
+include 'db.php';
 include 'transl.php';
+if(!$_SESSION['lang']||!$_SESSION['lang']=="")
+{
+  $_SESSION['lang'] = $_GET['lang'];
+}
+// error_log($_GET['lang']);
 $bs=getTransBase();?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +31,6 @@ $bs=getTransBase();?>
         <script src="hui/dropdown.js"></script> 
         <script src="cloudbeats.js"></script>
         <script src="facebook.js"></script>
-        <script type="text/javascript" src="blur.js"></script>
         <script type="text/javascript" src="progressBar/progressbar.js"></script>
         <!-- // <script type="text/javascript" src="http://blurjs.com/blur.js"></script> -->
         <script>
@@ -40,11 +45,6 @@ $bs=getTransBase();?>
          setTimeout(function(){ updateArtwork();
                                // $("#artworkBig").show();
                                //changeMode("artwork");
-                                           // $("#container").blurjs({
-                                           //                        source: 'body',
-                                           //                        radius: 10,
-                                           //                        overlay: 'rgba(255,255,255,0.5)'
-                                           //                      });
 
                       }
         , 1000);
@@ -197,7 +197,7 @@ $bs=getTransBase();?>
           <div id="stats">
               <div id='statsPane'>
              </div>  
-             <div class="button" style="position:absolute; bottom:21%;right:25%;color:white; background:#4da6ff;z-index:1001" onclick='$("#stats").fadeOut();'>Ok</div>                 
+             <div class="button" style="position:absolute; bottom:11%;right:25%;color:white; background:#4da6ff;z-index:1001" onclick='$("#stats").fadeOut();'>Ok</div>                 
           </div>
           <div id="bgChanger">
              <div id='bgChangerPane'>

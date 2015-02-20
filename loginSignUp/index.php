@@ -37,13 +37,14 @@ error_log($clientLang);?>
         return text;
       }
       function checkifUpperCase(text)
-      {console.log(text, text.toUpperCase());
+      {
+        // console.log(text, text.toUpperCase());
           if (text.charAt(0) == text.charAt(0).toUpperCase()) {
-            console.log("Upper");
+            // console.log("Upper");
            return true;
           }
           if (text.charAt(0) == text.charAt(0).toLowerCase()){
-             console.log("Lower");
+             // console.log("Lower");
            return false;
           }
       }
@@ -78,7 +79,7 @@ error_log($clientLang);?>
           { 
               $(arr[index]).text(translate($(arr[index]).text(), translObj, language));
           });
-          $('form').find("input[type=textarea], input[type=password], textarea").each(function(ev)
+          $('#document').find("input[type=textarea], input[type=password], textarea").each(function(ev)
             {
                 if(!$(this).val()) { 
                $(this).attr("placeholder", translate( $(this).attr("placeholder")));

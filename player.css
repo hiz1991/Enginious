@@ -363,7 +363,8 @@ body {
   box-shadow: 1px 1px 100px 10px rgba(50,50,50,0.74);
   box-shadow: 1px 1px 100px 10px rgba(50,50,50,0.74);
 }
-#uploadFrameDisplayerPane {
+#uploadFrameDisplayerPane,
+#statsPane {
   height: 80%;
   top: 10%;
 }
@@ -516,7 +517,7 @@ body {
   height: 7px;
 }
 ::-webkit-scrollbar:hover {
-  width: 12px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
   border-radius: 10px;
@@ -527,7 +528,7 @@ body {
   background-color: rgba(131,131,131,0.3);
 }
 ::-webkit-scrollbar-thumb:hover {
-  width: 12px;
+  width: 7px;
 }
 @font-face {
   font-family: myFirstFont;

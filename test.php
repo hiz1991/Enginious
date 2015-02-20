@@ -213,8 +213,12 @@ switch ($lang){
 }
 include 'db.php';
 include 'transl.php';
-$bs=getTransBase();
-$json = getTransJson($bs);
-echo $json;
+// $bs=getTransBase();
+// $json = getTransJson($bs);
+// echo $json;
+// for ($i=1800; $i <2010 ; $i++) { 
+  // echo floor($i/10)*10;
+// }
+
 
 ?>

@@ -5,15 +5,19 @@ var animationSpeed=300;
 var emailError=true;
 var passwordError=true;
 var confirmPasswordError=true;
-$( document ).ready(function() {     
+$( document ).ready(function() 
+{     
     //autologin
         $.ajax({
-        url : "../autolog.php",
-        success: function(check) {
-        if (check=="true")
-          window.open ('../player.php','_self',false);
+        url : "../getJson.php",
+        success: function(check) 
+        {
+          var resp = JSON.parse(check);
+          // console.log(resp.User[0].user);
+          if (resp.User[0].user)
+            window.open ('../player.php?lang='+language,'_self',false);
         }
-             });
+});
     //autologin
  //  setTimeout(function(){flip($("#form"),$("#formLogin")) },2000);
     $("#orSignUp, #orSignIn").click(function(){ flip($("#form"),$("#formLogin")); }); 
@@ -170,7 +174,7 @@ function showError(received, classReceived, message, span)
 {
     $(received).fadeTo(animationSpeed,1);
     (classReceived=="redColor")?$(received+" span").addClass(classReceived):$(received+" span").removeClass("redColor");//#emailErrorsSpan
-    $(span).text(message);
+    $(span).text(translate(message));
 }
 function closeDisplayer(received)
 {
@@ -248,7 +252,7 @@ function logEnter() {
                  showError("#emailErrorsDisplayerLogin", "redColor", "The username or password is wrong!", "#emailErrorsSpanLogin");
                }
           }
-          else {window.open ('/player.php','_self',false);}
+          else {window.open ('/player.php?lang='+language,'_self',false);}
       }
     });
                   }//logEnter
