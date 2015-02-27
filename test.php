@@ -219,6 +219,14 @@ include 'transl.php';
 // for ($i=1800; $i <2010 ; $i++) { 
   // echo floor($i/10)*10;
 // }
+$bs = selectAllDB('music', 'store');
+
+ mysql_data_seek($bs, 0);
+ $rs = array();
+ while($rs[] = mysql_fetch_object($bs)) {
+    // you don´t really need to do anything here.
+  }
+     echo json_encode($rs);
 
 
 ?>

@@ -520,14 +520,21 @@ function initiateDropDownEvents()
                         found=false;
                         for (var i=0; i<playlistList[indexPl-1].length;i++) {
                           console.log(fileData.id[index]+"     "+playlistList[indexPl-1][i]);
-                          if(fileData.id[index]==playlistList[indexPl-1][i]){var found=true;break;}
+                          if(fileData.id[index]==playlistList[indexPl-1][i])
+                            {
+                              var found=true;break;
+                            }
                         };
-                        if(!found){removeFromFileData(index); eachRemove();return false;}
-                        else{$("#song"+index).fadeIn(100);}
+                        if(!found){
+                          removeFromFileData(index); eachRemove();return false;
+                        }
+                        else{
+                          $("#song"+index).fadeIn(100);
+                        }
                      });
                   }
                 // timeEnd = (new Date()).getTime();
-                lengthOfJsonObject=fileData.url.length; //pauseButton();
+                lengthOfJsonObject=(fileData.url.length)?fileData.url.length:0; //pauseButton();
                 // console.log(timeEnd-timeStart);
                 $(".playlist").empty();
                 console.log("Here fileData");console.log(fileData);
@@ -768,6 +775,10 @@ function initiateDropDownEvents()
     action=="forward"?currentFile.currentTime+=time:currentFile.currentTime-=time;
     $(controls.played).css({ width: (currentFile.currentTime*100)/currentFile.duration + "%" });
   }
+  function getCurrentUrl()
+  {
+    return fileData.url[fileNumber];
+  }
   function metaDataLoaded() 
   {
     if (controls.timeDuration !=null || controls.timeDuration !=undefined) 
@@ -1004,7 +1015,7 @@ function initiateDropDownEvents()
     switch(module)
     {
       case "player":
-      pauseFacebook();
+      // pauseFacebook();
       // youtubePlayer.pauseVideo();
       break;
       case "facebook":

@@ -1,1 +1,3 @@
 //TODO:Check Nohchi sound gives 99999999
+//TODO:Disable analysis if not signed in
+//TODO: Add entry in libraryAnalysis table for new user

@@ -5,6 +5,11 @@ include 'db.php';
 include 'transl.php';
   // $firstTime=microtime();
 $bs=getTransBase();
+if(!$user)
+{
+  echo '{"Response":{"error":"Not logged in"}}';
+  exit(0);
+}
 //analyse volume
 $musicData = selectAllDB("music", $user);
 // error_log(getAccuracy($musicData, 'volume', 'volumeAccuracy', 300000)[1]);
@@ -16,8 +21,11 @@ for ($i=0; $i < count($parametres['name']); $i++) {
   $tempArrayForPushing=getAccuracy($musicData, $parametres['name'][$i], $parametres['name'][$i].'Accuracy', $parametres['maxValues'][$i]);
   array_push($toUpdateValues, $tempArrayForPushing[0], $tempArrayForPushing[1]);
 }
-$artistPriority=getArtistPriority($musicData, "artist", ["Unknown Artist"]);
+//clean existing records in priority table
 deleteAllDB('priority', $user);
+//clean
+
+$artistPriority=getArtistPriority($musicData, "artist", ["Unknown Artist"]);
 insertManyDB('priority', $artistPriority, 'artist', $user);
 
 $genrePriority=getArtistPriority($musicData, "genre", ["Other", "None", ""]);
@@ -27,74 +35,102 @@ $yearsInDecades = getYearsInDecades($musicData, [0]);
 insertManyDB('priority', $yearsInDecades, 'year', $user);
 //get and record avergaed distr levels
 $averageDistr = convertDistArrayToString(getAverageDistrib($musicData, 50, 2));
-array_push($toUpdate, "distribution");
-array_push($toUpdateValues, $averageDistr);
+//calculate stand deviation for genreAccuracy
+// $genreAccuracy = calcDeviationInPercent(null, $genrePriority, true);
+//calculate number fo songs to distinct values ratio
+$numberOfsongs = mysql_num_rows($musicData);
+// echo $genreAccuracy."<br>".$yearAccuracy."<br>".$artistAccuracy;
+
+//add values for record in libraryNalysis table
+array_push($toUpdate, "distribution");//, "genre");
+array_push($toUpdateValues, $averageDistr);//, 
 //get and record avergaed distr levels
+array_push($toUpdate, "genreAccuracy");//, "genre");
+array_push($toUpdateValues, ratioInPercent(count($genrePriority)/$numberOfsongs) );
+array_push($toUpdate, "yearAccuracy");//, "genre");
+array_push($toUpdateValues, ratioInPercent(count($yearsInDecades)/$numberOfsongs) );
+array_push($toUpdate, "artistAccuracy");//, "genre");
+array_push($toUpdateValues, ratioInPercent(count($artistPriority)/$numberOfsongs) );
+//end add ratios
+//add the highest values in priority
+array_push($toUpdate, "genre");
+array_push($toUpdateValues, array_keys($genrePriority)[0]);
+
+array_push($toUpdate, "year");
+array_push($toUpdateValues, array_keys($yearsInDecades)[0]);
+
+array_push($toUpdate, "artist");
+array_push($toUpdateValues, array_keys($artistPriority)[0]);
+//
+//write to DB
 updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user);
+//produce Json
+
+$json = '{ "Response":';//.trans("volume", $bs).'":'.cn($row['volume']).',
+$response = array();
+for ($i=0; $i < count($toUpdate); $i++) { 
+   $response[trans($toUpdate[$i], $bs)] = $toUpdateValues[$i];
+  // $json.='"'.trans($toUpdate[$i], $bs).'":'.cn($toUpdateValues[$i]).',';
+}
+$response['artistPriority'] = $artistPriority;
+$response['yearPriority']=$yearsInDecades;
+$response['genrePriority'] = $genrePriority;
+
 
 $result = selectAllDB('libraryAnalysis', $user);
-if(mysql_num_rows($result))
-{
-    $first = true;
-    // $row=mysql_fetch_assoc($result);
-    while($row=mysql_fetch_array($result))
-    {
-      // echo '{
-      //       	"Response":
-      //       	{
-      //       			"'.trans("volume", $bs).'":'.cn($row['volume']).',
-      //       			"'.trans("tempo", $bs).'":'.cn($row['tempo']).',
-      //       			"'.trans("genre", $bs).'": '.cn($row['genre']).',
-      //       			"'.trans("year", $bs).'": '.cn($row['year']).',
-      //       			"'.trans("pitch", $bs).'":'.cn($row['pitch']).',
-      //       			"'.trans("rhythm", $bs).'": '.cn($row['rhythm']).',
-      //       			"'.trans("popularity", $bs).'": '.cn($row['popularity']).',
-      //       			"'.trans("distribution", $bs).'": '.cn($row['distribution']).',
-      //       			"'.trans("volume importance", $bs).'": '.cn($row['volumeAccuracy']).',
-      //       			"'.trans("tempo importance", $bs).'": '.cn($row['tempoAccuracy']).',
-      //       			"'.trans("genre importance", $bs).'": '.cn($row['genreAccuracy']).',
-      //       			"'.trans("year importance", $bs).'": '.cn($row['yearAccuracy']).',
-      //       			"'.trans("pitch importance", $bs).'": '.cn($row['pitchAccuracy']).',
-      //       			"'.trans("rhythm importance", $bs).'": '.cn($row['rhythmAccuracy']).',
-      //       			"'.trans("popularity importance", $bs).'": '.cn($row['popularityAccuracy']).',
-      //       			"'.trans("distribution importance", $bs).'": '.cn($row['distributionAccuracy']).'
-      //       	}
-      //       }';       
+if(mysql_num_rows($result)){
+  $first = true;
+  while($row=mysql_fetch_array($result)){
+    $ks = array_keys($row);
+    for ($i=0; $i <count($row) ; $i++) { 
+      if((strpos($ks[$i],'Weighting') !== false)){
+         $response[$ks[$i]] = $row[$ks[$i]];
+      }
     }
-} 
-else 
-{
-    echo '[]';
+  }
 }
+echo $json.json_encode($response)."}";
+file_put_contents($user.'/library.txt',json_encode($response));
 
 // error_log(microtime() - $firstTime);
+function calcDeviationInPercent($meanValue, $arrayReceived, $assoc)
+{
+  $localMean;
+  $localSum;
+  $nonAssocArray = [];
+  $keys=array_keys($arrayReceived);
+  if($meanValue==null)
+  {
+    if($assoc){
+       for ($i=0; $i <count($arrayReceived) ; $i++) { 
+       $localSum+=$arrayReceived[$keys[$i]];
+       array_push($nonAssocArray, $arrayReceived[$keys[$i]]);
+       }
+       //replace assoc array with non assoc array
+       // var_dump($nonAssocArray);
+       $arrayReceived = $nonAssocArray;
+    }
+    $meanValue = $localSum/count($arrayReceived);
+    // echo $meanValue;
+  }
+  return  100-calculatePercentTo(calcDeviation($meanValue,$arrayReceived), 25);
+}
 function calculatePercentTo($givenValue, $maxValue)
 {
-  return round($givenValue*100/$maxValue);
+  return $givenValue*100/$maxValue;
 }
 function calcDeviation($meanReceived, $arrayReceived)
 {
   $sumDistance=0;
   for ($x=0; $x <count($arrayReceived) ; $x++)
   { 
-     $sumDistance=$sumDistance+abs($arrayReceived[$x]-$meanReceived); 
-  }
-  return round($sumDistance/count($arrayReceived));
+   $sumDistance=$sumDistance+abs($arrayReceived[$x]-$meanReceived); 
+ }
+ return $sumDistance/count($arrayReceived);
 }
-function cn($value)//check if number
+function ratioInPercent($value)//check if number
 {
-   if ($value == NULL) 
-   {
-    return "null";
-   }
-   elseif ($value ==0)
-   {
-    return '0';
-   }
-   else
-   {
-    return $value;
-   }
+  return 100 - $value*100;
 }
 function convertDistArrayToString($averageDistr)
 {
@@ -114,7 +150,7 @@ function convertDistArrayToString($averageDistr)
 function convertToDecades($number)
 {
    // echo(floor($number/10)*10);
-   return (floor($number/10)*10)."";
+ return (floor($number/10)*10)."";
 }
 function getMeanForArrayRounded($array)
 {
@@ -131,22 +167,22 @@ function getAccuracy($musicData, $criterion, $critAccuracy, $topValue)
   {
     // var_dump($row=mysql_fetch_array($musicData));
     $i=0;
-    $sumVolume=0;
-    $tempArrayVolume=[];
-      while($row=mysql_fetch_array($musicData))
-      {
-          $sumVolume=$sumVolume+calculatePercentTo($row[$criterion], $topValue);
-          $i++;
-          array_push($tempArrayVolume, calculatePercentTo($row[$criterion], $topValue));
+    $sum=0;
+    $tempArray=[];
+    while($row=mysql_fetch_array($musicData))
+    {
+      $sum=$sum+calculatePercentTo($row[$criterion], $topValue);
+      $i++;
+      array_push($tempArray, calculatePercentTo($row[$criterion], $topValue));
         // echo calculatePercentTo($row['volume'], 30000);
-      }
-      $meanVolume =round($sumVolume/$i);
-      // var_dump(calcDeviation($meanVolume,$tempArrayVolume));
-      $finalAccuracy=100-calculatePercentTo(calcDeviation($meanVolume,$tempArrayVolume), 25);
+    }
+    $meanValue =$sum/$i;
+      // var_dump(calcDeviation($meanValue,$tempArray));
+    $finalAccuracy=calcDeviationInPercent($meanValue, $tempArray);//100-calculatePercentTo(calcDeviation($meanValue,$tempArray), 25);
       // var_dump(updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user));
       // updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user);
-      return [$meanVolume, $finalAccuracy];
-  }
+    return [$meanValue, $finalAccuracy];
+  }   
 }
 function getArtistPriority($musicData, $criterion, $ignoreArray)
 {
@@ -156,16 +192,16 @@ function getArtistPriority($musicData, $criterion, $ignoreArray)
   $result=[];
   if(mysql_num_rows($musicData))
   {
-      while($row=mysql_fetch_array($musicData))
+    while($row=mysql_fetch_array($musicData))
+    {
+      if(!in_array($row[$criterion], $ignoreArray))
       {
-          if(!in_array($row[$criterion], $ignoreArray))
-          {
-            array_push($resultPriority, $row[$criterion]);
-          } 
-      }
+        array_push($resultPriority, $row[$criterion]);
+      } 
+    }
       // $result = array_count_values(explode(',', $resultPriority));
-      $result = array_count_values($resultPriority);
-      arsort($result);
+    $result = array_count_values($resultPriority);
+    arsort($result);
   }
   return $result;
 }
@@ -176,16 +212,16 @@ function getYearsInDecades($musicData, $ignoreArray)
   $result=[];
   if(mysql_num_rows($musicData))
   {
-      while($row=mysql_fetch_array($musicData))
+    while($row=mysql_fetch_array($musicData))
+    {
+      if(!in_array($row['year'], $ignoreArray))
       {
-          if(!in_array($row['year'], $ignoreArray))
-          {
-            array_push($years, convertToDecades($row['year']));
-          } 
-      }
+        array_push($years, convertToDecades($row['year']));
+      } 
+    }
       // $result = array_count_values(explode(',', $resultPriority));
-      $result = array_count_values($years);
-      arsort($result);
+    $result = array_count_values($years);
+    arsort($result);
   }
   return $result;
 }
@@ -199,15 +235,15 @@ function getAverageDistrib($musicData, $length=50, $step=2)
   mysql_data_seek($musicData, 0);
   if(mysql_num_rows($musicData))
   {
-      while($row=mysql_fetch_array($musicData))
-      {
-            for ($i=0; $i <($length*$step); $i+=$step) { 
-              array_push($levels[$i/$step], substr($row['wave'], $i, 2));
-            }
+    while($row=mysql_fetch_array($musicData))
+    {
+      for ($i=0; $i <($length*$step); $i+=$step) { 
+        array_push($levels[$i/$step], substr($row['wave'], $i, 2));
       }
-      for ($i=0; $i <$length ; $i++) { 
-        $result[$i]=getMeanForArrayRounded($levels[$i]);
-      }
+    }
+    for ($i=0; $i <$length ; $i++) { 
+      $result[$i]=getMeanForArrayRounded($levels[$i]);
+    }
   }
   // var_dump($levels[49]);
   return $result;//['mean', 'mean', '...'](50)

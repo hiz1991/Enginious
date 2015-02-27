@@ -178,10 +178,10 @@ body
   margin-bottom 5px
 
 #volume
-  margin-left 3%
+  margin-left 5%
   margin-right 2%
   position relative
-  width 10%
+  width 12%
   border-radius 10px
   border-radius 10px
   //border 1px solid #969696
@@ -200,7 +200,7 @@ body
   border-radius 4px
   border-radius 4px
 
-#fader, #stats, #bgChanger, #uploadFrameDisplayer
+#fader, #stats, #bgChanger, #uploadFrameDisplayer, #sharePopUp
   display none
   top 0px
   left 0px
@@ -210,6 +210,12 @@ body
   height 100%
   background rgba(0,0,0, 0.7)
   z-index 1000000000
+  
+#sharePopUp
+  // display block
+  z-index -5
+  position absolute
+  opacity 0
 
 #fader
   p
@@ -246,7 +252,7 @@ body
   vertical-align super
   color rgba(128, 128, 128, 0.59)
 
-#statsPane, #bgChangerPane, #uploadFrameDisplayerPane
+#statsPane, #bgChangerPane, #uploadFrameDisplayerPane, #sharePopUpPane
   font-family myFirstFont
   width 50%
   height 60%
@@ -265,16 +271,38 @@ body
   box-shadow 1px 1px 100px 10px rgba(50, 50, 50, 0.74)
   box-shadow 1px 1px 100px 10px rgba(50, 50, 50, 0.74)
 
-#uploadFrameDisplayerPane, #statsPane
+#uploadFrameDisplayerPane, #statsPane, #bgChangerPane
   height 80%
   top 10%
 
+#sharePopUpPane
+  width 1000px
+  height 80%
+  top 10%
+  left initial
+  right initial
+  margin auto
+  background #EDEDED
+  
 #statsPaneLabel
   margin-top 5% !important
   margin-bottom 5% !important
   font-size 20pt
   text-align center
 
+#settingsPaneLabel
+  font-size 20pt
+  text-align center
+  
+.settingsHeadings
+  text-align left
+  font-size 16pt
+  margin-left 15%
+  
+#polyglotLanguageSwitcher
+  margin-left 15%
+  height 10px
+  
 #bgsThumbsContainer
   display inline-block
   width 65.5%
@@ -298,11 +326,11 @@ body
 
 #urlInput
   margin 25px
-  margin-left 18%
-  margin-right 18%
+  margin-left 15%
+  margin-right 15%
   font-size 14pt
   height 40px
-  width 61%
+  width 66%
   z-index 1001
   border-radius 10px
   outline none
@@ -346,8 +374,15 @@ body
     width 30px !important
     height 30px !important
     //  background-color #666666
-
+      
 .shuffle
+  width 4%
+  img
+    width 30px !important
+    height 30px !important
+    //  background-color #666666
+
+.share
   margin-left 0px
   margin-right 0px
   width 4%

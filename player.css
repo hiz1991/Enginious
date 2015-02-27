@@ -274,10 +274,10 @@ body {
   margin-bottom: 5px;
 }
 #volume {
-  margin-left: 3%;
+  margin-left: 5%;
   margin-right: 2%;
   position: relative;
-  width: 10%;
+  width: 12%;
   border-radius: 10px;
   border-radius: 10px;
   background-color: rgba(155,155,155,0.2);
@@ -296,7 +296,8 @@ body {
 #fader,
 #stats,
 #bgChanger,
-#uploadFrameDisplayer {
+#uploadFrameDisplayer,
+#sharePopUp {
   display: none;
   top: 0px;
   left: 0px;
@@ -306,6 +307,11 @@ body {
   height: 100%;
   background: rgba(0,0,0,0.7);
   z-index: 1000000000;
+}
+#sharePopUp {
+  z-index: -5;
+  position: absolute;
+  opacity: 0;
 }
 #fader p {
   position: absolute;
@@ -344,7 +350,8 @@ body {
 }
 #statsPane,
 #bgChangerPane,
-#uploadFrameDisplayerPane {
+#uploadFrameDisplayerPane,
+#sharePopUpPane {
   font-family: myFirstFont;
   width: 50%;
   height: 60%;
@@ -364,15 +371,38 @@ body {
   box-shadow: 1px 1px 100px 10px rgba(50,50,50,0.74);
 }
 #uploadFrameDisplayerPane,
-#statsPane {
+#statsPane,
+#bgChangerPane {
   height: 80%;
   top: 10%;
+}
+#sharePopUpPane {
+  width: 1000px;
+  height: 80%;
+  top: 10%;
+  left: initial;
+  right: initial;
+  margin: auto;
+  background: #ededed;
 }
 #statsPaneLabel {
   margin-top: 5% !important;
   margin-bottom: 5% !important;
   font-size: 20pt;
   text-align: center;
+}
+#settingsPaneLabel {
+  font-size: 20pt;
+  text-align: center;
+}
+.settingsHeadings {
+  text-align: left;
+  font-size: 16pt;
+  margin-left: 15%;
+}
+#polyglotLanguageSwitcher {
+  margin-left: 15%;
+  height: 10px;
 }
 #bgsThumbsContainer {
   display: inline-block;
@@ -397,11 +427,11 @@ body {
 }
 #urlInput {
   margin: 25px;
-  margin-left: 18%;
-  margin-right: 18%;
+  margin-left: 15%;
+  margin-right: 15%;
   font-size: 14pt;
   height: 40px;
-  width: 61%;
+  width: 66%;
   z-index: 1001;
   border-radius: 10px;
   outline: none;
@@ -444,11 +474,18 @@ body {
   height: 30px !important;
 }
 .shuffle {
+  width: 4%;
+}
+.shuffle img {
+  width: 30px !important;
+  height: 30px !important;
+}
+.share {
   margin-left: 0px;
   margin-right: 0px;
   width: 4%;
 }
-.shuffle img {
+.share img {
   width: 30px !important;
   height: 30px !important;
 }

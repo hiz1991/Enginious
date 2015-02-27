@@ -1,5 +1,6 @@
 var total;
 var number=0;
+var drawerLaunched = false;
 function counter()
 { 
   number++;
@@ -260,4 +261,25 @@ function populateSvg(svgId, percent)
 
 	// in given context is equivalent to
 	rect.animate({width:$("#"+svgId).width()*(percent/100), height:30}, 2000, mina.easein);
+}
+
+function passDataToFlash()
+{
+	// console.log(convertToJsonUrl(getCurrentUrl()));
+	pauseButton();
+	var songUrl = getCurrentUrl();
+	var jsonUrl = convertToJsonUrl(songUrl);
+	setTimeout(function(){ 
+      window['drawer'].callFlash(jsonUrl, songUrl, translate("Share"));    }, 400);//(!drawerLaunched)?1000:
+	drawerLaunched=true;
+}
+function convertToJsonUrl(str)
+{
+str = str.replace("/", '/waveforms/');
+str = str.replace(".mp3",".json");
+return str;
+}
+function tellJS(arg, arg2)
+{
+  console.log(arg, arg2);
 }

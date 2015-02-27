@@ -21,9 +21,6 @@ function selectAllDB($tableName='music', $user, $order)
    $return="default";
    if($order)//ORDER BY `music`.`id` DESC;
    {
-      // error_log("order");
-      // error_log("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";");
-      // return mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";");
       $return= mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."' ORDER BY ".$order[0]." ".$order[1].";")
       or die('error At selectAllDB'.mysql_error());
 
@@ -34,6 +31,14 @@ function selectAllDB($tableName='music', $user, $order)
       $return =($user)?mysql_query("SELECT * FROM `".$tableName."` WHERE `username`='".$user."';"):mysql_query("SELECT * FROM `".$tableName."`;")
       or die('error At selectAllDB'.mysql_error());
    }   
+   return $return;
+}
+function selectAllWithSpecificRowDB($tableName='music', $rowAndValueArray)
+{
+   $return="default";
+
+   $return= mysql_query("SELECT * FROM `".$tableName."` WHERE `".$rowAndValueArray[0]."`='".$rowAndValueArray[1]."';")
+   or die('error At selectAllDB'.mysql_error());
    return $return;
 }
 function recordInDB($tableName='music', $toRecordArray, $toRecordValuesArray, $user)

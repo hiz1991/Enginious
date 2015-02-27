@@ -1,6 +1,6 @@
 <?php include '../db.php';
 include '../transl.php';
-$bs=getTransBase();
+$bs=getTransBase("index.php");
 $clientLang = "en";
 if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2))
   {
@@ -16,79 +16,18 @@ error_log($clientLang);?>
     <script src="index.js"></script>
     <script src="blur.js"></script>
     <script src="../lang/languageswitcher.js"></script>
+    <script src="../lang/language.js"></script>
     <link rel="stylesheet" href="clear.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="flip.css">
     <link rel="stylesheet" href="../lang/languageswitcher.css">
     <script type="text/javascript">
-      var translObj;
-      var language = "<?php echo $clientLang;?>";
-      String.prototype.replaceAt=function(index, character) {
-        return this.substr(0, index) + character + this.substr(index+character.length);
-      }
-      function toUpCase(text)
-      {
-        text = text.replaceAt(0, text.charAt(0).toUpperCase());
-        return text;
-      }
-      function toLowCase(text)
-      {
-        text = text.replaceAt(0, text.charAt(0).toLowerCase());
-        return text;
-      }
-      function checkifUpperCase(text)
-      {
-        // console.log(text, text.toUpperCase());
-          if (text.charAt(0) == text.charAt(0).toUpperCase()) {
-            // console.log("Upper");
-           return true;
-          }
-          if (text.charAt(0) == text.charAt(0).toLowerCase()){
-             // console.log("Lower");
-           return false;
-          }
-      }
-      function translate(text, obj, lang)
-      {
-        if(!obj) obj=translObj;
-        if(!lang) lang = language;
-        // if(!text) text ="deafult";
-        var upperCase = checkifUpperCase(text);
-        // console.log(upperCase);
-        var returned = text;
-        $.each(obj, function(i, v) 
-        {
-          $.each(obj[i], function (index, value) 
-          {
-            // console.log(text);
-            // console.log(obj[i][index], text);
-            if(obj[i][index].toLowerCase()==text.toLowerCase())
-            {
-              returned = (upperCase)?toUpCase(obj[i][lang]):toLowCase(obj[i][lang]);
-              // console.log(obj[i][lang]);
-            }
-            // console.log(index, value);
-          });
-        });
-        return returned;
-      }
-      function performTranslation()
-      {
-          var arr = $(".translatable");
-          $.each(arr, function (index, value) 
-          { 
-              $(arr[index]).text(translate($(arr[index]).text(), translObj, language));
-          });
-          $('#document').find("input[type=textarea], input[type=password], textarea").each(function(ev)
-            {
-                if(!$(this).val()) { 
-               $(this).attr("placeholder", translate( $(this).attr("placeholder")));
-            }
-            });
-      }
+    var translObj;
+    var language = "<?php echo $clientLang;?>";
      $( document ).ready(function() 
      {  
-      translObj = JSON.parse('<?php  $json = getTransJson($bs); echo $json;?>') ; 
+      translObj = JSON.parse('<?php  $json = getTransJson($bs); echo $json;?>') ;
+      console.log(translObj); 
       performTranslation();
       $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
                 effect: 'fade',

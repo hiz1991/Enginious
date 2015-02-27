@@ -37,10 +37,18 @@ function starts_with_upper($str)
     $chr = mb_substr ($str, 0, 1, "UTF-8");
     return mb_strtolower($chr, "UTF-8") != $chr;
 }
-function getTransBase()
+function getTransBase($page)
 {
-	 $data = selectAllDB("langs");
-	 return $data;
+	if($page)
+	{
+		$data = selectAllWithSpecificRowDB("langs", ["page", $page]);
+	 	return $data;
+	}
+	else{
+			$data = selectAllDB("langs");
+	 		return $data;
+	}
+
 }
 function trans($text, $received)
 {
