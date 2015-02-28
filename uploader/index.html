@@ -32,6 +32,20 @@
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
+<script src="../lang/language.js"></script>
+<script type="text/javascript">
+var translObj;
+var language;
+function receiveMessage(event)
+{
+   console.log(event.data);
+   translObj = event.data[0];
+   language = event.data[1];
+   performTranslation();
+}
+
+window.addEventListener("message", receiveMessage, false);
+</script>
 </head>
 <body>
 <div class="container">
@@ -43,13 +57,13 @@
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="row fileupload-buttonbar">
             <div id ="dragHere">
-                <p>Drag your files here..</p>
+                <p class="translatable">Drag your files here...</p>
             </div>
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>Add files...</span>
+                    <span class="translatable">Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
 <!--                 <button type="submit" class="btn btn-primary start">

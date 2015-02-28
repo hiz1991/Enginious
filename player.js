@@ -284,12 +284,12 @@ function getUser()
     //get the user
 }
 
-function syncServer(id, command, indexInPlaylist)
+function syncServer(id, command, arg)
 {
   switch(command)
   {
     case "delete":
-     $.ajax({ url : "/syncServer.php"+"?command=delete&id="+id+"&index="+indexInPlaylist,    type: "GET",
+     $.ajax({ url : "/syncServer.php"+"?command=delete&id="+id+"&index="+arg,    type: "GET",
       success: function(data)
       {
         renewPlaylist();
@@ -298,7 +298,7 @@ function syncServer(id, command, indexInPlaylist)
             });
      break;
     case "addNewPS":
-     $.ajax({ url : "/syncServer.php"+"?command=addNewPS&name="+indexInPlaylist,    type: "GET",
+     $.ajax({ url : "/syncServer.php"+"?command=addNewPS&name="+arg,    type: "GET",
       success: function(data)
       {
         renewPlaylist();
@@ -306,8 +306,8 @@ function syncServer(id, command, indexInPlaylist)
       }  
             });
      break;
-     case "addPs":
-     $.ajax({ url : "/syncServer.php"+"?command=addPs&id="+id+"&playlist="+indexInPlaylist,    type: "GET",
+    case "addPs":
+     $.ajax({ url : "/syncServer.php"+"?command=addPs&id="+id+"&playlist="+arg,    type: "GET",
       success: function(data)
       {
         renewPlaylist();
@@ -315,14 +315,8 @@ function syncServer(id, command, indexInPlaylist)
       }  
             });
      break;
-     case "fetchBgs":
+    case "fetchBgs":
      var arr=[];
-     // $.ajax({ url : "/syncServer.php"+"?command=fetchBgs",    type: "GET",
-     //  success: function(data)
-     //  {
-     //    fetchBgsCallBack(data);
-     //  }  
-     //        });
      $.getJSON("/syncServer.php"+"?command=fetchBgs", function(data){
           $("#bgsThumbsContainer > div").empty();
           $.each(data, function (index, value) {
@@ -330,7 +324,15 @@ function syncServer(id, command, indexInPlaylist)
               $("#bgsThumbsContainer > div").append("<img src='"+value+"' alt='bg' onclick='bgsThumbsClick(this)'></img>")
           });
               });
-     fetchBgsCallBack(arr);
+     // fetchBgsCallBack(arr);
+     break;
+    case "saveLang":
+     $.ajax({ url : "/syncServer.php"+"?command=saveLang&argument="+arg,    type: "GET",
+      success: function(data){
+        console.log("/syncServer.php"+"?command=saveLang&argument="+arg);
+        console.log(data);
+      }  
+            });
      break;
 
   }

@@ -1,6 +1,5 @@
 var total;
 var number=0;
-var drawerLaunched = false;
 function counter()
 { 
   number++;
@@ -262,24 +261,52 @@ function populateSvg(svgId, percent)
 	// in given context is equivalent to
 	rect.animate({width:$("#"+svgId).width()*(percent/100), height:30}, 2000, mina.easein);
 }
+function swfLoaded(value)
+{
+	console.log("passDataToFlash");
+	passDataToFlash();
+}
 
 function passDataToFlash()
 {
 	// console.log(convertToJsonUrl(getCurrentUrl()));
+	drawerLaunched=true;
 	pauseButton();
 	var songUrl = getCurrentUrl();
-	var jsonUrl = convertToJsonUrl(songUrl);
+
+	var jsonUrl = convertToJsonUrl(songUrl);//"100001430183965/waveforms/Walks Like Rihanna [Radio Rip].json";
+	 // window['drawer'].callFlash(jsonUrl, songUrl);
 	setTimeout(function(){ 
-      window['drawer'].callFlash(jsonUrl, songUrl, translate("Share"));    }, 400);//(!drawerLaunched)?1000:
-	drawerLaunched=true;
+      window['drawer'].callFlash(jsonUrl, songUrl, translate("Share"));    }, 400);
 }
 function convertToJsonUrl(str)
 {
-str = str.replace("/", '/waveforms/');
-str = str.replace(".mp3",".json");
-return str;
+	str = str.replace("/", '/waveforms/');
+	str = str.replace(".mp3",".json");
+	return str;
 }
 function tellJS(arg, arg2)
 {
-  console.log(arg, arg2);
+	$('#shareSpanContainer').hide();
+	console.log(arg, arg2);
+	if(arg=="hello"){
+       passDataToFlash();
+	}else if(arg=="no cut") {
+		$('#shareSpanContainer').show();
+		$('#sharePopUpPaneSpan').val('<iframe width="200" height="200" src="http://localhost:8888/share.php?id='+fileData.id[fileNumber]+'" frameborder="0" allowfullscreen></iframe>');
+		$('#sharePopUpPaneSpan').select();
+    }
+	else
+	{
+		$('#shareSpanContainer').show();
+	    $('#sharePopUpPaneSpan').val('<iframe width="200" height="200" src="http://localhost:8888/share.php?id='+fileData.id[fileNumber]+'&begin='+Math.round(arg)+'&end='+Math.round(arg2)+'" frameborder="0" allowfullscreen></iframe>');
+		$('#sharePopUpPaneSpan').select();
+	}
+}
+function translIframe(){
+	document.getElementById("uploadFrame").contentWindow.postMessage([translObj, language], window.location);
+}
+function saveLangOnDB()
+{
+	syncServer(null, "saveLang", language);
 }

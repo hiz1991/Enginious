@@ -10,7 +10,7 @@ function updateDB($tableName='music', $toUpdateArray, $toUpdateValuesArray, $use
    $string="`".$toUpdateArray[0]."` = '".$toUpdateValuesArray[0]."'";
    for ($y=1; $y <count($toUpdateArray) ; $y++) 
    { 
-   	$string=$string.' , '."`".$toUpdateArray[$y]."` = '".$toUpdateValuesArray[$y]."'";
+   	$string=$string.' , '."`".clean($toUpdateArray[$y])."` = '".clean($toUpdateValuesArray[$y])."'";
    }
    // error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    $result = mysql_query("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
@@ -33,12 +33,18 @@ function selectAllDB($tableName='music', $user, $order)
    }   
    return $return;
 }
+function selectByIdDB($tableName='music', $id)
+{
+   $result = mysql_query("SELECT * FROM `".$tableName."` WHERE `id`='".$id."';")
+   or die('error At selectByIdDB'.mysql_error());
+   return $result;
+}
 function selectAllWithSpecificRowDB($tableName='music', $rowAndValueArray)
 {
    $return="default";
 
    $return= mysql_query("SELECT * FROM `".$tableName."` WHERE `".$rowAndValueArray[0]."`='".$rowAndValueArray[1]."';")
-   or die('error At selectAllDB'.mysql_error());
+   or die('error At selectAllWithSpecificRowDB'.mysql_error());
    return $return;
 }
 function recordInDB($tableName='music', $toRecordArray, $toRecordValuesArray, $user)
@@ -48,7 +54,7 @@ function recordInDB($tableName='music', $toRecordArray, $toRecordValuesArray, $u
    for ($y=1; $y <count($toRecordArray) ; $y++) 
    {
    	  $entries=$entries.', '.$toRecordArray[$y];
-   	  $values=$values.', '."'".mysql_real_escape_string($toRecordValuesArray[$y])."'";
+   	  $values=$values.', '."'".clean($toRecordValuesArray[$y])."'";
    }
    //error_log("INSERT INTO ".$tableName."(".$entries.")  VALUES(".$values.")");
    $result = mysql_query("INSERT INTO ".$tableName."(".$entries.")  VALUES(".$values.");"); //error_log($result);
@@ -68,7 +74,7 @@ function insertManyDB($tableName, $values, $type, $user)
   $length = count($values);
   $str="";
   for ($i=0; $i < $length ; $i++) { 
-     $str=$str."('".$user."', '".$keys[$i]."', ".$values[$keys[$i]].", '".$type."' ),";
+     $str=$str."('".clean($user)."', '".clean($keys[$i])."', ".clean($values[$keys[$i]]).", '".$type."' ),";
   }
   // $str=$str."('".$user."', '".$values[$length]."', ".$length." )";
   $str = substr($str, 0, strlen($str)-1);
@@ -76,5 +82,9 @@ function insertManyDB($tableName, $values, $type, $user)
    $return = mysql_query("INSERT INTO `".$tableName."` (`username`, `value`, `occurances`, `type`) VALUES ".$str.";")
    or die('error At insertManyDB'.mysql_error());
    return $return;
+}
+function clean($text)
+{
+   return mysql_real_escape_string($text);
 }
 ?>

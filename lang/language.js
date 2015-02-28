@@ -25,6 +25,7 @@ function checkifUpperCase(text)
 }
 function translate(text, obj, lang)
 {
+  if (text==null) {return null};
   if(!obj) obj=translObj;
   if(!lang) lang = language;
   // if(!text) text ="deafult";
@@ -54,7 +55,7 @@ function performTranslation()
     { 
         $(arr[index]).text(translate($(arr[index]).text(), translObj, language));
     });
-    $('#document').find("input[type=textarea], input[type=password], textarea").each(function(ev)
+    $("body").find("input[type=textarea], input[type=password], textarea").each(function(ev)
       {
           if(!$(this).val()) { 
          $(this).attr("placeholder", translate( $(this).attr("placeholder")));

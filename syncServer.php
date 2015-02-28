@@ -1,10 +1,10 @@
 <?php
 session_start();
-// echo "arg1";
+include("db.php");
 $user=$_SESSION['user'];
 //  if (!isset($_SESSION))
 //  {
-//  	header("index.php");
+//    header("index.php");
 //  }
 if($_GET['id']) 
   $id = $_GET['id'];
@@ -17,7 +17,6 @@ if($_GET['argument'])
 $action=$_GET['command'];
 
 // echo $id;
-include("db.php");
 switch ($action) 
 {
   case 'delete':
@@ -74,9 +73,15 @@ switch ($action)
       $saveBgquery = updateDB($tableName='userInfo', $tmparrWheretoSave, $tmparrWhat, $user);
       mysql_query($saveBgquery); //or die (' error'. mysql_error());
       if($saveBgquery){$_SESSION['bg']=$value;}
-      mysql_close();
       echo $_SESSION['bg'];
       break;
+  case 'saveLang':
+      error_log("message");
+      updateDB('userInfo', ['lang'], [$argument], $user);
+      $_SESSION['lang']=$argument;
+      // echo $res;
+      break;
 }
+mysql_close();
 
 ?>

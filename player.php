@@ -1,7 +1,8 @@
 <?php 
 include 'db.php';
 include 'transl.php';
-if(!$_SESSION['lang']||!$_SESSION['lang']=="")
+error_log($_SESSION['lang']);
+if(!$_SESSION['lang'])
 {
   $_SESSION['lang'] = $_GET['lang'];
 }
@@ -48,12 +49,6 @@ $bs=getTransBase("player.php");?>
        $("#tags").on("blur",function(e){  keyboardControl=true; $("#ui-id-48").hide();});   
        $("#tags").on("mouseup",function(e){   return false;});
 
-       setTimeout(function(){ updateArtwork();
-                               // $("#artworkBig").show();
-                               //changeMode("artwork");
-
-                             }
-                             , 1000);
          // setTimeout(function(){loadStats();}, 4000);
          $(".menu.menu--open .morph-shape").css("height", "300px");
 
@@ -63,8 +58,14 @@ $bs=getTransBase("player.php");?>
         $("#polyglot-language-options").change(function(s) {
             language = $(this).children(":selected").attr("id");
             performTranslation();
+            translIframe();
+            saveLangOnDB();
         })
-
+        // $(".popUp").click(function(str){$("#"+str.target.id+"").fadeOut(200);})
+       setTimeout(function(){ 
+        updateArtwork();
+        translIframe();
+       }, 1000);
 
       }); 
 
@@ -202,7 +203,7 @@ $bs=getTransBase("player.php");?>
             <img src="defaultTheme/images/shuffle.svg" alt="repeat"/>
             <!--shuffle-->
           </div>
-          <div class="share secondaryFunctionality" onclick="$('#sharePopUp').fadeIn(); passDataToFlash();">
+          <div class="share secondaryFunctionality" onclick="$('#sharePopUp').fadeIn(); ">
             <img src="defaultTheme/images/share.svg" alt="share"/>
             <!--share-->
           </div>
@@ -213,12 +214,12 @@ $bs=getTransBase("player.php");?>
             </div>
           </div>
         </div>
-        <div id="stats">
+        <div id="stats" class="popUp">
           <div id='statsPane'>
           </div>  
           <div class="button" style="position:absolute; bottom:11%;right:25%;color:white; background:#4da6ff;z-index:1001" onclick='$("#stats").fadeOut();'>Ok</div>                 
         </div>
-        <div id="sharePopUp">
+        <div id="sharePopUp" class="popUp">
           <div id='sharePopUpPane'>
             <object type="application/x-shockwave-flash" data="drawer.swf" width="1000" height="453" id="drawer" style="float: none; vertical-align:middle">
               <param name="movie" value="drawer.swf" />
@@ -236,15 +237,18 @@ $bs=getTransBase("player.php");?>
                 <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
               </a>
             </object>
-          </div>  
+            <div id="shareSpanContainer">
+              <textarea id="sharePopUpPaneSpan"></textarea>
+            </div>
+          </div> 
           <div class="button" style="position:absolute; bottom:11%;right:16%;color:white; background:#4da6ff;z-index:1001" onclick='$("#sharePopUp").fadeOut();'>Ok</div>                 
         </div>
-        <div id="bgChanger">
+        <div id="bgChanger" class="popUp">
          <div id='bgChangerPane'>
            <p id='settingsPaneLabel' class="translatable"><?php echo trans("Settings:", $bs); ?></p>
            <p class="settingsHeadings translatable" ><?php echo trans("Background", $bs); ?></p>
            <div>
-             <input id="urlInput" type="textArea" placeholder="<?php echo trans("type URL", $bs); ?>" />
+             <input id="urlInput" type="textarea" placeholder="<?php echo trans("type URL", $bs); ?>" />
            </div>
            <div id="bgsThumbsContainer">
              <div>
@@ -269,12 +273,12 @@ $bs=getTransBase("player.php");?>
         '>Ok</div>                 
       </div>
 
-      <div id="uploadFrameDisplayer">
+      <div id="uploadFrameDisplayer" class="popUp">
         <div id='uploadFrameDisplayerPane'>
           <iframe id = "uploadFrame" src="/uploader/index.html" FRAMEBORDER=0 style="position:absolute; width:100%; height:90%; "> </iframe>
         </div>  
         <div>
-         <div style="    position: absolute;     z-index: 50000;     color: black;     margin-left: 27%; bottom: 11%; font-family: myFirstFont;"><input type="checkbox" id="showStatsCheck" class="translatable"> <?php echo trans("Show stats on complete", $bs); ?><br>
+         <div style="    position: absolute;     z-index: 50000;     color: black;     margin-left: 27%; bottom: 11%; font-family: myFirstFont;"><input type="checkbox" id="showStatsCheck" > <span class="translatable"><?php echo trans("Show stats on complete", $bs); ?></span>
          </div>
          <div class="button translatable" style="position:absolute; bottom:11%;right:26.2%;color:white; background:#4da6ff;z-index:1001" onclick='$("#uploadFrameDisplayer").fadeOut();
          setTimeout(function(){renewPlaylist();}, 300);
