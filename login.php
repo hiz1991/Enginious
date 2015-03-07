@@ -18,6 +18,8 @@ while($info = mysql_fetch_array( $data ))
   // if($info['accountType']=='facebook'){$_SESSION['userType']='Facebook';}
   $_SESSION['userType'] = $info['accountType'];
   $_SESSION['bg'] = $info['theme'];
+  $_SESSION['email'] =$info['username'];
+
   // echo 'success';
   $correct=true;
 }

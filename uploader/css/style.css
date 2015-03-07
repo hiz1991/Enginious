@@ -48,3 +48,7 @@ body {
 {
 	width: 60px;
 }
+.delete
+{
+	display: none;
+}

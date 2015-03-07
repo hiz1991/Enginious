@@ -1,3 +1,26 @@
-//TODO:Check Nohchi sound gives 99999999
-//TODO:Disable analysis if not signed in
+//TODO: check login 
+//TODO: check registration request for exist user
+//TODO: check registration request for exist user
+//TODO: test path creation
+//TODO: test snap
+//TODO: test snap for numbers
+//TODO: create empty user
+//TODO: translation test
+//TODO: translations enter to DB
+//TODO: translation error for first letter
+//TODO: test modes
+//TODO: test distribution
+//TODO: test distribution and file avail
+//TODO: test distrib for short files
+//TODO: reccom front end
+//TODO: recommendations switch test
+//TODO: audio pitch takes long
+//TODO: aubio pitch threshold
+//TODO: check aubio tempo with DB
+//TODO: test aubio tempo short files
+//TODO: enable flash communcation
+//TODO: test modes
+//TODO: Check Nohchi sound gives 99999999
+//TODO: Disable analysis if not signed in
 //TODO: Add entry in libraryAnalysis table for new user
+//TODO: Fix music not added to database

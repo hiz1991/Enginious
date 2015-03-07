@@ -192,41 +192,69 @@
 // error_log($outputEnd);
 // error_log($outputEnd1);
 // include "getJson.php";
-$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-switch ($lang){
-    case "fr":
-        // echo "PAGE FR";
-        // include("index_fr.php");//include check session FR
-        break;
-    case "it":
-        // echo "PAGE IT";
-        // include("index_it.php");
-        break;
-    case "en":
-        // echo "PAGE EN";
-        // include("index_en.php");
-        break;        
-    default:
-        // echo "PAGE EN - Setting Default";
-        // include("index_en.php");//include EN in all other cases of different lang detection
-        break;
-}
-include 'db.php';
-include 'transl.php';
+
+
+
+
+
+
+// $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+// switch ($lang){
+//     case "fr":
+//         // echo "PAGE FR";
+//         // include("index_fr.php");//include check session FR
+//         break;
+//     case "it":
+//         // echo "PAGE IT";
+//         // include("index_it.php");
+//         break;
+//     case "en":
+//         // echo "PAGE EN";
+//         // include("index_en.php");
+//         break;        
+//     default:
+//         // echo "PAGE EN - Setting Default";
+//         // include("index_en.php");//include EN in all other cases of different lang detection
+//         break;
+// }
+// include 'db.php';
+// include 'transl.php';
 // $bs=getTransBase();
 // $json = getTransJson($bs);
 // echo $json;
 // for ($i=1800; $i <2010 ; $i++) { 
   // echo floor($i/10)*10;
 // }
-$bs = selectAllDB('music', 'store');
-
- mysql_data_seek($bs, 0);
- $rs = array();
- while($rs[] = mysql_fetch_object($bs)) {
-    // you don´t really need to do anything here.
-  }
-     echo json_encode($rs);
 
 
-?>
+
+
+// $bs = selectAllDB('music', 'store');
+
+//  mysql_data_seek($bs, 0);
+//  $rs = array();
+//  while($rs[] = mysql_fetch_object($bs)) {
+//     // you don´t really need to do anything here.
+//   }
+//      echo json_encode($rs);
+
+// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
+// of $_FILES.
+
+// $ds          = DIRECTORY_SEPARATOR;  //1
+ 
+// $storeFolder = 'shared';   //2
+ 
+// if (!empty($_FILES)) {
+     
+//     $tempFile = $_FILES['file']['tmp_name'];          //3             
+      
+//     $targetPath = dirname( __FILE__ ) . $ds. $storeFolder . $ds;  //4
+     
+//     $targetFile =  $targetPath. $_FILES['file']['name'];  //5
+ 
+//     move_uploaded_file($tempFile,$targetFile); //6
+     
+// }
+echo '{ "Songs":[{"artist":"Shaham & Brandon","title":"Bodyrock","id":"11015","tempo":"113","volume":"207927","pitch":"3434","url":"new\/Bodyrock.mp3","urlOfArt":"new\/artwork\/Bodyrock.mp3.jpg"},{"artist":"One Republic","title":"Counting Stars (PrimeMusic.ru)","id":"11033","tempo":"120","volume":"219325","pitch":"2992","url":"new\/01 Counting Stars (PrimeMusic.ru).mp3","urlOfArt":"new\/artwork\/01 Counting Stars (PrimeMusic.ru).mp3.jpg"},{"artist":"Neyo","title":"Closer","id":"11029","tempo":"125","volume":"180856","pitch":"4298","url":"new\/01 Closer.mp3","urlOfArt":"new\/artwork\/01 Closer.mp3.jpg"},{"artist":"Lady GaGa","title":"Dope","id":"11047","tempo":"112","volume":"206499","pitch":"6004","url":"new\/13 Dope.mp3","urlOfArt":"new\/artwork\/13 Dope.mp3.jpg"},{"artist":"dmitrii_koldun_","title":"_carevna","id":"11021","tempo":"136","volume":"204514","pitch":"5412","url":"new\/01 _carevna.mp3","urlOfArt":"new\/artwork\/01 _carevna.mp3.jpg"},{"artist":"Jay Sean Ft Lil Wayne","title":"Down","id":"11046","tempo":"130","volume":"233274","pitch":"5207","url":"new\/Down.mp3","urlOfArt":"new\/artwork\/Down.mp3.jpg"},{"artist":"Jessie J","title":"Domino","id":"11043","tempo":"125","volume":"224060","pitch":"6046","url":"new\/Domino 4.mp3","urlOfArt":"new\/artwork\/Domino 4.mp3.jpg"},{"artist":"Blue","title":"Breathe Easy","id":"11018","tempo":"122","volume":"203696","pitch":"6784","url":"new\/Breathe Easy.mp3","urlOfArt":"new\/artwork\/Breathe Easy.mp3.jpg"},{"artist":"Molly","title":"Children of the Universe (United Kingdom)","id":"11025","tempo":"128","volume":"250847","pitch":"3842","url":"new\/14 Children of the Universe (United Kingdom).mp3","urlOfArt":"new\/artwork\/14 Children of the Universe (United Kingdom).mp3.jpg"},{"artist":"Jessie J","title":"Do It Like a Dude","id":"11040","tempo":"132","volume":"244629","pitch":"5086","url":"new\/04 Do It Like a Dude.mp3","urlOfArt":"new\/artwork\/04 Do It Like a Dude.mp3.jpg"},{"artist":"Amel Bent","title":"Cette Idee-L\u00a0","id":"11023","tempo":"127","volume":"187898","pitch":"5797","url":"new\/Cette Idee-L.mp3","urlOfArt":"new\/artwork\/Cette Idee-L.mp3.jpg"},{"artist":"Arash feat. Helena","title":"Broken Angel (2010)","id":"11014","tempo":"111","volume":"236843","pitch":"5911","url":"new\/Broken Angel (2010).mp3","urlOfArt":"new\/artwork\/Broken Angel (2010).mp3.jpg"},{"artist":"Austin Mahone","title":"Cant Fight This Love www.mixmp3.net","id":"11020","tempo":"101","volume":"207604","pitch":"2565","url":"new\/01 Cant Fight This Love www.mixmp3.net.mp3","urlOfArt":"new\/artwork\/01 Cant Fight This Love www.mixmp3.net.mp3.jpg"},{"artist":"Swedish House Mafia feat. John Martin","title":"Dont You Worry Child (Radio Edit)","id":"11045","tempo":"126","volume":"245238","pitch":"2940","url":"new\/Dont You Worry Child (Radio Edit).mp3","urlOfArt":"new\/artwork\/Dont You Worry Child (Radio Edit).mp3.jpg"},{"artist":"Gym Class Heroes","title":"Cookie Jar (Ft. The-Dream)","id":"11031","tempo":"112","volume":"247606","pitch":"3131","url":"new\/01 Cookie Jar (Ft. The-Dream).mp3","urlOfArt":"new\/artwork\/01 Cookie Jar (Ft. The-Dream).mp3.jpg"},{"artist":"Alex Hepburn","title":"Dont bury me","id":"11044","tempo":"113","volume":"221960","pitch":"7277","url":"new\/Dont bury me.mp3","urlOfArt":"new\/artwork\/Dont bury me.mp3.jpg"},{"artist":"Leann Rimes","title":"Cant Fight the Moonlight","id":"11019","tempo":"101","volume":"165497","pitch":"4140","url":"new\/Cant Fight the Moonlight.mp3","urlOfArt":"new\/artwork\/Cant Fight the Moonlight.mp3.jpg"},{"artist":"Sting","title":"Desert Rose","id":"11042","tempo":"109","volume":"163283","pitch":"3707","url":"new\/Desert Rose.mp3","urlOfArt":"new\/artwork\/Desert Rose.mp3.jpg"},{"artist":"Justin Timberlake","title":"Cry Me A River (Instrumental)","id":"11035","tempo":"142","volume":"159156","pitch":"4088","url":"new\/Cry Me A River (Instrumental).mp3","urlOfArt":"new\/artwork\/Cry Me A River (Instrumental).mp3.jpg"},{"artist":"Imagine Dragons","title":"Demons","id":"11038","tempo":"115","volume":"266843","pitch":"2077","url":"new\/02 Demons.mp3","urlOfArt":"new\/artwork\/02 Demons.mp3.jpg"},{"artist":"Rihanna www.STREETLiFE.kz","title":"Cry www.STREETLiFE.kz","id":"11036","tempo":"106","volume":"184971","pitch":"8157","url":"new\/Cry www.STREETLiFE.kz.mp3","urlOfArt":"new\/artwork\/Cry www.STREETLiFE.kz.mp3.jpg"},{"artist":"Skillet","title":"Comatose","id":"11030","tempo":"112","volume":"280352","pitch":"1870","url":"new\/05 Comatose.mp3","urlOfArt":"new\/artwork\/05 Comatose.mp3.jpg"},{"artist":"Piano","title":"chandel Piano","id":"11024","tempo":"128","volume":"246573","pitch":"8886","url":"new\/chandel Piano.mp3","urlOfArt":"new\/artwork\/chandel Piano.mp3.jpg"},{"artist":"Elyar Fox","title":"Do It All Over Again","id":"11041","tempo":"114","volume":"282179","pitch":"1625","url":"new\/01 Do It All Over Again.mp3","urlOfArt":"new\/artwork\/01 Do It All Over Again.mp3.jpg"},{"artist":"DJ Alligator","title":"Close To You (Classical Version)","id":"11028","tempo":"129","volume":"131233","pitch":"7135","url":"new\/65535 Close To You (Classical Version).mp3","urlOfArt":"new\/artwork\/65535 Close To You (Classical Version).mp3.jpg"},{"artist":"Christina Aguilera","title":"Castle Walls","id":"11022","tempo":"94","volume":"86291","pitch":"3565","url":"new\/Castle Walls.mp3","urlOfArt":"new\/artwork\/Castle Walls.mp3.jpg"},{"artist":"Akord","title":"Crash Lady","id":"11032","tempo":"107","volume":"84527","pitch":"2672","url":"new\/Crash Lady.mp3","urlOfArt":"new\/artwork\/Crash Lady.mp3.jpg"},{"artist":"Cassius Henry","title":"Closer","id":"11026","tempo":"125","volume":"74212","pitch":"2545","url":"new\/Closer.mp3","urlOfArt":"new\/artwork\/Closer.mp3.jpg"}]}';
+?> 

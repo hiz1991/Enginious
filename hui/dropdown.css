@@ -21,18 +21,12 @@
 }
 .selector
 {
-  margin-left: 1%;
-  float:left;
-  display:inline-block;
-  width:20%; height:3%;
-  // margin:2%;
-  margin-top:0px !important; 
-  //margin-bottom:1px;
-  //opacity:0.8;
-  /*position: absolute !important;*/
-  z-index:510 !important;
-  /*background:yellow;*/
-  min-width: 400px;
+  float: left;
+  display: inline-block;
+  width: 405px;
+  height: 100%;
+  min-width: 405px;
+  border-right: 1px solid rgb(220, 221, 221);
 }
 
 .selector select
@@ -120,6 +114,18 @@
     /* Hiding */
     /*opacity: 0;*/
     pointer-events: none;
+}
+#uploadIcon
+{
+  margin: 0px;
+  margin-left: 13px;
+  display: inline-block;
+  vertical-align: sub;
+  padding: 0px;
+}
+#uploadIcon >img
+{
+  height: 22px;
 }
 #addNewPlaylist
 {
@@ -214,7 +220,7 @@
 /*for autocomplete*/
 #ui-id-1
 {
-  width: 189px !important;
+  width: 189px !important;/*212*/
   background: rgba(255, 255,255, 0.9); 
   border-radius: 5px;
   padding: 5px;

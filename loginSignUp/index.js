@@ -5,6 +5,7 @@ var animationSpeed=300;
 var emailError=true;
 var passwordError=true;
 var confirmPasswordError=true;
+var userexists=false;
 $( document ).ready(function() 
 {     
     //autologin
@@ -110,12 +111,18 @@ $( document ).ready(function()
             url: "/registration.php",
             data: { username: $("#emailInput").val(), password: $("#passwordInput").val(),
                    email: $("#emailInput").val(), confirmEmail: $("#confirmPasswordInput").val(),
-                   musicPreferences: 0 }
+                   lang: language, check: "false" }
           })
             .done(function( msg ) {
-              if (msg=="success") {window.location.href="/player.php"}
-                else if(msg=="taken"){alert("Email already registered!")}
-                  else{alert("Input values incorrect")}
+              if (msg=='cool') {
+                window.location.href="/player.php"
+              }
+              else if(msg=='{"Response":"unchecked exists"}'){
+                alert("Email already registered!")
+              }
+              else{
+                alert("Input values incorrect")
+              }
               console.log( "Data Saved: " + msg );
             });
      });
@@ -135,7 +142,7 @@ $( document ).ready(function()
 function checkIfCanProceed()
 {
     console.log(emailError, passwordError, confirmPasswordError);
-    if(!emailError && !passwordError && !confirmPasswordError)
+    if(!emailError && !passwordError && !confirmPasswordError && !userexists && $("#passwordInput").val()==$("#confirmPasswordInput").val())
         $("#submitButton").addClass("buttonActiveBlue");
     else
         $("#submitButton").removeClass("buttonActiveBlue");
@@ -182,8 +189,28 @@ function closeDisplayer(received)
 }
 function checkIfUserExists(received)
 {
-    closeDisplayer(received);
-//    showError("#emailErrorsDisplayer", "redColor", "This email is already registered", "#emailErrorsSpan");
+                $.ajax({
+            type: "POST",
+            url: "/registration.php",
+            data: { username: $("#emailInput").val(),  confirmEmail: $("#confirmPasswordInput").val(),
+                   check:"true" }
+          })
+            .done(function( msg ) {
+                console.log(msg);
+              if (msg!='{"Response":"does not exist"}') {
+                 showError("#emailErrorsDisplayer", "redColor", translate("This email is already registered"), "#emailErrorsSpan");
+                 userexists=true;
+                 checkIfCanProceed()
+                 emailError=true;
+                 // closeDisplayer(received);
+              }else{
+                userexists=false;
+                closeDisplayer(received);
+                checkIfCanProceed()
+                emailError=false;
+              }
+            });
+
 
 }
 function flip(div1, div2)

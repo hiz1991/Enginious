@@ -13,6 +13,7 @@
 .fileinput-button {
   position: relative;
   overflow: hidden;
+  display: none;
 }
 .fileinput-button input {
   position: absolute;

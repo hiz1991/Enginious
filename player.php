@@ -12,7 +12,7 @@ $bs=getTransBase("player.php");?>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <!-- <meta name="viewport" content="width=device-width, user-scalable=no"> -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Enginious</title>
   <script type="text/javascript" src="jquery.min.js"></script>
@@ -25,6 +25,7 @@ $bs=getTransBase("player.php");?>
   <script src="player.js"></script>
   <script src="hui/dropdown.js"></script> 
   <script src="cloudbeats.js"></script>
+  <script src="dropzone/dropzone.js"></script>
   <!-- // <script src="hui/jquery.ui-contextmenu.min.js" type="text/javascript"></script> -->
   <!-- // <script src="hui/taphold.js" type="text/javascript"></script> -->
   <!-- // <script src="http://vkontakte.ru/js/api/xd_connection.js" type="text/javascript"></script> -->
@@ -34,42 +35,50 @@ $bs=getTransBase("player.php");?>
   <link rel="stylesheet" type="text/css" href="player.css">
   <link rel="stylesheet" type="text/css" href="hui/dropdown.css">
   <link type="text/css" rel="stylesheet" href="hui/jquery-ui.css" />
+
   <!-- <link rel="stylesheet" href="../lang/languageswitcher.css"> -->
   <!-- // <script src="facebook.js"></script> -->
   <!-- // <script type="text/javascript" src="progressBar/progressbar.js"></script> -->
   <!-- // <script type="text/javascript" src="http://blurjs.com/blur.js"></script> -->
-  <script>
-    var translObj;
-    var language = "<?php echo $clientLang;?>";
-    $(document).ready(function()
-    {
-     var el = document.createElement("script");el.type = "text/javascript";el.src = "//vk.com/js/api/openapi.js";el.async = true;document.getElementById("vk_api_transport").appendChild(el); 
-       //searchBarText Select
-       $("#tags").on("focus",function(e){  keyboardControl=false;  $(this).select();});   
-       $("#tags").on("blur",function(e){  keyboardControl=true; $("#ui-id-48").hide();});   
-       $("#tags").on("mouseup",function(e){   return false;});
+  <!-- <link rel="stylesheet" href="popover/jquery.webui-popover.css"> -->
+  <!-- // <script src="popover/jquery.webui-popover.js"></script> -->
+  <script src="recPanel/icheck.min.js"></script>
+  <link href="recPanel/skins/all.css" rel="stylesheet">
+  <link href="recPanel/test.css" rel="stylesheet">
+  <script src="recPanel/ch.js"></script>
 
-         // setTimeout(function(){loadStats();}, 4000);
-         $(".menu.menu--open .morph-shape").css("height", "300px");
+<script>
+  var translObj;
+  var language = "<?php echo $clientLang;?>";
+  $(document).ready(function()
+  {
+    initKplayer();
+    var el = document.createElement("script");el.type = "text/javascript";el.src = "//vk.com/js/api/openapi.js";el.async = true;document.getElementById("vk_api_transport").appendChild(el); 
+     //searchBarText Select
+    $("#tags").on("focus",function(e){  keyboardControl=false;  $(this).select();});   
+    $("#tags").on("blur",function(e){  keyboardControl=true; $("#ui-id-48").hide();});   
+    $("#tags").on("mouseup",function(e){   return false;});
 
-         translObj = JSON.parse('<?php  $json = getTransJson($bs); echo $json;?>') ;
-         console.log(translObj); 
-        // performTranslation();
-        $("#polyglot-language-options").change(function(s) {
-            language = $(this).children(":selected").attr("id");
-            performTranslation();
-            translIframe();
-            saveLangOnDB();
-        })
-        // $(".popUp").click(function(str){$("#"+str.target.id+"").fadeOut(200);})
-       setTimeout(function(){ 
-        updateArtwork();
-        translIframe();
-       }, 1000);
+    // setTimeout(function(){loadStats();}, 4000);
+    $(".menu.menu--open .morph-shape").css("height", "300px");
 
-      }); 
-
-
+    translObj = JSON.parse('<?php  $json = getTransJson($bs); echo $json;?>') ;
+    console.log(translObj); 
+      // performTranslation();
+    // $("#settingsIcon").webuiPopover({content:$('#bgChangerPane').html()});
+    $("#polyglot-language-options").change(function(s) {
+      language = $(this).children(":selected").attr("id");
+      performTranslation();
+      translIframe();
+      saveLangOnDB();
+    })
+      // $(".popUp").click(function(str){$("#"+str.target.id+"").fadeOut(200);})
+    setTimeout(function(){ 
+      updateArtwork();
+      translIframe();
+    }, 1000);
+    var checked = new ch.init('flat','blue') //recc option checker
+  }); 
 </script>
 
 </head>
@@ -83,6 +92,7 @@ $bs=getTransBase("player.php");?>
               <li><a href="#action5">sub5</a>
               </ul>
             </ul>
+            <!-- <div id="test" style="width:500px; height:500px;top:0;position:absolute; z-index:100000; background:white"></div> -->
             <div id="container"> 
 
               <div class="settings">
@@ -124,8 +134,11 @@ $bs=getTransBase("player.php");?>
        <div class="searchBar">
          <input id="tags" class="tagsSearchImage"/>
        </div>
+       <div id="uploadIcon" class="button" onclick="$('#uploadFrameDisplayer').show();enableDocClick()">
+         <img src="defaultTheme/images/upload.svg">
+       </div>
      </div>
-     <div id="lyricsButton" class="button" onclick="changeMode('lyrics');" style="opacity:0.01;"><span>Lyrics</span></div>
+     <div id="lyricsButton" class="button" onclick="changeMode('lyrics');"><span class="translatable"><?php echo trans("Store", $bs); ?></span></div>
               <!-- <div id="artworkButton" class="button buttonPressed" onclick="changeMode('artwork');" style="opacity:0.01;"><span>Artwork</span></div>
               <div id="youtubeButton" class="button" onclick="changeMode('youtube');" style="opacity:0.01;"><span>Youtube</span></div> -->
               <div id="artworkButton" class="button buttonPressed" onclick="changeMode('artwork');" ><span class="translatable"><?php echo trans("Artwork", $bs); ?></span></div>
@@ -133,10 +146,10 @@ $bs=getTransBase("player.php");?>
 
               <div id="VKConnectbutton" class="button" onclick="initiateVKButton();"><span>Connect to VK</span></div>
               <!--               <div id="Upload" class="button" onclick="pickFlash();"><span>Upload Music</span></div> -->
-              <div id="Upload" class="button" onclick="$('#uploadFrameDisplayer').show();"><span class="translatable"><?php echo trans("Upload Music", $bs); ?></span></div>
-              <div id="logout" class="button" onclick="logout();" style="border-left: 1px dotted white; "><span class="translatable"><?php echo trans("Logout", $bs); ?></span></div>
-              <div style="display:inline-block;" onclick="showbg()" class="button">
-                <img src="images/settings.svg" height="16px" style="vertical-align: sub;" />
+              <!-- <div id="Upload" class="button" onclick="$('#uploadFrameDisplayer').show();"><span class="translatable"><?php echo trans("Upload Music", $bs); ?></span></div> -->
+              <div id="settingsIcon" style="display:inline-block;float: right;" onclick="showbg()" class="button">
+              <!-- onclick="showbg()" -->
+                <img src="images/settings.svg" height="22px" style="vertical-align: sub;" />
               </div>
               
             </div><!-- settings -->
@@ -148,15 +161,41 @@ $bs=getTransBase("player.php");?>
                 <!-- <img id="artworkBig" src="images/artwork.svg" /> -->
                 <!-- <div id="signature">Default</div> -->
               </div> 
-              <div class="lyricsHolder"><div id="lyricsContainer">No Lyrics found. Sorry(:</div>
-            </div>
+              <div id="lyricsHolder"><!-- <div id="lyricsContainer">No Lyrics found. Sorry(:</div> -->
+                    <div id='recommendationFilterContainer' class='recommendationFilterContainer' style="position:absolute;">
+                      <span class="recommendation">Recommendations: </span>
+                      <span id='checkboxesButton' class='checkboxesButton'>
+                        <span id="checkboxesValues">All</span>
+                        <img src="recPanel/da.svg" alt="Down arrow">
+                      </span>
+
+                      <div id="checkboxesContainer" class="checkboxesContainer">
+                        <label for="checkbox1" >Artist: </label>
+                        <input type="checkbox" id='checkbox1'checked>
+                        <label for="checkbox2" >Volume: </label>
+                        <input type="checkbox" id='checkbox2' checked>
+
+                        <label for="checkbox3" >Tempo: </label>
+                        <input type="checkbox" id='checkbox3'checked>
+                        <label for="checkbox4" >Pitch: </label>
+                        <input type="checkbox" id='checkbox4' checked>
+
+                        <label for="checkbox5" >Genre: </label>
+                        <input type="checkbox" id='checkbox5' checked>
+                        <label for="checkbox6" >Year: </label>
+                        <input type="checkbox" id='checkbox6'checked>
+                        <img src="recPanel/refresh.svg" onclick="getUser('recs')">
+                      </div>
+                    </div>
+               <div id="recContainer"></div>
+              </div>
             <div id="youtube">
               <div id='containterYoutubeOutMost'>
                 <div id='youtubeThumbsContainer'></div>
               </div>
               <div id="YTPlayer"></div>
             </div>
-            <!--  <iframe src="http://www.azlyrics.com/lyrics/rihanna/unfaithful.html"  sandbox="allow-forms allow-scripts" width="500px%" height="500px" align="center" allowTransparency > -->
+             <!-- <iframe src="http://www.azlyrics.com/lyrics/rihanna/unfaithful.html"  sandbox="allow-forms allow-scripts" width="500px%" height="500px" align="center" allowTransparency > -->
             <!-- </iframe> -->
           </div> 
           <div class="player">
@@ -203,7 +242,7 @@ $bs=getTransBase("player.php");?>
             <img src="defaultTheme/images/shuffle.svg" alt="repeat"/>
             <!--shuffle-->
           </div>
-          <div class="share secondaryFunctionality" onclick="$('#sharePopUp').fadeIn(); ">
+          <div class="share secondaryFunctionality">
             <img src="defaultTheme/images/share.svg" alt="share"/>
             <!--share-->
           </div>
@@ -244,7 +283,12 @@ $bs=getTransBase("player.php");?>
           <div class="button" style="position:absolute; bottom:11%;right:16%;color:white; background:#4da6ff;z-index:1001" onclick='$("#sharePopUp").fadeOut();'>Ok</div>                 
         </div>
         <div id="bgChanger" class="popUp">
+        <!-- <div class="arrow"></div> -->
          <div id='bgChangerPane'>
+           <div id="logout" class="button" onclick="logout();" style="float:right;margin: 10px;display: inline-block;">
+              <span class="translatable"><?php echo trans("Logout", $bs); ?></span>
+              <div id="username" style="margin-left:6px;display: inline-block;"></div>
+           </div>
            <p id='settingsPaneLabel' class="translatable"><?php echo trans("Settings:", $bs); ?></p>
            <p class="settingsHeadings translatable" ><?php echo trans("Background", $bs); ?></p>
            <div>
@@ -267,15 +311,32 @@ $bs=getTransBase("player.php");?>
             </form>
           </div>
         </div>  
-        <div class="button" style="position:absolute; bottom:11%;right:25%;color:white; background:#4da6ff;z-index:1001" onclick='$("#bgChanger").fadeOut();
+        <div class="button translatable" style="position:absolute; bottom:11%;right:25%;color:white; background:#4da6ff;z-index:1001" onclick='$("#bgChanger").fadeOut();
         setTimeout(function(){changeBackground();}, 500);
 
-        '>Ok</div>                 
+        '><?php echo trans("Save", $bs); ?></div>                 
       </div>
 
       <div id="uploadFrameDisplayer" class="popUp">
         <div id='uploadFrameDisplayerPane'>
           <iframe id = "uploadFrame" src="/uploader/index.html" FRAMEBORDER=0 style="position:absolute; width:100%; height:90%; "> </iframe>
+              <!-- <form id="upload" method="post" action="upload.php" enctype="multipart/form-data"> -->
+              <!-- <div id="drop" style="display:block;"> -->
+                <!-- Drop Here -->
+
+                <!-- <a>Browse</a> -->
+                <!-- <input type="file" name="upl" multiple /> -->
+              <!-- </div> -->
+<!-- 
+              <ul>
+                The file uploads will be shown here
+              </ul>
+
+            </form> -->
+                
+            <!-- JavaScript Includes -->
+            <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
         </div>  
         <div>
          <div style="    position: absolute;     z-index: 50000;     color: black;     margin-left: 27%; bottom: 11%; font-family: myFirstFont;"><input type="checkbox" id="showStatsCheck" > <span class="translatable"><?php echo trans("Show stats on complete", $bs); ?></span>

@@ -78,7 +78,7 @@ function getTransJson($bs)
  while($rs[] = mysql_fetch_object($bs)) {
     // you don´t really need to do anything here.
   }
-     return json_encode($rs);
+     return json_encode($rs, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 }
 
 ?>

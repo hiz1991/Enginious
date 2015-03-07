@@ -440,6 +440,7 @@ class UploadHandler
 
     protected function get_unique_filename($file_path, $name, $size, $type, $error,
             $index, $content_range) {
+        $name=str_replace("'", "", $name);
         while(is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
         }

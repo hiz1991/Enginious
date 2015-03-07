@@ -12,7 +12,7 @@ function updateDB($tableName='music', $toUpdateArray, $toUpdateValuesArray, $use
    { 
    	$string=$string.' , '."`".clean($toUpdateArray[$y])."` = '".clean($toUpdateValuesArray[$y])."'";
    }
-   // error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
+   error_log("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    $result = mysql_query("UPDATE `".$tableName."` SET ".$string." WHERE `username` = '".$user."';");
    return $result;
 }
@@ -56,7 +56,7 @@ function recordInDB($tableName='music', $toRecordArray, $toRecordValuesArray, $u
    	  $entries=$entries.', '.$toRecordArray[$y];
    	  $values=$values.', '."'".clean($toRecordValuesArray[$y])."'";
    }
-   //error_log("INSERT INTO ".$tableName."(".$entries.")  VALUES(".$values.")");
+   error_log("INSERT INTO ".$tableName."(".$entries.")  VALUES(".$values.")");
    $result = mysql_query("INSERT INTO ".$tableName."(".$entries.")  VALUES(".$values.");"); //error_log($result);
    return $result;
    // error_log($result);

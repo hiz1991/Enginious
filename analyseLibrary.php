@@ -39,11 +39,9 @@ $averageDistr = convertDistArrayToString(getAverageDistrib($musicData, 50, 2));
 // $genreAccuracy = calcDeviationInPercent(null, $genrePriority, true);
 //calculate number fo songs to distinct values ratio
 $numberOfsongs = mysql_num_rows($musicData);
+error_log($numberOfsongs);
 // echo $genreAccuracy."<br>".$yearAccuracy."<br>".$artistAccuracy;
 
-//add values for record in libraryNalysis table
-array_push($toUpdate, "distribution");//, "genre");
-array_push($toUpdateValues, $averageDistr);//, 
 //get and record avergaed distr levels
 array_push($toUpdate, "genreAccuracy");//, "genre");
 array_push($toUpdateValues, ratioInPercent(count($genrePriority)/$numberOfsongs) );
@@ -52,6 +50,9 @@ array_push($toUpdateValues, ratioInPercent(count($yearsInDecades)/$numberOfsongs
 array_push($toUpdate, "artistAccuracy");//, "genre");
 array_push($toUpdateValues, ratioInPercent(count($artistPriority)/$numberOfsongs) );
 //end add ratios
+//add values for record in libraryNalysis table
+array_push($toUpdate, "distribution");//, "genre");
+array_push($toUpdateValues, $averageDistr);//, 
 //add the highest values in priority
 array_push($toUpdate, "genre");
 array_push($toUpdateValues, array_keys($genrePriority)[0]);
@@ -69,7 +70,7 @@ updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user);
 $json = '{ "Response":';//.trans("volume", $bs).'":'.cn($row['volume']).',
 $response = array();
 for ($i=0; $i < count($toUpdate); $i++) { 
-   $response[trans($toUpdate[$i], $bs)] = $toUpdateValues[$i];
+   $response[$toUpdate[$i]] = $toUpdateValues[$i];
   // $json.='"'.trans($toUpdate[$i], $bs).'":'.cn($toUpdateValues[$i]).',';
 }
 $response['artistPriority'] = $artistPriority;
@@ -216,7 +217,7 @@ function getYearsInDecades($musicData, $ignoreArray)
     {
       if(!in_array($row['year'], $ignoreArray))
       {
-        array_push($years, convertToDecades($row['year']));
+        array_push($years, $row['year']);//convertToDecades($row['year']));
       } 
     }
       // $result = array_count_values(explode(',', $resultPriority));

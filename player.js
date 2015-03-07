@@ -1,11 +1,4 @@
-$(document).ready(function()//TODO:file upload front end testing 
-{
-getUser();
-initKplayer();
-if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volumeOfPlayer"));}
- //remoteIni();
- // chhuio();
-}); 
+//TODO:file upload front end testing 
 //variables-----------------------------------------
     var controls = 
     {
@@ -23,7 +16,8 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
         "volumeWrapper":{},
         "artistAndTitleContainer":{},
         "timeProgress":{},
-        "timeDuration":{}
+        "timeDuration":{}, 
+        "shareButton":{}
     };
     var VKMusic={};
     var JSONResponse={};
@@ -40,6 +34,7 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     var Playlists=new Array();
     cleanedArr=new Array(); 
     var currentMode;
+    var playSource="playlist";
     var ip;
     var currentPlaylist;
     var isBeingAnimated;
@@ -64,7 +59,7 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     var seeking=false;
     var seekPercent=0;
     var scrollVolControl = 0;
-
+    var autoNext=true;
     var defaultTheme="defaultTheme";//"purchasedTheme";//
     var filetype=".svg";
     var theme = 
@@ -98,6 +93,7 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     controls.buffered = document.getElementById('buffered');
     controls.shuffleButton = document.getElementsByClassName('shuffle')[0];
     controls.repeatButton = document.getElementsByClassName('repeat')[0];
+    controls.shareButton = document.getElementsByClassName('share')[0];
     controls.volumeLevel = document.getElementById('level');
     controls.indicator = document.getElementById('indicator');
     controls.volumeIndicator = document.getElementById('volumeIndicator');
@@ -110,10 +106,6 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     if (controls.progressWrapper !=null || controls.progressWrapper !=undefined) controls.progressWrapper.addEventListener("mousedown", seekbarMouseDown, false);
     if (controls.volumeWrapper !=null || controls.volumeWrapper !=undefined) controls.volumeWrapper.addEventListener("mousedown", volumeMouseDown, false);
     if (controls.playButton !=null || controls.playButton !=undefined) controls.playButton.addEventListener("click", playSong, false);
-    if (controls.prevButton !=null || controls.prevButton !=undefined) controls.prevButton.addEventListener("click", prevSong, false);
-    if (controls.nextButton !=null || controls.nextButton !=undefined) controls.nextButton.addEventListener("click", nextSong, false);
-    if (controls.repeatButton !=null || controls.repeatButton !=undefined) controls.repeatButton.addEventListener("click", repeatSong, false);
-    if (controls.shuffleButton !=null || controls.shuffleButton !=undefined) controls.shuffleButton.addEventListener("click", shuffleSong, false);
     if (currentFile !=null || currentFile !=undefined) currentFile.addEventListener("progress", progressUpdate, false);
     if (currentFile !=null || currentFile !=undefined) currentFile.addEventListener("loadeddata", progressUpdate, false);
 
@@ -122,26 +114,48 @@ if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volu
     if (currentFile !=null || currentFile !=undefined) currentFile.addEventListener("canplaythrough", progressUpdate, false);
     if (currentFile !=null || currentFile !=undefined) currentFile.addEventListener("timeupdate", timeupdateSong, false);
     if (currentFile !=null || currentFile !=undefined) currentFile.addEventListener("ended", songEnded, false);
+    addListForSecFunty();
 
     //scrollVolume------------------------------------------------------------------------------
     
     var playerScroll= document;//.getElementsByClassName('player')[0];
     mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
     $(".playlist, #youtube, #stats, #bgChanger, #uploadFrameDisplayer").on(mousewheelevt, function(e){e.stopPropagation();});
-    $(".lyricsHolder").on(mousewheelevt, function(e){e.stopPropagation();});
+    $("#lyricsHolder").on(mousewheelevt, function(e){e.stopPropagation();});
     $("#youtube").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".facebook").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".ui-autocomplete").on(mousewheelevt, function(e){e.stopPropagation();});
     $(".playlist").on("dblclick", function(e){e.stopPropagation();});
+    $("#lyricsHolder >div").on("dblclick", function(e){e.stopPropagation();});
     $(".facebook").on("dblclick", function(e){e.stopPropagation();});
     $(".settings").on("dblclick", function(e){e.stopPropagation();});
     $("#addNewPlaylist").on("click", function(e){e.stopPropagation();});
-    if (playerScroll.attachEvent && scrollVolumeOn)
-    playerScroll.attachEvent("on"+mousewheelevt, volumeScroll)
-    else if (playerScroll.addEventListener && scrollVolumeOn)
-    playerScroll.addEventListener(mousewheelevt, volumeScroll, false)
+    if (playerScroll.attachEvent && scrollVolumeOn){
+      playerScroll.attachEvent("on"+mousewheelevt, volumeScroll)
+    }
+    else if (playerScroll.addEventListener && scrollVolumeOn){
+      playerScroll.addEventListener(mousewheelevt, volumeScroll, false)
+    }
+    getUser("music");
+    if(getCookie("volumeOfPlayer")=="null"){volume(80);} else{volume(getCookie("volumeOfPlayer"));}
   }// initKplayer
   
+function addListForSecFunty()
+{
+    if (controls.prevButton !=null || controls.prevButton !=undefined) controls.prevButton.addEventListener("click", prevSong, false);
+    if (controls.nextButton !=null || controls.nextButton !=undefined) controls.nextButton.addEventListener("click", nextSong, false);
+    if (controls.shareButton !=null || controls.shareButton !=undefined) controls.shareButton.addEventListener("click", shareAction, false);
+    if (controls.repeatButton !=null || controls.repeatButton !=undefined) controls.repeatButton.addEventListener("click", repeatSong, false);
+    if (controls.shuffleButton !=null || controls.shuffleButton !=undefined) controls.shuffleButton.addEventListener("click", shuffleSong, false);
+} 
+function removeListForSecFunty()
+{
+    if (controls.prevButton !=null || controls.prevButton !=undefined) controls.prevButton.removeEventListener("click", prevSong, false);
+    if (controls.nextButton !=null || controls.nextButton !=undefined) controls.nextButton.removeEventListener("click", nextSong, false);
+    if (controls.shareButton !=null || controls.shareButton !=undefined) controls.shareButton.removeEventListener("click", shareAction, false);
+    if (controls.repeatButton !=null || controls.repeatButton !=undefined) controls.repeatButton.removeEventListener("click", repeatSong, false);
+    if (controls.shuffleButton !=null || controls.shuffleButton !=undefined) controls.shuffleButton.removeEventListener("click", shuffleSong, false);
+}  
 function changeMode(mode)
 {
   if(currentMode=="youtube") toggleYoutubeVideo('hide');
@@ -151,18 +165,21 @@ function changeMode(mode)
   {
   case "lyrics":
   $('#lyricsButton').addClass('buttonPressed');
-  searchLyricsVK(fileData.title[fileNumber]+" "+fileData.artist[fileNumber]);
-  flip($('.lyricsHolder')); 
+  // searchLyricsVK(fileData.title[fileNumber]+" "+fileData.artist[fileNumber]);
+  getUser("recs");
+  flip($('#lyricsHolder')); 
   break;
   case "artwork":
   $('#artworkButton').addClass('buttonPressed');
   updateArtwork();
   flip($('.artHolder'));
+  exitRecommMode();
   break;
   case "youtube":
   $('#youtubeButton').addClass('buttonPressed');
   loadYoutube(fileData.artist[fileNumber]+" "+fileData.title[fileNumber]);
   flip($('#youtube'));
+  exitRecommMode();
   break;
   }
   //alert(mode);
@@ -172,7 +189,7 @@ function flip(div)
   //$('#youtube').removeClass('flip in').addClass('flip out').hide();
   //alert(div.is(':visible'));
   var pageImage = $('.artHolder');
-  var pageLyrics = $('.lyricsHolder');
+  var pageLyrics = $('#lyricsHolder');
   var pageYoutube = $('#youtube');
   var toShow = div; 
   if(pageImage.is(':visible')) {var toHide=pageImage;}
@@ -270,18 +287,37 @@ function setHeader(xhr) {
 
   xhr.setRequestHeader('Authorization', token);
 }
-function getUser()
+function getUser(where)
 {
-//get the user
-      $.ajax({
-		 url : "/getJson.php",
-		 type: "GET",
-		 success: function(data)
-		 {
-        getFromJSON(data);
-		 }  
-	      });
-    //get the user
+  switch(where){
+    case "music": 
+    $.ajax({
+     url : "/getJson.php",
+     type: "GET",
+     success: function(data){
+      getFromJSON(data, where);
+     }  
+    });
+    break;
+    case "recs":
+    options =ch.getRecommendationOptions();
+    var str="";
+    $.each( options, function( key, value ) {
+        if(value) str+=key+",";
+    });
+    str=str.slice(0,-1)
+    console.log(str);
+    $.ajax({
+     url : "/getRecommendations.php?options="+str,
+     type: "GET",
+     success: function(data){
+      console.log(data)
+      getRecsFromJson(data, where);
+     }  
+    });
+    break;
+
+  }
 }
 
 function syncServer(id, command, arg)
@@ -341,7 +377,9 @@ function renewPlaylist()
 {
     
   $.get( "/getJson.php", function( data ) {
-    $(".playlist").empty(); getFromJSON(data);
+    $(".playlist").empty(); 
+    console.log("emptied playlist");
+    getFromJSON(data);
   });
 }
 function removeFromFileData(index)
@@ -367,42 +405,51 @@ function removeFromFileData(index)
   fileData.genre.splice(index, 1);//} catch(e){alert(e);}//console.log(index);
 }
 
- function getFromJSON(file) 
+ function parseIntoObject(file){
+     // JSONResponse=file;
+     console.log(file);
+    var response = {};
+    response.url=new Array();
+    response.title = new Array();
+    response.artist = new Array();
+    response.album = new Array();
+    response.year = new Array();
+    response.wave = new Array();
+    response.genre = new Array();
+    response.urlOfArt = new Array();
+    response.id = new Array();
+    for (var u = 0; u < file.Songs.length; u++)
+    {
+      var filet = file.Songs[u]; //alert(u);
+      response.url.push(filet.url);
+      response.title.push(filet.title);
+      response.artist.push(filet.artist);
+      response.album.push(filet.album);
+      response.year.push(filet.year);
+      response.urlOfArt.push(filet.urlOfArt);
+      response.genre.push(filet.genre);
+      response.wave.push(filet.wave);
+      response.id.push(filet.id);
+     }
+     return response;
+ }
+ function getFromJSON(file, where) 
   {
-    JSONResponse=file;
-    fileData.url=new Array();
-    fileData.title = new Array();
-    fileData.artist = new Array();
-    fileData.album = new Array();
-    fileData.year = new Array();
-    fileData.wave = new Array();
-    fileData.genre = new Array();
-    fileData.urlOfArt = new Array();
-    fileData.id = new Array();
     file = $.parseJSON(file);//alert(file.User[0].user);
     if(file.User[0].user==""){window.location.replace("/loginSignUp/");}
-    if(file.User[0].type=="Facebook"){facebookIni(file.User[0].user);}//alert(user);}
+    if(file.User[0].type=="Facebook"){
+    facebookIni(file.User[0].user);
+    }//alert(user);}
     if(file.User[0].bg)
     {
        $("body").css("background", "url('"+file.User[0].bg+"')"); 
        $("body").css("background-size", "cover");
        $("body").css("background-repeat", "initial initial");
     }//=========================fade in
+    $("#username").text(' ('+file.User[0].email+')');
     $("#container").fadeIn();
-    for (var u = 0; u < file.Songs.length; u++)
-    {
-      var filet = file.Songs[u]; //alert(u);
-      fileData.url.push(filet.url);
-      fileData.title.push(filet.title);
-      fileData.artist.push(filet.artist);
-      fileData.album.push(filet.album);
-      fileData.year.push(filet.year);
-      fileData.urlOfArt.push(filet.urlOfArt);
-      fileData.genre.push(filet.genre);
-      fileData.wave.push(filet.wave);
-      fileData.id.push(filet.id);
-     }
 
+     fileData = parseIntoObject(file);
      //back up
      fileDataBackUp = JSON.parse(JSON.stringify(fileData));// alert("happened");
      //autocomplete
@@ -445,7 +492,7 @@ function removeFromFileData(index)
     });
     initiateDropdown(Playlists);
     //initialise playlist
-    playlist();
+    playlist(where);
 
 }
 
@@ -575,29 +622,33 @@ function initiateDropDownEvents()
 
 
 
-  function loopPlaylistItemRendering (i) 
+  function loopPlaylistItemRendering (i, object, table) 
   {  
      //console.log(i);         //  create a loop function
      setTimeout(function () 
      { 
-        if((fileData.url.length-(i))<31)
+        if((object.url.length-(i))<31)
         {
-          renderPlaylistItem(i);          //  your code here
+          renderPlaylistItem(i, table, object);          //  your code here
           i++;                     //  increment the counter
         }
         else
         {
-          renderPlaylistItemBigChunks(i);          //  your code here
+          renderPlaylistItemBigChunks(i, object, table);          //  your code here
           i=i+30; 
         }
-        if (i < fileData.url.length) {            //  if the counter < 10, call the loop function
-           loopPlaylistItemRendering(i);             //  ..  again which will trigger another 
+        if (i < object.url.length) {            //  if the counter < 10, call the loop function
+           loopPlaylistItemRendering(i, object, table);             //  ..  again which will trigger another 
         }                        //  ..  setTimeout()
      }, 30)
   }
 
-  function playlist() 
+  function playlist(table) 
   {
+    if(table==undefined)
+    {
+      table = "music";
+    }
     if (playlistOn)
     {
       if(fileData.url.length==0)
@@ -608,22 +659,10 @@ function initiateDropDownEvents()
           $('#uploadFrameDisplayer').show();
         });
       }
-      var i;
-      if (fileData.url.length>30) 
-      {
-         for (var x=0; x<30; x++) 
-         {
-           renderPlaylistItem(x);
-         }
-         loopPlaylistItemRendering(30);
-      }
-      else
-      {
-         for (var x=0; x<fileData.url.length; x++) 
-         {
-           renderPlaylistItem(x);
-         }
-      }
+      var i = new Date();
+
+      initiateRendering(fileData, table);
+      console.log(new Date() - i);
       removeSongBack(0);
       changeSongBack(0);
       lengthOfJsonObject=fileData.url.length;
@@ -631,27 +670,57 @@ function initiateDropDownEvents()
     }//if
   }
 
+  function initiateRendering (object, table) {
 
-  function renderPlaylistItem(index)
+      if (object.url.length>30) 
+      {
+         for (var x=0; x<30; x++) 
+         {
+           renderPlaylistItem(x, table, object);
+         }
+         loopPlaylistItemRendering(30, object, table);
+      }
+      else
+      {
+         for (var x=0; x<object.url.length; x++) 
+         {
+           renderPlaylistItem(x, table, object);
+         }
+      }
+  }
+
+  function renderPlaylistItem(index, table, object)
   {
-            $(".playlist").append("<div draggable=true id=song"+index+">"
-          +"<div class='artInPlaylist'><img src='"+cl(convertToThumbURL(fileData.urlOfArt[index]))
+      if(table=="music"){
+          $(".playlist").append("<div draggable=true id=song"+index+">"
+          +"<div class='artInPlaylist'><img src='"+cl(convertToThumbURL(fileData.urlOfArt[index])) //encodeURI(str)
           +"' alt='art' /></div>"
           +"<div class='spanContainer'><span class='artist'>"
           +cl(fileData.artist[index])+"</span>"
           +"<span class='title'>"
           +cl(fileData.title[index])+"</span></div></div>");
-        $("#song"+index).on("click", function()
-        {
-          setCurrentFile(index);
-        });
+          $("#song"+index).on("click", function()
+          {
+            setCurrentFile(index);
+            playSource="playlist";
+          });
+      }
+      if (table=="recs") {
+          $("#recContainer").append("<div draggable=true id='recomm"+index+"' onclick='playRecomm(this)'>"
+          +"<div class='recArt'><img src='"+cl(convertToThumbURL(object.urlOfArt[index]))
+          +"' alt='art' /></div>"
+          +"<div><span>"
+          +cl(object.artist[index])+" - "
+          +cl(object.title[index])+"</span></div></div>");
+      }
+
   }
-  function renderPlaylistItemBigChunks(index)
+  function renderPlaylistItemBigChunks(index, object, table)
   {
 
     for (var x=index; x<index+30; x++) 
     {
-      renderPlaylistItem(x);
+      renderPlaylistItem(x, table, object);
     }
   }
   function cl(text)
@@ -660,10 +729,16 @@ function initiateDropDownEvents()
     text  = text.replace('/\0/g', '0').replace('/\(.)/g', '$1').replace('\\','');
     return text;
   }
-  function convertToThumbURL(str)
+  function convertToThumbURL(str )
   {
     var filename = str.replace(/^.*[\\\/]/, '');
     str = str.replace(filename,"thumb/"+filename);
+    return str;
+  }
+  function convertToSampleURL(str )
+  {
+    var filename = str.replace(/^.*[\\\/]/, '');
+    str = str.replace(filename,"samples/"+filename);
     return str;
   }
   function changeTheme(customTheme, type)
@@ -701,6 +776,7 @@ function initiateDropDownEvents()
 
   function setCurrentFile(action)
   {
+    playSource="playlist";
     if (action=="prev")
     {
       removeSongBack(fileNumber);
@@ -713,7 +789,7 @@ function initiateDropDownEvents()
       currentFile.setAttribute("src", fileData.url[fileNumber]);
       playButton();
     }
-    else if (action=="next")
+    else if (action=="next" && autoNext)
     {
       removeSongBack(fileNumber);
       if (shuffle) 
@@ -855,11 +931,16 @@ function initiateDropDownEvents()
 //================================================================================================
   function songEnded() 
   {
+    console.log("song ended");
     if (repeat==0 && fileNumber>=lengthOfJsonObject-1) {pauseButton()}
     else if (repeat==1){currentFile.currentTime=0;currentFile.play();}
-    // else if (repeat==2){nextSong();}
-    // else if (repeat==0) {nextSong();}
-    else {nextSong();}
+    else {
+      if(!autoNext){
+        pauseButton();
+      }
+      else
+      nextSong();
+    }
   }
 
 //buffered---------------------------------------------
@@ -992,7 +1073,15 @@ function initiateDropDownEvents()
   {
     //$(".play > img").replaceWith("<img src='"+defaultTheme+theme.pauseImg+filetype+"' />");
     //hide unnec functionality
-    if(source=="autocomplete") {$(".secondaryFunctionality").fadeTo("fast",0.3);} else {$(".secondaryFunctionality").fadeTo("fast",1);}
+    if(source=="autocomplete") {
+      $(".secondaryFunctionality").fadeTo("fast",0.3);
+      nextDisable();
+      removeListForSecFunty();
+    } else {
+      // if(playSource=="playlist"){
+          exitRecommMode();
+      // }
+    }
     currentFile.play();
     $("#playButton").hide(); 
     $("#pauseButton").show(); 
@@ -1000,7 +1089,7 @@ function initiateDropDownEvents()
     if(currentFile.currentTime==0 && source!="autocomplete")
     {
       updateIcon("Playing: ", fileData.title[fileNumber]+" - "+fileData.artist[fileNumber]);
-      if($('.lyricsHolder').is(':visible')) searchLyricsVK(fileData.title[fileNumber]+" "+fileData.artist[fileNumber]);
+      if($('#lyricsHolder').is(':visible')) searchLyricsVK(fileData.title[fileNumber]+" "+fileData.artist[fileNumber]);
       if($('.artHolder').is(':visible')) updateArtwork();
       if($('#youtube').is(':visible')) loadYoutube(fileData.artist[fileNumber]+" "+fileData.title[fileNumber]);
     }
@@ -1113,5 +1202,13 @@ function initiateDropDownEvents()
   function allowScrollVolume(value) 
   {
     scrollVolumeOn=value;
+  }
+  function nextDisable()
+  {
+    autoNext = false;
+  }
+    function nextEnable()
+  {
+    autoNext = true;
   }
   

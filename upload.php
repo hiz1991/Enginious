@@ -3,7 +3,7 @@ session_start();
 $user=$_SESSION['user'];
 if (!isset($_SESSION))
 {
-	header("/index.html");
+	header("/index.php");
 }
 // include("./getGenre.php");
 // include("db.php");

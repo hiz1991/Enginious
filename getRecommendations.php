@@ -1,182 +1,260 @@
 <?php
 session_start();
 $user=$_SESSION['user'];
+  $firstTime=round(microtime(true) * 1000);
 include 'db.php';
 include 'transl.php';
-  // $firstTime=microtime();
+include("getUserObject.php");
+
 $bs=getTransBase();
 if(!$user)
 {
   echo '{"Response":{"error":"Not logged in"}}';
   exit(0);
 }
-//analyse volume
+//get store songs
 $storeMusic = selectAllDB('music', 'store');
-$fetchedObject = array();
-while($fetchedObject[] = mysql_fetch_object($storeMusic)) {
-    // you don´t really need to do anything here.
+$storeFiles=array();
+while($row = mysql_fetch_array($storeMusic)) {
+  $song=null;
+  $song->artist=$row['artist'];
+  $song->wave=$row['wave'];
+  $song->year=$row['year'];
+  $song->genre=$row['genre'];
+  $song->title=$row['title'];
+  $song->id=$row['id'];
+  $song->tempo=$row['tempo'];
+  $song->volume=$row['volume'];
+  $song->pitch=$row['pitch'];
+  $song->url=$row['url'];
+  $song->urlOfArt=$row['urlOfArt'];
+  array_push($storeFiles, $song);
 }
-$userData = json_decode(file_get_contents($user.'/library.txt'));
-$result;
-$result['userData']=$userData;
-$result['storeData'] = $fetchedObject;
-file_put_contents($user.'/analysis.txt', json_encode($result));
+$userData = selectAllDB('libraryAnalysis', $user);
+$libraryResults = array();
+while($libraryResults[] = mysql_fetch_object($userData)) {
+}
 
+$artistPriority = array();
+$artistPriority['values']=array();
+$artistPriority['occurances']=array();
+$yearPriority = array();
+$yearPriority['values']=array();
+$yearPriority['occurances']=array();
+$genrePriority = array();
+$genrePriority['values']=array();
+$genrePriority['occurances']=array();
 
-function calcDeviationInPercent($meanValue, $arrayReceived, $assoc)
-{
-  $localMean;
-  $localSum;
-  $nonAssocArray = [];
-  $keys=array_keys($arrayReceived);
-  if($meanValue==null)
-  {
-    if($assoc){
-       for ($i=0; $i <count($arrayReceived) ; $i++) { 
-       $localSum+=$arrayReceived[$keys[$i]];
-       array_push($nonAssocArray, $arrayReceived[$keys[$i]]);
+$priorityRequest = selectAllDB('priority', $user);
+if(mysql_num_rows($priorityRequest)){
+  while($row = mysql_fetch_array($priorityRequest)) {
+    if ($row['type']=='artist') {
+      array_push($artistPriority['values'], $row['value'] );
+      array_push($artistPriority['occurances'], $row['occurances'] );
+    } elseif ($row['type']=='genre') {
+      array_push($genrePriority['values'], $row['value'] );
+      array_push($genrePriority['occurances'], $row['occurances'] );
+    } elseif ($row['type']=='year') {
+      array_push($yearPriority['values'], $row['value'] );
+      array_push($yearPriority['occurances'], $row['occurances'] );
+    }
+  }
+}
+// $indicesOfStoreFilesToDelete=array();
+$userSongs =  getUserObject($user, 'object', 'songs');//[0]['id'];
+//get rid of songs that a user already has
+$stripedStoreFiles=array();
+for ($i=0; $i < count($storeFiles); $i++) { 
+  // echo $storeFiles[$i]->title.'<br><br>';
+  $found=false;
+  for ($x=0; $x < count($userSongs); $x++) { 
+       if($userSongs[$x]['title']==$storeFiles[$i]->title && $userSongs[$x]['artist']==$storeFiles[$i]->artist){
+        $found=true;
        }
-       //replace assoc array with non assoc array
-       // var_dump($nonAssocArray);
-       $arrayReceived = $nonAssocArray;
-    }
-    $meanValue = $localSum/count($arrayReceived);
-    // echo $meanValue;
   }
-  return  100-calculatePercentTo(calcDeviation($meanValue,$arrayReceived), 25);
-}
-function calculatePercentTo($givenValue, $maxValue)
-{
-  return $givenValue*100/$maxValue;
-}
-function calcDeviation($meanReceived, $arrayReceived)
-{
-  $sumDistance=0;
-  for ($x=0; $x <count($arrayReceived) ; $x++)
-  { 
-   $sumDistance=$sumDistance+abs($arrayReceived[$x]-$meanReceived); 
- }
- return $sumDistance/count($arrayReceived);
-}
-function ratioInPercent($value)//check if number
-{
-  return 100 - $value*100;
-}
-function convertDistArrayToString($averageDistr)
-{
-  $avDistrToString="";
-  for ($i=0; $i <count($averageDistr) ; $i++) { 
-    if($averageDistr[$i]<10)
-    {
-      $avDistrToString.='0'.$averageDistr[$i];
-    }
-    else
-    {
-      $avDistrToString.=$averageDistr[$i];
-    }
+  if(!$found){
+    array_push($stripedStoreFiles, $storeFiles[$i]);
   }
-  return $avDistrToString;
 }
-function convertToDecades($number)
-{
-   // echo(floor($number/10)*10);
- return (floor($number/10)*10)."";
-}
-function getMeanForArrayRounded($array)
-{
-  $sum =0;
-  for ($i=0; $i <count($array) ; $i++) { 
-    $sum+=$array[$i];
+// var_dump($indicesOfStoreFilesToDelete);
+// for ($i=0; $i < count($stripedStoreFiles); $i++) { 
+//   echo $stripedStoreFiles[$i]->title.'<br><br>';
+// }
+
+//Done $stripedStoreFiles has music files not present in a users lib
+
+
+// ========================================================
+
+$libraryResults = $libraryResults[0];
+$tempo = $libraryResults->tempo;
+$volume = $libraryResults->volume;
+$pitch = $libraryResults->pitch;
+$artist = $libraryResults->artistAccuracy;
+$genre = $libraryResults->genreAccuracy;
+$year = $libraryResults->yearAccuracy;
+$distribution = $libraryResults->distribution;
+$distributionAccuracy = $libraryResults->distributionAccuracy;
+$itemRelevanceArray = array();
+
+$isTempoOn = false;
+$isVolumeOn = false;
+$isPitchOn = false;
+$diffTempo = 0;
+$diffVolume = 0;
+$diffPitch = 0;
+$criteriaValueTempo = 0;
+$criteriaValueVolume = 0;
+$criteriaValuePitch = 0;
+
+$isArtistOn = false;
+$isGenreOn = false;
+$isYearOn = false;
+$diffArtist = 0;
+$diffGenre = 0;
+$diffYear = 0;
+$criteriaValueArtist = 0;
+$criteriaValueGenre = 0;
+$criteriaValueYear = 0;
+
+$isDistributionOn = false;
+$diffDistribution = 0;
+$criteriaValueDistribution = 0;
+
+// check for security later
+$params = $_GET['options'];
+$optioins = explode(",", $params);
+for ($i=0; $i < count($optioins); $i++) { 
+  if ($optioins[$i]=='tempo') {
+    $isTempoOn = true;
   }
-  return round($sum/count($array));
-}
-function getAccuracy($musicData, $criterion, $critAccuracy, $topValue)
-{
-  mysql_data_seek($musicData, 0);
-  if(mysql_num_rows($musicData))
-  {
-    // var_dump($row=mysql_fetch_array($musicData));
-    $i=0;
-    $sum=0;
-    $tempArray=[];
-    while($row=mysql_fetch_array($musicData))
-    {
-      $sum=$sum+calculatePercentTo($row[$criterion], $topValue);
-      $i++;
-      array_push($tempArray, calculatePercentTo($row[$criterion], $topValue));
-        // echo calculatePercentTo($row['volume'], 30000);
-    }
-    $meanValue =$sum/$i;
-      // var_dump(calcDeviation($meanValue,$tempArray));
-    $finalAccuracy=calcDeviationInPercent($meanValue, $tempArray);//100-calculatePercentTo(calcDeviation($meanValue,$tempArray), 25);
-      // var_dump(updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user));
-      // updateDB('libraryAnalysis', $toUpdate, $toUpdateValues,$user);
-    return [$meanValue, $finalAccuracy];
-  }   
-}
-function getArtistPriority($musicData, $criterion, $ignoreArray)
-{
-  //TODO: need to remove Unknown artist
-  mysql_data_seek($musicData, 0);
-  $resultPriority=[];
-  $result=[];
-  if(mysql_num_rows($musicData))
-  {
-    while($row=mysql_fetch_array($musicData))
-    {
-      if(!in_array($row[$criterion], $ignoreArray))
-      {
-        array_push($resultPriority, $row[$criterion]);
-      } 
-    }
-      // $result = array_count_values(explode(',', $resultPriority));
-    $result = array_count_values($resultPriority);
-    arsort($result);
+  elseif ($optioins[$i]=='volume') {
+    $isVolumeOn = true;
   }
-  return $result;
-}
-function getYearsInDecades($musicData, $ignoreArray)
-{
-  $years=[];
-  mysql_data_seek($musicData, 0);
-  $result=[];
-  if(mysql_num_rows($musicData))
-  {
-    while($row=mysql_fetch_array($musicData))
-    {
-      if(!in_array($row['year'], $ignoreArray))
-      {
-        array_push($years, convertToDecades($row['year']));
-      } 
-    }
-      // $result = array_count_values(explode(',', $resultPriority));
-    $result = array_count_values($years);
-    arsort($result);
+  elseif ($optioins[$i]=='pitch') {
+    $isPitchOn = true;
   }
-  return $result;
-}
-function getAverageDistrib($musicData, $length=50, $step=2)
-{
-  $levels=[];
-  $result=[];
-  for ($i=0; $i < $length; $i++) { 
-    $levels[$i] = array();
+  elseif ($optioins[$i]=='artist') {
+    $isArtistOn = true;
   }
-  mysql_data_seek($musicData, 0);
-  if(mysql_num_rows($musicData))
-  {
-    while($row=mysql_fetch_array($musicData))
-    {
-      for ($i=0; $i <($length*$step); $i+=$step) { 
-        array_push($levels[$i/$step], substr($row['wave'], $i, 2));
+  elseif ($optioins[$i]=='genre') {
+    $isGenreOn = true;
+  }
+  elseif ($optioins[$i]=='year') {
+    $isYearOn = true;
+  }
+  elseif ($optioins[$i]=='distribution') {
+    $isDistributionOn = true;
+  } else {
+    $isTempoOn = true;
+    $isVolumeOn = true;
+    $isPitchOn = true;
+    $isArtistOn = true;
+    $isGenreOn = true;
+    $isYearOn = true;
+    $isDistributionOn = true;
+  }
+}
+
+$sumOfAccuracies = (($isTempoOn?$tempo:0) + ($isVolumeOn?$volume:0) + ($isPitchOn?$pitch:0) 
+                  + ($isArtistOn?$artist:0) + ($isGenreOn?$genre:0) + ($isYearOn?$year:0) 
+                  + ($isDistributionOn?$distribution:0));
+
+for ($i=0; $i < count($stripedStoreFiles); $i++) {
+  $ArtistOccurance = 0;
+  $genreOccurance = 0;
+  $yearOccurance = 0;
+
+  if ($isTempoOn) {
+    $diffTempo = abs($tempo - $stripedStoreFiles[$i]->tempo * 100 / 200);
+    $criteriaValueTempo = (100 - $diffTempo) * $tempo;
+  }
+  if ($isVolumeOn) {
+    $diffVolume = abs($volume - $stripedStoreFiles[$i]->volume * 100 / 300000);
+    $criteriaValueVolume = (100 - $diffVolume) * $volume;
+  }
+  if ($isPitchOn) {
+    $diffPitch = abs($pitch - $stripedStoreFiles[$i]->pitch * 100 / 10000);
+    $criteriaValuePitch = (100 - $diffPitch) * $pitch;
+  }
+  // needs to be checked
+  if ($isArtistOn) {
+    $sum = 0;
+    for ($j = 0; $j < count($artistPriority['values']); $j++) {
+      $sum += $artistPriority['occurances'][$j];
+      if ($stripedStoreFiles[$i]->artist == $artistPriority['values'][$j]){
+        $ArtistOccurance = $artistPriority['occurances'][$j];
       }
-    }
-    for ($i=0; $i <$length ; $i++) { 
-      $result[$i]=getMeanForArrayRounded($levels[$i]);
-    }
+    };
+    $occurenceOfArtistPercent = $ArtistOccurance*100/$sum;
+    
+    $diffArtist = abs(100 - $occurenceOfArtistPercent);
+    $criteriaValueArtist = (100 - $diffArtist) * $artist;
   }
-  // var_dump($levels[49]);
-  return $result;//['mean', 'mean', '...'](50)
+  if ($isGenreOn) {
+    $sum = 0;
+    for ($j = 0; $j < count($genrePriority['values']); $j++) {
+      $sum += $genrePriority['occurances'][$j];
+      if ($stripedStoreFiles[$i]->genre == $genrePriority['values'][$j]){
+        $genreOccurance = $genrePriority['occurances'][$j];
+      }
+    };
+    $occurenceOfGenrePercent = $genreOccurance*100/$sum;
+    
+    $diffGenre = abs(100 - $occurenceOfGenrePercent);
+    $criteriaValueGenre = (100 - $diffGenre) * $genre;
+  }
+  if ($isYearOn) {
+
+    $sum = 0;
+    for ($j = 0; $j < count($yearPriority['values']); $j++) {
+      $sum += $yearPriority['occurances'][$j];
+      if ($stripedStoreFiles[$i]->year == $yearPriority['values'][$j]){
+        $yearOccurance = $yearPriority['occurances'][$j];
+      }
+    };
+    $occurenceOfYearPercent = $yearOccurance*100/$sum;
+
+    $diffYear = abs(100 - $occurenceOfYearPercent);
+    $criteriaValueYear = (100 - $diffYear) * $year;
+  }
+  // deviation
+  if ($isDistributionOn) {
+    $distribution = str_split($distribution, 2);
+    $wave = str_split($stripedStoreFiles[$i]->wave, 2);
+    $sum = 0;
+    for ($j = 0; $j < count($distribution); $j++) {
+      $sum += abs($distribution[$j] - $wave[$j]);
+    }
+    $diffDistribution = $sum*100/5000;
+    $criteriaValueDistribution = (100 - $diffDistribution) * $distributionAccuracy;
+  }
+
+  $itemRelevance = $criteriaValueTempo + $criteriaValueVolume + $criteriaValuePitch + $criteriaValueArtist + $criteriaValueGenre + $criteriaValueYear;
+
+  $itemRelevancePercentage = $itemRelevance / $sumOfAccuracies;
+  // echo $itemRelevancePercentage.'<br>';
+  // array_push($itemRelevanceArray, $itemRelevancePercentage);
+  $itemRelevanceArray[$stripedStoreFiles[$i]->id] = $itemRelevancePercentage;
+  // echo $itemRelevancePercentage.'<br>';
 }
+arsort($itemRelevanceArray);
+$ids = array_keys($itemRelevanceArray);
+// var_dump($ids);
+$finalArray=array();
+for ($x=0; $x < count($ids); $x++) { 
+  for ($i=0; $i <count($stripedStoreFiles) ; $i++) { 
+    if($ids[$x]==$stripedStoreFiles[$i]->id){
+      array_push($finalArray,$stripedStoreFiles[$i] );
+      break;
+    }
+    # code...
+  }
+  # code...
+}
+echo '{   "Songs":'.json_encode($finalArray).'}';
+// $secondTime = round(microtime(true) * 1000);
+// echo ($secondTime-$firstTime);
+
 mysql_close($db);
 ?>

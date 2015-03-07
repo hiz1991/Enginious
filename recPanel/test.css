@@ -1,0 +1,45 @@
+.checkboxesContainer{
+	margin-top: 10px;
+	/*background: lightBlue;*/
+}
+.checkboxesContainer>img{
+  height: 20px;
+  vertical-align: sub;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.checkboxesButton>img{
+	width: 10px;
+	height: 10px;
+}
+.recommendation{
+	font-weight: 600;
+}
+#checkboxesButton {
+	cursor: pointer;
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-family: Arial;
+  color: #ffffff;
+  /*font-size: 20px;*/
+  background: #B7B7B7;
+  padding: 3px 10px 3px 10px;
+  text-decoration: none;
+}
+
+#checkboxesButton:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+#recommendationFilterContainer {
+  background: rgba(255, 255, 255, 0.93);
+  /* text-align: center; */
+  top: 0;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  padding: 7px;
+  border-bottom: 1px solid rgb(178, 183, 183);
+  border-left: 1px solid rgb(178, 183, 183);
+}

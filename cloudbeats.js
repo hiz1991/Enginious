@@ -1,5 +1,6 @@
 var total;
 var number=0;
+var recData={};
 function counter()
 { 
   number++;
@@ -96,6 +97,7 @@ function changeBackground()
 function showbg()
 {
 	$("#bgChanger").show();
+	enableDocClick();
 	fetchBgs();
 }
 function fetchBgs()
@@ -151,16 +153,32 @@ function statsShow(dataPassed)
 {
       smth = $.parseJSON(dataPassed);
       $("#statsPane").empty();
-      $("#statsPane").append('<p id="statsPaneLabel">Library analysis results:</p>'); 
+      $("#statsPane").append('<p id="statsPaneLabel">'+translate("Library analysis results")+':</p>'); 
       var i=0;
       for(var k in smth.Response)// alert(k);
       {
-          $("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+k+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
-          $("#container"+i).append("    <svg class='svg' id='"+"svg"+i+"' style='width: "+$("#container"+i).width()+"px'/></svg>");
-          populateSvg('svg'+i, (smth.Response[k]<=100&&smth.Response[k]!=null)?smth.Response[k]:0);
+      	// console.log(jQuery.type(smth.Response[k]));
+      	if(jQuery.type(smth.Response[k])!="object"){
+      	  if(k=="distribution")
+      	  {
+      	  	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+translate(k)+"</span></div> <svg class='statsIndicatorsContainersDistribution' height='30px'  id='svgPlace'></svg> </div>");
+      	  	drawWaveForm("svgPlace", smth.Response[k], 220, 30);
+      	  }
+      	  else{
+	          if(jQuery.type(smth.Response[k])=="number" && smth.Response[k]<=100){
+	            $("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+translate(k)+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
+	          	$("#container"+i).append("    <svg class='svg' id='"+"svg"+i+"' style='width: "+$("#container"+i).width()+"px'/></svg>");
+	            populateSvg('svg'+i, (smth.Response[k]<=100&&smth.Response[k]!=null)?smth.Response[k]:0);
+	          }
+	          else{
+	          	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+k+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
+	          }
+	      }
+        }
           i++;
       }
       $("#stats").fadeIn();
+      enableDocClick();
 }
 function remoteIni()
 {
@@ -309,4 +327,86 @@ function translIframe(){
 function saveLangOnDB()
 {
 	syncServer(null, "saveLang", language);
+}
+function gid(text)
+{
+	return $("#"+text);
+}
+function gcs(text)
+{
+	return $("."+text);
+}
+function playRecomm(ev)
+{
+	// console.log(ev.id);
+	playSource="recommend";
+	$("#recContainer > div").removeClass("recActive");
+	$("#"+ev.id).addClass("recActive")
+	$(".playlist > div").removeClass("songActive")
+	console.log(recData.url[ev.id.replace("recomm", "")]);
+  	currentFile.setAttribute("src",convertToSampleURL(recData.url[ev.id.replace("recomm", "")]));
+	//fileNumber=action;
+	playButton("autocomplete");
+}
+function exitRecommMode(ev)
+{
+	console.log("exitRecommMode");
+	// console.log(ev.id);
+	if(playSource!="playlist"){
+		pauseButton();
+		playSource="playlist";
+		// $("#recContainer > div").removeClass("recActive");
+		// $("#"+ev.id).addClass("recActive")
+		// $(".playlist > div").removeClass("songActive")
+	  	currentFile.setAttribute("src",fileData.url[fileNumber]);
+	}
+	  	$(".secondaryFunctionality").fadeTo("fast",1);
+	    nextEnable();
+	    addListForSecFunty();
+	    $("#recContainer > div").removeClass("recActive");
+	    changeSongBack(fileNumber);
+	//fileNumber=action;
+	// playButton("autocomplete");
+}
+function shareAction()
+{
+	$('#sharePopUp').fadeIn(); 
+	enableDocClick();
+}
+function enableDocClick()
+{
+	$(".popUp").click(function() {$(".popUp").fadeOut(200);});
+	$("#sharePopUpPane").on("click", function(e){e.stopPropagation();});
+	$("#statsPane").on("click", function(e){e.stopPropagation();});
+	$("#bgChangerPane").on("click", function(e){e.stopPropagation();});
+	$("#uploadFrameDisplayerPane").on("click", function(e){e.stopPropagation();});
+    $("#uploadFrameDisplayer  div").on("click", function(e){e.stopPropagation();});
+    $("#showStatsCheck").on("click", function(e){e.stopPropagation();});
+	
+}
+function drawWaveForm(id,string,w,h,strWidth,color){
+  var s = Snap("#"+id);
+  strWidth = strWidth > 0 ? strWidth : 3;
+  color = color || '#ffa500';
+ 
+  var array = string.match(/.{1,2}/g);
+
+  var path = 'M0,'+((array[0]*1)+1)*h/100+'';
+  for(var i=0;i<array.length;i++){
+    path += ' '+'L'+i*w/50+','+ ((array[i]*1)+1)*h/100;
+  }
+  
+  s.path(path).attr({
+      stroke: color,
+      fill: 'none',
+      strokeWidth: strWidth,
+      transform: 's1,-1'
+  });
+  return s;
+}
+function getRecsFromJson(file, where){
+	file = $.parseJSON(file);
+	recData = parseIntoObject(file);
+	$("#recContainer").empty();
+	initiateRendering( recData, "recs" );
 }
