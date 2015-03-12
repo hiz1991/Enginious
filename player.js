@@ -311,7 +311,7 @@ function getUser(where)
      url : "/getRecommendations.php?options="+str,
      type: "GET",
      success: function(data){
-      console.log(data)
+      // console.log(data)
       getRecsFromJson(data, where);
      }  
     });
@@ -363,13 +363,23 @@ function syncServer(id, command, arg)
      // fetchBgsCallBack(arr);
      break;
     case "saveLang":
+        // console.log("/syncServer.php"+"?command=saveLang&argument="+arg);
      $.ajax({ url : "/syncServer.php"+"?command=saveLang&argument="+arg,    type: "GET",
       success: function(data){
-        console.log("/syncServer.php"+"?command=saveLang&argument="+arg);
         console.log(data);
       }  
             });
      break;
+    case "buySong":
+      $.ajax({ url : "/syncServer.php"+"?command="+command+"&argument="+arg,    type: "GET",
+      success: function(data){
+        // console.log("/syncServer.php"+"?command="+command+"&argument="+arg);
+        // console.log(data);
+        renewPlaylist();
+      }  
+            });
+     break;
+
 
   }
 }
@@ -707,6 +717,7 @@ function initiateDropDownEvents()
       }
       if (table=="recs") {
           $("#recContainer").append("<div draggable=true id='recomm"+index+"' onclick='playRecomm(this)'>"
+          +"<div id='recBuyButton"+index+"' onclick='buyButtonAction(this)' class='recBuyButton translatable'>"+buyButtonLabel+"</div>"
           +"<div class='recArt'><img src='"+cl(convertToThumbURL(object.urlOfArt[index]))
           +"' alt='art' /></div>"
           +"<div><span>"

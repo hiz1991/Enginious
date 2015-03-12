@@ -1,6 +1,7 @@
 var total;
 var number=0;
 var recData={};
+var buyButtonLabel;
 function counter()
 { 
   number++;
@@ -161,17 +162,17 @@ function statsShow(dataPassed)
       	if(jQuery.type(smth.Response[k])!="object"){
       	  if(k=="distribution")
       	  {
-      	  	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+translate(k)+"</span></div> <svg class='statsIndicatorsContainersDistribution' height='30px'  id='svgPlace'></svg> </div>");
+      	  	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+breakCamelCaseAndTransl(k)+"</span></div> <svg class='statsIndicatorsContainersDistribution' height='30px'  id='svgPlace'></svg> </div>");
       	  	drawWaveForm("svgPlace", smth.Response[k], 220, 30);
       	  }
       	  else{
 	          if(jQuery.type(smth.Response[k])=="number" && smth.Response[k]<=100){
-	            $("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+translate(k)+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
+	            $("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+breakCamelCaseAndTransl(k)+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
 	          	$("#container"+i).append("    <svg class='svg' id='"+"svg"+i+"' style='width: "+$("#container"+i).width()+"px'/></svg>");
 	            populateSvg('svg'+i, (smth.Response[k]<=100&&smth.Response[k]!=null)?smth.Response[k]:0);
 	          }
 	          else{
-	          	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+k+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
+	          	$("#statsPane").append("<div> <div class='statsDescriptors' ><span class='statsSpan'>"+breakCamelCaseAndTransl(k)+"</span></div> <div class='statsIndicatorsContainers' id='container"+i+"'></div><div class='statsNumberContainers' >"+smth.Response[k]+"</div> </div>");
 	          }
 	      }
         }
@@ -179,6 +180,22 @@ function statsShow(dataPassed)
       }
       $("#stats").fadeIn();
       enableDocClick();
+}
+
+function breakCamelCaseAndTransl(str)
+{
+	var withSpaces=str.replace(/([A-Z])/g, ' $1');
+	// withSpaces=str.replace(/([A-Z])/g, function(str){ return str.toLowerCase(); });
+	var arr=withSpaces.split(" ");
+	console.log(arr);
+	var result="";
+	$.each(arr, function( index, value)
+    {
+       	 arr[index] = translate(arr[index]);
+       	 result+=arr[index].toLowerCase()+" ";
+    });
+    return result;
+
 }
 function remoteIni()
 {
@@ -336,17 +353,29 @@ function gcs(text)
 {
 	return $("."+text);
 }
-function playRecomm(ev)
+function playRecomm(ev, shorten)
 {
 	// console.log(ev.id);
+	shorten = true;
 	playSource="recommend";
 	$("#recContainer > div").removeClass("recActive");
 	$("#"+ev.id).addClass("recActive")
 	$(".playlist > div").removeClass("songActive")
 	console.log(recData.url[ev.id.replace("recomm", "")]);
-  	currentFile.setAttribute("src",convertToSampleURL(recData.url[ev.id.replace("recomm", "")]));
+	var url = (shorten)?convertToSampleURL(recData.url[ev.id.replace("recomm", "")]):recData.url[ev.id.replace("recomm", "")];
+  	currentFile.setAttribute("src",url);
 	//fileNumber=action;
 	playButton("autocomplete");
+}
+function buyButtonAction(ev)
+{
+   // alert(ev.id);
+   if(confirm(translate("Are you sure you wan to buy: ")+"\n"+recData.artist[ev.id.replace("recBuyButton", "")]+" - "+recData.title[ev.id.replace("recBuyButton", "")]+"?")){
+	   $("#"+ev.parentNode.id).fadeOut();
+	   syncServer("", "buySong", recData.id[ev.id.replace("recBuyButton", "")]);
+	}
+   // getUser('recs');
+   // console.log(recData.id[ev.id.replace("recBuyButton", "")])
 }
 function exitRecommMode(ev)
 {
@@ -405,8 +434,10 @@ function drawWaveForm(id,string,w,h,strWidth,color){
   return s;
 }
 function getRecsFromJson(file, where){
+	buyButtonLabel=translate("Buy");
 	file = $.parseJSON(file);
 	recData = parseIntoObject(file);
 	$("#recContainer").empty();
 	initiateRendering( recData, "recs" );
+	$(".recBuyButton").on("click", function(e){e.stopPropagation();});
 }

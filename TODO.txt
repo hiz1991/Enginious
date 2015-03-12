@@ -24,3 +24,4 @@
 //TODO: Disable analysis if not signed in
 //TODO: Add entry in libraryAnalysis table for new user
 //TODO: Fix music not added to database
+//TODO: Check click propogation for recomendation buy buttons

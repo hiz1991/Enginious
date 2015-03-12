@@ -6,13 +6,13 @@ var ch = {
   		var allSelected=true;
   		for(key in obj){
   			if (obj[key])
-    			text+=key+', ';
+    			text+=translate(key)+', ';
     		else
     			allSelected=false;
   		};
   		text = text.substring(0, text.length - 2);
   		if (allSelected)
-  			text='All';
+  			text=translate('All');
   	  $('#checkboxesValues').text(text)
   	});
 

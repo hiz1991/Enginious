@@ -483,8 +483,9 @@ button.ui-button::-moz-focus-inner {
 	/* support: IE7; */
 	font-weight: normal;
 	display: block;
-	border:1px solid rgba(230, 232, 234, 0.01);
+	/*border:1px solid rgba(230, 232, 234, 0.01);*/
 	border-bottom: 1px solid rgba(230, 232, 234, 0.42);
+	/*border: 0px !important;*/
 	padding-bottom: 10px;
 	padding-top: 10px;
 }
@@ -496,7 +497,7 @@ button.ui-button::-moz-focus-inner {
 .ui-menu .ui-menu-item a.ui-state-focus,
 .ui-menu .ui-menu-item a.ui-state-active {
 	font-weight: normal;
-	margin: -1px;
+	/*margin: -1px;*/
 }
 
 .ui-menu .ui-state-disabled {
@@ -848,7 +849,8 @@ body .ui-tooltip {
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	border: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	/*border: 0px !important;*/
 	background: rgba(155, 155, 155, 0.2) url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #212121;
@@ -863,7 +865,7 @@ body .ui-tooltip {
 .ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
-	border: 1px solid #aaaaaa;
+	border: 0px !important;
 	background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #212121;
@@ -880,7 +882,8 @@ body .ui-tooltip {
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #fcefa1;
+	/*border: 1px solid #fcefa1;*/
+	border: 0px !important;
 	background: #fbf9ee url(images/ui-bg_glass_55_fbf9ee_1x400.png) 50% 50% repeat-x;
 	color: #363636;
 }
@@ -892,7 +895,8 @@ body .ui-tooltip {
 .ui-state-error,
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
-	border: 1px solid #cd0a0a;
+	/*border: 1px solid #cd0a0a;*/
+	border: 0px !important;
 	background: #fef1ec url(images/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x;
 	color: #cd0a0a;
 }

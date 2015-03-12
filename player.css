@@ -654,11 +654,25 @@ body {
 #recContainer > div:hover {
   border: 1px solid #949494;
 }
+#recContainer > div:hover .recBuyButton {
+  display: block;
+}
 .recControls {
   position: absolute;
 }
 .RecPauseButton {
   display: none;
+}
+.recBuyButton {
+  display: none;
+  color: #fff;
+  position: absolute;
+  z-index: 5;
+  background: url("images/ribbon.png") center center;
+  width: 148px;
+  transform: rotate(45deg) !important;
+  background-size: cover;
+  top: 29px;
 }
 #youtube {
   max-height: 595px !important;

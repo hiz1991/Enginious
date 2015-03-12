@@ -20,31 +20,31 @@ $action=$_GET['command'];
 switch ($action) 
 {
   case 'delete':
-      // $addingUser="DELETE FROM `music` WHERE `music`.`id` = ".$id." AND `music`.`username`=".$user;
-      // mysql_query($addingUser) or die (' error'. mysql_error());
-      // if ($addingUser)
-      // {//echo "success";
-      //     $addingUser2="DELETE FROM `songsInPlaylists` WHERE `songsInPlaylists`.`songId` =".$_GET['index']." AND `songsInPlaylists`.`username`=".$user;
-      //     mysql_query($addingUser2) or die (' error'. mysql_error());
-      //     if ($addingUser2)
-      //     {echo "success2";
-      //         mysql_close();
-      //     }
-      //     else{
-      //       echo mysql_error(); mysql_close();
-      //         }
-      // }
-      // else{
-      //   echo mysql_error(); mysql_close();
-      //     }
+      $addingUser="DELETE FROM `music` WHERE `music`.`id` = ".$id." AND `music`.`username`=".$user;
+      mysql_query($addingUser) or die (' error'. mysql_error());
+      if ($addingUser)
+      {//echo "success";
+          $addingUser2="DELETE FROM `songsInPlaylists` WHERE `songsInPlaylists`.`songId` =".$_GET['index']." AND `songsInPlaylists`.`username`=".$user;
+          mysql_query($addingUser2) or die (' error'. mysql_error());
+          if ($addingUser2)
+          {echo "success2";
+              mysql_close();
+          }
+          else{
+            echo mysql_error(); mysql_close();
+              }
+      }
+      else{
+        echo mysql_error(); mysql_close();
+          }
       break;
   case 'addPs':
-      // $addingUser="INSERT INTO `songsInPlaylists` (`id`, `playlistName`, `songId`, `username`) VALUES (NULL, '".$_GET['playlist']."', '".$id."', '".$user."')";
-      // mysql_query($addingUser) or die (' error'. mysql_error()); if ($addingUser) {echo "success2"; mysql_close();}  else{ echo mysql_error(); }
+      $addingUser="INSERT INTO `songsInPlaylists` (`id`, `playlistName`, `songId`, `username`) VALUES (NULL, '".$_GET['playlist']."', '".$id."', '".$user."')";
+      mysql_query($addingUser) or die (' error'. mysql_error()); if ($addingUser) {echo "success2"; mysql_close();}  else{ echo mysql_error(); }
       break;
   case 'addNewPS':
-      // $addingUser="INSERT INTO `playlists` (`name`, `username`, `id`) VALUES ('".$_GET['name']."', '".$user."', NULL)";
-      // mysql_query($addingUser) or die (' error'. mysql_error()); if ($addingUser) {echo "success2"; mysql_close();}  else{ echo mysql_error(); }
+      $addingUser="INSERT INTO `playlists` (`name`, `username`, `id`) VALUES ('".$_GET['name']."', '".$user."', NULL)";
+      mysql_query($addingUser) or die (' error'. mysql_error()); if ($addingUser) {echo "success2"; mysql_close();}  else{ echo mysql_error(); }
       break;
   case 'fetchBgs':
       // echo "arg1";
@@ -80,6 +80,10 @@ switch ($action)
       updateDB('userInfo', ['lang'], [$argument], $user);
       $_SESSION['lang']=$argument;
       // echo $res;
+      break;
+  case 'buySong':
+      duplicateEntry($argument, $user);
+      echo 'success';
       break;
 }
 mysql_close();

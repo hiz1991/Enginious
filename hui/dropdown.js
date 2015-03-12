@@ -144,7 +144,8 @@ function initiateContextMenu(options)
 	       for (var i=0; i<Playlists.length;i++)
 		    {
 		    	var tempPlaylist={};//object to insert
-		       tempPlaylist.title=Playlists[i]; tempPlaylist.cmd="addPs";
+		       tempPlaylist.title=Playlists[i]; 
+           tempPlaylist.cmd="addPs";
 		       arrPlaylistNames.push(tempPlaylist); 
 	        }
 	       //console.log(Playlists);
@@ -156,9 +157,9 @@ function initiateContextMenu(options)
         show: { effect: "fold", duration: 50},
         hide: { effect: "fold", duration: 50 },
         menu: [ 
-            {title: "Delete", cmd: "delete", uiIcon: "ui-icon-scissors"},
-            {title: "Download", cmd: "download", uiIcon: "ui-icon-copy"},
-            {title: "Add to a Playlist", children:  arrPlaylistNames
+            {title: translate("Delete"), cmd: "delete", uiIcon: "ui-icon-scissors"},
+            {title: translate("Download"), cmd: "download", uiIcon: "ui-icon-copy"},
+            {title: translate("Add to a Playlist"), children:  arrPlaylistNames
            //     {title: "Sub 1 (using callback)", action: function(event, ui) { alert("action callback sub1");} },
            //     {title: "Sub 2", cmd: "sub1"}
                                                    }
@@ -175,7 +176,7 @@ function initiateContextMenu(options)
             var id; if(ui.target[0].id=="") {id=ui.target[0].parentNode.parentNode.id;} else{id=ui.target[0].id;}
             switch(ui.cmd){
             case "delete":
-            //alert(id.replace("song","")); 
+            alert(id.replace("song","")); 
             syncServer(fileData.id[Number(id.replace("song",""))], "delete", Number(id.replace("song",""))); break;
             //deleteSong(fileData.id[Number(id.replace("song",""))]);
             break;
@@ -184,9 +185,9 @@ function initiateContextMenu(options)
                window.open(fileData.url[Number(id.replace("song",""))],  '_blank');
                break;
             case "addPs":
-               //console.log( fileData.id[Number(id.replace("song",""))]);
+               console.log( fileData.id[Number(id.replace("song",""))]);
                syncServer(fileData.id[Number(id.replace("song",""))], "addPs", event.currentTarget.innerText);
-               //addToPS(fileData.id[Number(id.replace("song",""))], event.currentTarget.innerText);
+               addToPS(fileData.id[Number(id.replace("song",""))], event.currentTarget.innerText);
                break;
               //  CLIPBOARD = "";
                 //break

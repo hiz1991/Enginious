@@ -83,6 +83,12 @@ function insertManyDB($tableName, $values, $type, $user)
    or die('error At insertManyDB'.mysql_error());
    return $return;
 }
+function duplicateEntry($id, $user)
+{
+   $return= mysql_query("INSERT INTO `music` (`url`, `artist`, `title`, `urlOfArt`, `genre`, `year`, `volume`, `tempo`,  `pitch`, `date`, `wave`, `username`) SELECT `url`, `artist`, `title`, `urlOfArt`, `genre`, `year`, `volume`, `tempo`,  `pitch`, `date`, `wave`, '".$user."' FROM `music` WHERE `id` = '".$id."'")
+      or die('error At deleteAllDB'.mysql_error());
+   return $return;
+}
 function clean($text)
 {
    return mysql_real_escape_string($text);

@@ -48,7 +48,7 @@ function translate(text, obj, lang)
   });
   return returned;
 }
-function performTranslation()
+function performTranslation(arrayReceived)
 {
     var arr = $(".translatable");
     $.each(arr, function (index, value) 
@@ -61,4 +61,11 @@ function performTranslation()
          $(this).attr("placeholder", translate( $(this).attr("placeholder")));
       }
       });
+    if(arrayReceived){
+      $.each(arrayReceived, function (index, value) 
+      { 
+          $(arrayReceived[index]).text(translate($(arrayReceived[index]).text(), translObj, language));
+      });
+    }
+
 }

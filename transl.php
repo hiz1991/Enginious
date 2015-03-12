@@ -60,7 +60,7 @@ function trans($text, $received)
    {
 	    while($row=mysql_fetch_array($base))
 	    {
-	            if($row['en']==$text)
+	            if(mb_strtolower($row['en'], "UTF-8")==mb_strtolower($text, "UTF-8"))
 	            {
 	            	if(!$row[$lang][$i]==null)
 	            	{

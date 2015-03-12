@@ -26,7 +26,7 @@ $bs=getTransBase("player.php");?>
   <script src="hui/dropdown.js"></script> 
   <script src="cloudbeats.js"></script>
   <script src="dropzone/dropzone.js"></script>
-  <!-- // <script src="hui/jquery.ui-contextmenu.min.js" type="text/javascript"></script> -->
+  <script src="hui/jquery.ui-contextmenu.min.js" type="text/javascript"></script>
   <!-- // <script src="hui/taphold.js" type="text/javascript"></script> -->
   <!-- // <script src="http://vkontakte.ru/js/api/xd_connection.js" type="text/javascript"></script> -->
   <!-- // <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js"></script> -->
@@ -63,20 +63,22 @@ $bs=getTransBase("player.php");?>
     $(".menu.menu--open .morph-shape").css("height", "300px");
 
     translObj = JSON.parse('<?php  $json = getTransJson($bs); echo $json;?>') ;
-    console.log(translObj); 
+    // console.log(translObj); 
       // performTranslation();
     // $("#settingsIcon").webuiPopover({content:$('#bgChangerPane').html()});
     $("#polyglot-language-options").change(function(s) {
       language = $(this).children(":selected").attr("id");
-      performTranslation();
+      performTranslation(["#ui-id-16", "#ui-id-15", "#ui-id-14"]);
       translIframe();
       saveLangOnDB();
     })
       // $(".popUp").click(function(str){$("#"+str.target.id+"").fadeOut(200);})
     setTimeout(function(){ 
       updateArtwork();
-      translIframe();
     }, 1000);
+    setTimeout(function(){ 
+      translIframe();
+    }, 2000);
     var checked = new ch.init('flat','blue') //recc option checker
   }); 
 </script>
@@ -163,26 +165,26 @@ $bs=getTransBase("player.php");?>
               </div> 
               <div id="lyricsHolder"><!-- <div id="lyricsContainer">No Lyrics found. Sorry(:</div> -->
                     <div id='recommendationFilterContainer' class='recommendationFilterContainer' style="position:absolute;">
-                      <span class="recommendation">Recommendations: </span>
+                      <span class="recommendation translatable"><?php echo trans("Recommendations: ", $bs); ?></span>
                       <span id='checkboxesButton' class='checkboxesButton'>
-                        <span id="checkboxesValues">All</span>
+                        <span id="checkboxesValues" class="translatable"><?php echo trans("All", $bs); ?></span>
                         <img src="recPanel/da.svg" alt="Down arrow">
                       </span>
 
                       <div id="checkboxesContainer" class="checkboxesContainer">
-                        <label for="checkbox1" >Artist: </label>
+                        <label class="translatable" for="checkbox1" ><?php echo trans("Artist", $bs); ?></label>
                         <input type="checkbox" id='checkbox1'checked>
-                        <label for="checkbox2" >Volume: </label>
+                        <label class="translatable" for="checkbox2" ><?php echo trans("Volume", $bs); ?></label>
                         <input type="checkbox" id='checkbox2' checked>
 
-                        <label for="checkbox3" >Tempo: </label>
+                        <label class="translatable" for="checkbox3" ><?php echo trans("Tempo", $bs); ?></label>
                         <input type="checkbox" id='checkbox3'checked>
-                        <label for="checkbox4" >Pitch: </label>
+                        <label class="translatable" for="checkbox4" ><?php echo trans("Pitch", $bs); ?></label>
                         <input type="checkbox" id='checkbox4' checked>
 
-                        <label for="checkbox5" >Genre: </label>
+                        <label class="translatable" for="checkbox5" ><?php echo trans("Genre", $bs); ?></label>
                         <input type="checkbox" id='checkbox5' checked>
-                        <label for="checkbox6" >Year: </label>
+                        <label class="translatable" for="checkbox6" ><?php echo trans("Year", $bs); ?></label>
                         <input type="checkbox" id='checkbox6'checked>
                         <img src="recPanel/refresh.svg" onclick="getUser('recs')">
                       </div>

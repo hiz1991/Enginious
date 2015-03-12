@@ -621,6 +621,12 @@ body
       overflow hidden
     &:hover
       border 1px solid #949494
+      
+#recContainer
+  & > div
+    &:hover .recBuyButton
+      display block
+  
 
 .recControls
   position absolute
@@ -628,6 +634,18 @@ body
 .RecPauseButton
   display none
   
+.recBuyButton
+  display none
+  color white
+  position absolute
+  z-index 5
+  background url("images/ribbon.png") center center
+  width 148px
+  transform rotate(45deg) !important
+  background-size cover
+  top 29px
+  
+
 #youtube
   // padding-top 5px
   // padding-bottom 5px
