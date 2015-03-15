@@ -68,7 +68,7 @@ $bs=getTransBase("player.php");?>
     // $("#settingsIcon").webuiPopover({content:$('#bgChangerPane').html()});
     $("#polyglot-language-options").change(function(s) {
       language = $(this).children(":selected").attr("id");
-      performTranslation(["#ui-id-16", "#ui-id-15", "#ui-id-14"]);
+      performTranslation($(".ui-helper-hidden > li > a"));
       translIframe();
       saveLangOnDB();
     })
@@ -80,6 +80,13 @@ $bs=getTransBase("player.php");?>
       translIframe();
     }, 2000);
     var checked = new ch.init('flat','blue') //recc option checker
+
+    remoteIni()
+
+    $(window).on('dragenter', function(){
+        $('#uploadFrameDisplayer').show();enableDocClick()
+    });
+
   }); 
 </script>
 

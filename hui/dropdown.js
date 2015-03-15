@@ -65,7 +65,7 @@ function initiateDropdown(file)
       //initiate dropdown for playlists
       var Playlists=file;
       $(".dropdown").empty();
-      $(".dropdown").append('<li><a href="#"></i>All Music</a></li>');
+      $(".dropdown").append('<li><a href="#" class="translatable"></i>'+translate("All Music")+'</a></li>');
       if(Playlists.length>0)
       {
 
@@ -73,13 +73,13 @@ function initiateDropdown(file)
         {
           $(".dropdown").append('<li><a href="#">'+Playlists[index]+'</a></li>');
         });
+      }
         try
         {
           delete dd; delete DropDown; $('#dd').off('click'); $('ul.dropdown > li').off('click'); 
         }
         catch(e){}
         var dd = new DropDown( $('#dd') );
-      }
     //poluted
     initiateDropDownEvents();
     // dropDownHeight=$("#dropdownSlider").height()+33; console.log("dropDownHeight"+dropDownHeight);
@@ -108,7 +108,7 @@ function toggleSlideDownUp()
     document.querySelector(".menu").style.opacity = "1";
     $(".wrapper-demo").addClass('shadowless');
     $(".morph-shape").addClass("morph-shape-open");
-    $(".morph-shape-open").css("height", $("#dropdownSlider").height()+33+"px"); //console.log(dropDownHeight+33+"px");
+    rerenderBackground() //console.log(dropDownHeight+33+"px");
 
     dropDownBackground.open();
     // $("#dropdownSlider").delay(600).fadeIn();
@@ -136,6 +136,9 @@ function removeOpacity()
  {
    clicked=false; $(".playlist").removeAttr('style');
   }
+}
+function rerenderBackground(){
+  $(".morph-shape-open").css("height", $("#dropdownSlider").height()+33+"px");
 }
 function initiateContextMenu(options)
 {//console.log(Playlists);
@@ -176,8 +179,10 @@ function initiateContextMenu(options)
             var id; if(ui.target[0].id=="") {id=ui.target[0].parentNode.parentNode.id;} else{id=ui.target[0].id;}
             switch(ui.cmd){
             case "delete":
-            alert(id.replace("song","")); 
-            syncServer(fileData.id[Number(id.replace("song",""))], "delete", Number(id.replace("song",""))); break;
+            // alert(id.replace("song","")); 
+            if(confirm(translate("Are you sure you want to delete?")+"\n"+fileData.artist[Number(id.replace("song",""))]+" - "+fileData.title[Number(id.replace("song",""))])){
+              syncServer(fileData.id[Number(id.replace("song",""))], "delete", Number(id.replace("song",""))); break;
+            }
             //deleteSong(fileData.id[Number(id.replace("song",""))]);
             break;
             case "download":
@@ -225,6 +230,7 @@ function appendPlaylists(text)
    	delete DropDown; $('#dd').off('click'); $('ul.dropdown > li').off('click'); 
    $(".dropdown").append('<li><a href="#">'+text+'</a></li>');
    var dd = new DropDown( $('#dd') );
+   rerenderBackground()
    syncServer(null, "addNewPS", text);
  }
 }

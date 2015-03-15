@@ -199,7 +199,8 @@ function breakCamelCaseAndTransl(str)
 }
 function remoteIni()
 {
-  window.setInterval(remoteUpdate, 500);
+  unset()
+  window.setInterval(remoteUpdate, 1000);
   function remoteUpdate()
   {
           $.ajax({
@@ -210,74 +211,43 @@ function remoteIni()
 		 {
 		  switch(answer)
 		  {
-		    case "play": playButton();unset(); break;
+		    case "playPause": 
+		    	if(isPlaying()){
+		    		playButton()
+		    		unset(); 
+		    		break;
+		    	} else {
+		    		pauseButton();
+		    		unset(); 
+		    		break;
+		    	}
 		    case "pause": pauseButton();unset(); break;
-		    case "next": nextSong();unset(); break;
-		    case "prev": prevSong();unset(); break;
-		    case "volumeUp": volume(getVolume()+3);unset(); break;
-		    case "volumeDown": volume(getVolume()-3);unset(); break;
+		    case "next": 
+		    	if(autoNext){nextSong()}  
+		    	unset(); 
+		    	break;
+		    case "prev":
+		    	if(autoNext){prevSong()}
+		     	unset(); 
+		     	break;
+		    case "volumeUp": volume(getVolume()+8);unset(); break;
+		    case "volumeDown": volume(getVolume()-8);unset(); break;
 		  }
 		 } 
 	      });
-	      function unset()
-	      {
-	          $.ajax({
-		  url : "/remote.php?set=%20",
-		 //data: args,
-		 type: "GET",
-		 success: function()
-		  {
-		  }  
-	         });
-	      }
+
   }
 }
-function animatePlayerOnHover()
+function unset()
 {
-	$( ".player" ).mouseleave(function() {
-
-		  $( "#seekbar, #volume" ).animate({
-		    // opacity: 1,
-		    bottom: "15px",
-		    height: "6px"
-		    // margin-top: "15px"
-		  }, 80, function() {
-		    // Animation complete.
-		  });
-
-			$( "#played, #level" ).animate({
-		    // opacity: 1,
-		    // bottom: "15px",
-		    height: "6px"
-		    // margin-top: "15px"
-		  }, 80, function() {
-		    // Animation complete.
-		  });
-
-
-    }).mouseenter(function() {
-
-		  $( "#seekbar, #volume" ).animate({
-		    // opacity: 1,
-		    bottom: "0px",
-		    height: "30px"
-		    // margin-top: "15px"
-		  }, 80, function() {
-		    // Animation complete.
-		  });
-
-			$( "#played, #level" ).animate({
-		    // opacity: 1,
-		    // bottom: "15px",
-		    height: "30px"
-		    // margin-top: "15px"
-		  }, 80, function() {
-		    // Animation complete.
-		  });
-
-    });
-    // height: 6px;
-// margin-top: 15px;
+  $.ajax({
+		 url : "/remote.php?set=%20",
+	 //data: args,
+	 type: "GET",
+	 success: function()
+	  {
+	  }  
+  });
 }
 function populateSvg(svgId, percent)
 {
@@ -345,14 +315,7 @@ function saveLangOnDB()
 {
 	syncServer(null, "saveLang", language);
 }
-function gid(text)
-{
-	return $("#"+text);
-}
-function gcs(text)
-{
-	return $("."+text);
-}
+
 function playRecomm(ev, shorten)
 {
 	// console.log(ev.id);
@@ -370,7 +333,7 @@ function playRecomm(ev, shorten)
 function buyButtonAction(ev)
 {
    // alert(ev.id);
-   if(confirm(translate("Are you sure you wan to buy: ")+"\n"+recData.artist[ev.id.replace("recBuyButton", "")]+" - "+recData.title[ev.id.replace("recBuyButton", "")]+"?")){
+   if(confirm(translate("Are you sure you want to buy?")+"\n"+recData.artist[ev.id.replace("recBuyButton", "")]+" - "+recData.title[ev.id.replace("recBuyButton", "")]+"?")){
 	   $("#"+ev.parentNode.id).fadeOut();
 	   syncServer("", "buySong", recData.id[ev.id.replace("recBuyButton", "")]);
 	}

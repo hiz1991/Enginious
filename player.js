@@ -556,7 +556,7 @@ function initiateDropDownEvents()
             $("#tags").removeClass("tagswithVK");
         }
         if(indexPl==0){ //$(".playlist > div").css({ opacity: 1}); $(".playlist > div").show();
-                      setCurrentPlaylist(name);
+                      setCurrentPlaylist(translate(name, null, "en"));
                       }
         else if(name=="VK"){//alert(VKMusic.response.length);// VK case
                       setCurrentPlaylist(name);
@@ -1082,7 +1082,6 @@ function initiateDropDownEvents()
   }
     function playButton(source)
   {
-    //$(".play > img").replaceWith("<img src='"+defaultTheme+theme.pauseImg+filetype+"' />");
     //hide unnec functionality
     if(source=="autocomplete") {
       $(".secondaryFunctionality").fadeTo("fast",0.3);
@@ -1221,5 +1220,11 @@ function initiateDropDownEvents()
     function nextEnable()
   {
     autoNext = true;
+  }
+  function isPlaying(){
+    return currentFile.paused
+  }
+  function isNextEnabled(){
+    return autoNext
   }
   
