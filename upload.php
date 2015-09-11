@@ -8,6 +8,7 @@ if (!isset($_SESSION))
 // include("./getGenre.php");
 // include("db.php");
 //set_time_limit(90); 
+error_log("file recived");
 require('UploadHandler.php');
 // require("infoExtractor.php");
 $upload_handler = new UploadHandler(['upload_dir' => $user.'/', 'upload_url'=>'../'.$user.'/' ]);

@@ -83,8 +83,8 @@ $bs=getTransBase("player.php");?>
 
     remoteIni()
 
-    $(window).on('dragenter', function(){
-        $('#uploadFrameDisplayer').show();enableDocClick()
+    $(window).on('dragenter', function(e){
+        dragoverHandler(e);
     });
 
   }); 

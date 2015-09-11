@@ -3,15 +3,14 @@ session_start();
 $user=$_SESSION['user'];
   $firstTime=round(microtime(true) * 1000);
 include 'db.php';
-include 'transl.php';
+// include 'transl.php';
 include("getUserObject.php");
-
-$bs=getTransBase();
 if(!$user)
 {
   echo '{"Response":{"error":"Not logged in"}}';
   exit(0);
 }
+$particularFile;//if a particular file needs to be checked
 //get store songs
 $storeMusic = selectAllDB('music', 'store');
 $storeFiles=array();
@@ -30,10 +29,7 @@ while($row = mysql_fetch_array($storeMusic)) {
   $song->urlOfArt=$row['urlOfArt'];
   array_push($storeFiles, $song);
 }
-$userData = selectAllDB('libraryAnalysis', $user);
-$libraryResults = array();
-while($libraryResults[] = mysql_fetch_object($userData)) {
-}
+
 
 $artistPriority = array();
 $artistPriority['values']=array();
@@ -44,6 +40,11 @@ $yearPriority['occurances']=array();
 $genrePriority = array();
 $genrePriority['values']=array();
 $genrePriority['occurances']=array();
+
+$userData = selectAllDB('libraryAnalysis', $user);
+$libraryResults = array();
+while($libraryResults[] = mysql_fetch_object($userData)) {
+}
 
 $priorityRequest = selectAllDB('priority', $user);
 if(mysql_num_rows($priorityRequest)){

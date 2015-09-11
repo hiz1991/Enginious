@@ -2,7 +2,11 @@
 session_start();
 $user=$_SESSION['user'];
 include("db.php");
-    
+if(!$user)
+{
+  echo '{"Response":{"error":"Not logged in"}}';
+  exit(0);
+}
 if($_GET['set']!=null)
 {
 $get=$_GET['set'];

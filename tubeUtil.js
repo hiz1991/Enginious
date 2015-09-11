@@ -381,7 +381,7 @@ jQTubeUtil.init({
     key: "AI39si7DGbcdv6vuKW5HkcD2NVNK0c5wy8cs5CnW8X2wMvUYMcQXXErGH-TTh-Rx1kFkI6C6nWclgY8ZRxEyBvDCEoXBHIUgUQ",
     orderby: "relevance",  // *optional -- "viewCount" is set by default
     time: "all_time",   // *optional -- "this_month" is set by default
-    maxResults: 8   // *optional -- defined as 10 results by default
+    maxResults: 9   // *optional -- defined as 10 results by default
   });
 youtubeVideoId='f-7Y5XOhGrg';
 $(document).ready(function(){
@@ -423,6 +423,8 @@ jQTubeUtil.search(titileAndArtist, function(response){ console.log(response);
 					  $("#youtubeThumbsContainer").empty();
 					  // $("#youtube").append("<div id='containterYoutubeOutMost'></div>");
  					  // $("#containterYoutubeOutMost").append("<div id='youtubeThumbsContainer'></div>");
+ 					  //remove youtube help
+ 					  response.videos.shift()
 	                  for (var i = 0; i < response.videos.length; i++) 
 	                  {
 	                  	$("#youtubeThumbsContainer").append("<div class='youtubeResultContainer' id='youtubeSerachReasultDiv"+i+"'><img src='"+response.videos[i].thumbs[2].url+"'/><br><span>"+response.videos[i].title+"</span></div>");
@@ -446,7 +448,7 @@ jQTubeUtil.search(titileAndArtist, function(response){ console.log(response);
 	                    		toggleYoutubeVideo//
 	                    		$("#YTPlayer").hide();//pause and hide the video
 	                    		$("#youtubeThumbsContainer").css("width","100%");
-	                    		$("#youtubeThumbsContainer").append("<div style='margin-left:40%;margin-top:30px;font-family:myFirstFont;'>No videos found (:</div>");
+	                    		$("#youtubeThumbsContainer").append("<div style='margin-left:40%;margin-top:30px;font-family:myFirstFont;'>"+translate("No videos found")+" (:</div>");
 	                    	}
 	             }, "Music");
 }

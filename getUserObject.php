@@ -25,6 +25,11 @@ function getUserObject($user, $returnType, $subObject)
 		  $ur['genre']=$info['genre'];
 		  $ur['wave']=$info['wave'];
 		  $ur['id']=$info['id'];
+
+		  $ur['tempo']=$info['tempo'];
+		  $ur['volume']=$info['volume'];
+		  $ur['pitch']=$info['pitch'];
+
 		  $ur['urlOfArt']=$info['urlOfArt'];
 		  array_push($final, $ur); 
 		  //}        

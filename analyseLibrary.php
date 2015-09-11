@@ -34,7 +34,9 @@ insertManyDB('priority', $genrePriority, 'genre', $user);
 $yearsInDecades = getYearsInDecades($musicData, [0]);
 insertManyDB('priority', $yearsInDecades, 'year', $user);
 //get and record avergaed distr levels
-$averageDistr = convertDistArrayToString(getAverageDistrib($musicData, 50, 2));
+$distrdata=getAverageDistrib($musicData, 50, 2);//array 2 elements
+$averageDistr = convertDistArrayToString($distrdata[0]);
+$distrAccuracy = $distrdata[1];
 //calculate stand deviation for genreAccuracy
 // $genreAccuracy = calcDeviationInPercent(null, $genrePriority, true);
 //calculate number fo songs to distinct values ratio
@@ -53,6 +55,9 @@ array_push($toUpdateValues, ratioInPercent(count($artistPriority)/$numberOfsongs
 //add values for record in libraryNalysis table
 array_push($toUpdate, "distribution");//, "genre");
 array_push($toUpdateValues, $averageDistr);//, 
+//distr accuracy
+array_push($toUpdate, "distributionAccuracy");//, "genre");
+array_push($toUpdateValues, $distrAccuracy);//,
 //add the highest values in priority
 array_push($toUpdate, "genre");
 array_push($toUpdateValues, array_keys($genrePriority)[0]);
@@ -230,6 +235,7 @@ function getAverageDistrib($musicData, $length=50, $step=2)
 {
   $levels=[];
   $result=[];
+  $deviations=[];
   for ($i=0; $i < $length; $i++) { 
     $levels[$i] = array();
   }
@@ -244,10 +250,12 @@ function getAverageDistrib($musicData, $length=50, $step=2)
     }
     for ($i=0; $i <$length ; $i++) { 
       $result[$i]=getMeanForArrayRounded($levels[$i]);
+      //add deviations
+      array_push($deviations, calcDeviationInPercent(getMeanForArrayRounded($levels[$i]), $levels[$i]));
     }
   }
   // var_dump($levels[49]);
-  return $result;//['mean', 'mean', '...'](50)
+  return [$result, getMeanForArrayRounded($deviations)];//['mean', 'mean', '...'](50)
 }
 mysql_close($db);
 ?>

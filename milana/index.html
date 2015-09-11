@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+
+  
+    <title>Милана</title>
+  
+
+    <meta content="Touch-enabled image gallery and content slider plugin, that focuses on providing great user experience on every desktop and mobile device." name="description">
+    <meta name="keywords" content="content slider, gallery, plugin, jquery, banner rotator">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0" />
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.royalslider.min.js?v=9.3.6"></script>
+     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- <link href="css/reset.css?v=1.0.4" rel="stylesheet"> -->
+    <link href="css/rs-default.css?v=1.0.4" rel="stylesheet">
+
+     
+    <script src="js/snap.svg-min.js"></script>
+    <script src="js/modernizr.custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="css/dialog-henry.css" />
+    <link href="css/royalslider.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    
+    <style>
+      #gallery-1 {
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;  
+  user-select: none;
+}
+
+    </style>
+    
+  </head>
+  <body >
+  <header  id="main-header" class="clearfix">  
+  </header>
+  <div  class="page wrapper main-wrapper"> 
+  <div id="logoMenuContainer">
+    <img id="logo" src="css/logo.png"> 
+    <div id="categories">
+        <div class="searchBar" id="searchBar">
+      <input id="tags" class="tagsSearchImage"/>
+    </div>
+      <a href="">Women</a>
+      <a href="">Men</a>
+      <a href="">Children</a>
+      <a href="">Contact us</a>
+      <a href="#" data-toggle="popover" title="Account settings" data-placement="bottom" data-content="
+      <div class='popoveroption'>Some content</div>
+      <div class='popoveroption'>Another content</div>
+      ">Khizir</a>
+    </div>
+  </div>
+<div class="row clearfix"> 
+  <div id="leftPanel"> 
+   <div class="col span_2 example-info">
+    <h2 id="h2"></h2>
+    <div id="text">
+    </div>
+    <!-- <a class="wp-how-to-video" href="http://youtu.be/S-VJs_cmjwU">See video about how to create such gallery in WordPress version</a> -->
+  </div>
+  <div id="stock">In stock</div>
+  <div  id="order" data-dialog="somedialog" class="trigger button" >
+    Заказать
+  </div>
+ </div>
+
+<div class="col span_4 fwImage">
+  <div id="gallery-1" class="royalSlider rsDefault">
+
+  </div>
+</div>
+</div>
+
+  </div>
+  <div class="wrapper page">
+<!--      <footer class="row clearfix" id="main-footer">
+    <div class="col span_6">
+      <nav><a href="http://dimsemenov.com/subscribe.html">Email Newsletter</a><a href="http://twitter.com/dimsemenov">Twitter</a><a href="/plugins/royal-slider/documentation">Documentation</a><a href="/plugins/royal-slider/pricing">Pricing</a></nav>
+      <p class="copy">© <a href="http://dimsemenov.com">Dmitry Semenov</a></p>
+    </div>
+  </footer> -->
+            <div id="somedialog" class="dialog">
+                    <div class="dialog__overlay"></div>
+                    <div class="dialog__content">
+                      <div class="morph-shape" data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z" data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+            C3.084,29.762,0,29.75,0,29.75z">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+                          <path d="M0,0C0,0,80,0,80,0C80,0,80,9.977,80,29.834C80,49.778999999999996,80,60.083,80,60.083C80,60.083,0,60.083,0,60.083C0,60.083,0,50.028,0,29.750999999999998C0,8.219000000000001,0,0,0,0C0,0,0,0,0,0"></path>
+                        <desc>Created with Snap</desc><defs></defs></svg>
+                      </div>
+                      <div class="dialog-inner">
+                           <div style="position: absolute;z-index: 51;top: -4em;right:-2.4em">
+                            <div class="action" data-dialog-close="">Закрыть</div>
+                           </div>
+                          <div>
+
+                             <h3 id="signUpHeader" class="translatable">Заказать</h3>
+                             <span class="relative"><span class="icon-pass"></span>
+                              <input id="name" type="textarea" class="input" name="passwordLogin" placeholder="Имя" class="icon-pass"></span>
+                            <span class="relative"><span class="icon-pass"></span>
+                              <input id="phone" type="textarea" class="input" name="passwordLogin" placeholder="Телефон" class="icon-pass"></span>
+                            <span class="relative"><span class="icon-user"></span>
+                              <input id="email" class="input" name="emailLogin" type="textarea" placeholder="Электронный адрес (необязат)" class="icon-user"></span>
+                            <div id="submitButtonLogin" class="button translatable">Заказать</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+    <script>
+    function dialogWillOpen(){
+      // alert("open")
+    }
+    function dialogClosed(){
+      // alert("closed")
+    }
+    var imageUrls = [];
+    var names = [];
+    var descriptions = [];
+    var prices = [];
+    var imgWidths= [];
+    var imgHeights = [];
+    var buttonText;
+    jQuery(document).ready(function($) {
+      $('[data-toggle="popover"]').popover({ html : true}); 
+      buttonText=$("#order").text();
+      $.getJSON( "getItems.php", function( data ) {
+        // console.log(data);
+        names = data[0];
+        imageUrls= data[1];
+        prices = data[2];
+        descriptions = data[3];
+        imgWidths = data[4];
+        imgHeights = data[5];
+        // console.log(imageUrls);
+        $.each( imageUrls, function( key, val ) {
+          $("#gallery-1").append('<a class="rsImg" data-rsw="'+imgWidths[key]+'" data-rsh="'+imgHeights[key]+'" data-rsBigImg="'+val+'" href="'+val+'">'+names[key]+'<img width="40px" height="60px" class="rsTmb" src="'+val+'" /></a>');
+        });
+        $('#gallery-1').royalSlider({
+            fullscreen: {
+              enabled: true,
+              nativeFS: true
+            },
+            controlNavigation: 'thumbnails',
+            autoScaleSlider: true, 
+            autoScaleSliderWidth: 970,     
+            autoScaleSliderHeight: 760,
+            loop: false,
+            imageScaleMode: 'fit-if-smaller',
+            navigateByClick: true,
+            numImagesToPreload:2,
+            arrowsNav:true,
+            arrowsNavAutoHide: true,
+            arrowsNavHideOnTouch: true,
+            keyboardNavEnabled: true,
+            fadeinLoadedSlide: true,
+            globalCaption: true,
+            globalCaptionInside: false,
+            thumbs: {
+              appendSpan: true,
+              firstMargin: true,
+              paddingBottom: 4
+            }, 
+            autoPlay: {
+              // autoplay options go gere
+              enabled: true,
+              pauseOnHover: true
+            }
+       });
+
+        var slider = $(".royalSlider").data('royalSlider');
+        slider.ev.on('rsAfterSlideChange', function(event) {
+        console.log(slider.currSlideId)
+        changeText(slider.currSlideId)
+        setPrice(slider.currSlideId)
+        });
+
+        changeText(0);
+        setPrice(0);
+
+        function changeText(id){
+            $("#text").fadeOut(200, function () {
+              $("#text").html(descriptions[id]);
+              $("#text").fadeIn(200);
+            })
+              $("#h2").fadeOut(200, function () {
+              $("#h2").html(names[id]);
+              $("#h2").fadeIn(200);
+            })
+        }
+        function setPrice(id) {
+          $("#order").text(buttonText+'('+prices[id]+'р.)');         
+        }
+
+      });
+
+});
+    </script>
+      
+  </div>
+  <script src="js/dialogFx.js"></script>
+  <script src="js/classie.js"></script>
+  <script>
+      (function() {
+
+        var dlgtrigger = document.querySelector( '[data-dialog]' ),
+
+          somedialog = document.getElementById( dlgtrigger.getAttribute( 'data-dialog' ) ),
+          // svg..
+          morphEl = somedialog.querySelector( '.morph-shape' ),
+          s = Snap( morphEl.querySelector( 'svg' ) ),
+          path = s.select( 'path' ),
+          steps = { 
+            open : morphEl.getAttribute( 'data-morph-open' ),
+            close : morphEl.getAttribute( 'data-morph-close' )
+          },
+          dlg = new DialogFx( somedialog, {
+            onOpenDialog : function( instance ) {
+              // animate path
+              path.stop().animate( { 'path' : steps.open }, 400, mina.easeinout );
+            },
+            onCloseDialog : function( instance ) {
+              // animate path
+              path.stop().animate( { 'path' : steps.close }, 400, mina.easeinout );
+            }
+          } );
+
+        dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg) );
+
+      })();
+    </script>
+  </body>
+</html>

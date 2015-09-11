@@ -333,6 +333,7 @@ function playRecomm(ev, shorten)
 function buyButtonAction(ev)
 {
    // alert(ev.id);
+   // ev.stopPropagation();
    if(confirm(translate("Are you sure you want to buy?")+"\n"+recData.artist[ev.id.replace("recBuyButton", "")]+" - "+recData.title[ev.id.replace("recBuyButton", "")]+"?")){
 	   $("#"+ev.parentNode.id).fadeOut();
 	   syncServer("", "buySong", recData.id[ev.id.replace("recBuyButton", "")]);
@@ -403,4 +404,12 @@ function getRecsFromJson(file, where){
 	$("#recContainer").empty();
 	initiateRendering( recData, "recs" );
 	$(".recBuyButton").on("click", function(e){e.stopPropagation();});
+	$(".favourite").on("click", function(e){e.stopPropagation();});
+}
+function dragoverHandler(e) {
+	// console.log(e.)
+	$('#uploadFrameDisplayer').show();enableDocClick()
+}
+function favAction(e) {
+	$("#"+e.id).attr("src","defaultTheme/images/fav.svg");
 }

@@ -62,13 +62,15 @@ body
   // background-color rgba(255,255,255,0.5)
   min-width 700px
   bottom 0 !important
-  border-bottom-right-radius 10px
-  border-bottom-left-radius 10px
-  border-bottom-right-radius 10px
-  border-bottom-left-radius 10px
-  borderleft-radius 10px
-  borderright-radius 10px
-  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)))
+  border-bottom-right-radius 5px
+  border-bottom-left-radius 5px
+  border-bottom-right-radius 5px
+  border-bottom-left-radius 5px
+  borderleft-radius 5px
+  borderright-radius 5px
+  // background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)))
+  background-color rgba(255,255,255,0.9)
+  background-clip padding-box
   div
     &:not(.jquery-ui-like)
       margin-left 1%
@@ -94,8 +96,8 @@ body
   height 704px
   margin-top 5%
   // box-shadow 0px 10px 60px  5px rgba(0,0,0, 0.2)
-  border-radius 10px
-  border-radius 10px
+  border-radius 5px
+  border-radius 5px
 
 #playedContainer
   overflow hidden
@@ -641,10 +643,20 @@ body
   z-index 5
   background url("images/ribbon.png") center center
   width 148px
-  transform rotate(45deg) !important
+  transform rotate(45deg)  !important
+  -webkit-transform rotate(45deg)  !important
+  -moz-transform rotate(45deg)  !important
+  -o-transform rotate(45deg)  !important
+  -ms-transform rotate(45deg)  !important
   background-size cover
   top 29px
   
+.favourite
+  cursor pointer
+  left 2px
+  bottom 2px
+  position absolute
+  width 20px !important
 
 #youtube
   // padding-top 5px
@@ -708,7 +720,7 @@ body
   height 100%
 
 #YTPlayer
-  position absolute
+  // position absolute
   z-index 6000
 
 .flip
@@ -789,17 +801,19 @@ body
 .settings
   // border-bottom 1px dotted  rgba(255,255,255,0.3)
   border-bottom: 1px solid rgba(191, 191, 191, 1);
-  border-top-right-radius 10px
-  border-top-left-radius 10px
-  border-top-right-radius 10px
-  border-top-left-radius 10px
-  borderleft-radius 10px
-  borderright-radius 10px
-  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)))
+  border-top-right-radius 5px
+  border-top-left-radius 5px
+  border-top-right-radius 5px
+  border-top-left-radius 5px
+  borderleft-radius 5px
+  borderright-radius 5px
+  // background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)))
   padding-top 10px
   width 1000px
   height 40px
   z-index 2000 !important
+  background-color rgba(255,255,255,0.9)
+  background-clip padding-box
   //display none
 
 #VKConnectbutton

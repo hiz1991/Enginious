@@ -261,5 +261,125 @@
 // echo '{"id":1,"language":"en","username":"m.k.x@mail.ru","name":"Kiura","lastName":"Magomadov","profileImage":"https://pp.vk.me/c308226/v308226161/3927/t02Dm6L0Dw0.jpg","status":"teststatusKiura","createdAt":"2014-12-03T04:18:02.000Z","updatedAt":"2014-12-03T04:18:02.000Z","ip":"10.118.195.30"}';
 // echo '[{"id": 11,"senderId": 1,"receiverId": null,"receiverGroupId": null,"message": null,"file": "http://2.bp.blogspot.com/-U-qkJww9Q78/U_3TlvjJLsI/AAAAAAAADuc/UmGabxzF_7Q/s1600/facepalm.gif","type": "googleimage","thumb": null,"createdAt": "2015-03-12T00:11:13.000Z"},{"id": 12,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": null,"file": "http://2.bp.blogspot.com/_Vei5yX-Ebio/TOuK-ypV0SI/AAAAAAAAADY/bhBBO2VZ1k4/s1600/WTF__by_UndineCG.jpg","type": "googleimage","thumb": null,"createdAt": "2015-03-12T00:11:59.000Z"},{"id": 13,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": "%F0%9F%98%8D","file": null,"type": "txt","thumb": null,"createdAt": "2015-03-12T00:12:19.000Z"},{"id": 14,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": "%F0%9F%93%80","file": null,"type": "txt","thumb": null,"createdAt": "2015-03-12T00:12:30.000Z"},{"id": 15,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": "%F0%9F%98%93%F0%9F%98%8D%F0%9F%98%8A%F0%9F%98%8B","file": null,"type": "txt","thumb": null,"createdAt": "2015-03-12T00:12:45.000Z"},{"id": 16,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": null,"file": "http://2.bp.blogspot.com/--bGNp_9rb28/UaLfT6-GggI/AAAAAAAAK6k/87XGAv_7WTA/s1600/4122574WTF_When_you_see_it_XD.jpg","type": "googleimage","thumb": null,"createdAt": "2015-03-12T00:15:28.000Z"},{"id": 17,"senderId": 2,"receiverId": null,"receiverGroupId": null,"message": null,"file": "o3bMSNWoeFw","type": "youtube","thumb": "https://i.ytimg.com/vi/o3bMSNWoeFw/hqdefault.jpg","createdAt": "2015-03-12T00:17:46.000Z"},{"id": 18,"senderId": 1,"receiverId": null,"receiverGroupId": null,"message": "hi there","file": null,"type": null,"thumb": null,"createdAt": "2015-03-12T02:31:56.000Z"},{"id": 19,"senderId": 1,"receiverId": null,"receiverGroupId": null,"message": "dfdsmk","file": null,"type": "txt","thumb": null,"createdAt": "2015-03-12T02:36:01.000Z"}]';
 // echo $_POST['senderId'];
-echo '[{"createdAt" : "2015-03-13T06:08:37.000Z","file" : null,"id" : 153,"message" : "hi","receiverGroupId" : null,"receiverId" : null,"senderId" : 2,"thumb" : null,"type" : "txt","updatedAt" : null}]'
+// echo '[{"createdAt" : "2015-03-13T06:08:37.000Z","file" : null,"id" : 153,"message" : "hi","receiverGroupId" : null,"receiverId" : null,"senderId" : 2,"thumb" : null,"type" : "txt","updatedAt" : null}]'
+// require_once "dropbox-sdk-php-1.1.5/lib/Dropbox/autoload.php";
+// use \Dropbox as dbx;
+
+// $appInfo = dbx\AppInfo::loadFromJsonFile("dropbox-sdk-php-1.1.5/json.json");
+// $webAuth = new dbx\WebAuthNoRedirect($appInfo, "PHP-Example/1.0");
+
+// $authorizeUrl = $webAuth->start();
+
+// echo "1. Go to: " . $authorizeUrl . "\n";
+// echo "2. Click \"Allow\" (you might have to log in first).\n";
+// echo "3. Copy the authorization code.\n";
+// $authCode = \trim(\readline("Enter the authorization code here: "));
+
+// list($accessToken, $dropboxUserId) = $webAuth->finish($authCode);
+// print "Access Token: " . $accessToken . "\n";
+
+// $dbxClient = new dbx\Client($accessToken, "PHP-Example/1.0");
+// $accountInfo = $dbxClient->getAccountInfo();
+
+// print_r($accountInfo);
+
+// $f = fopen("working-draft.txt", "rb");
+// $result = $dbxClient->uploadFile("/working-draft.txt", dbx\WriteMode::add(), $f);
+// fclose($f);
+// print_r($result);
+
+// $folderMetadata = $dbxClient->getMetadataWithChildren("/");
+// print_r($folderMetadata);
+
+// $f = fopen("working-draft.txt", "w+b");
+// $fileMetadata = $dbxClient->getFile("/working-draft.txt", $f);
+// fclose($f);
+// print_r($fileMetadata);
+// require 'PHPMailer/PHPMailerAutoload.php';
+
+// $mail = new PHPMailer;
+
+// //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+// $mail->isSMTP();                                      // Set mailer to use SMTP
+// $mail->Host = 'smtp.mail.ru';  // Specify main and backup SMTP servers
+// $mail->SMTPAuth = true;                               // Enable SMTP authentication
+// $mail->Username = 'hiz1991@mail.ru';                 // SMTP username
+// $mail->Password = '19910728AaA';                           // SMTP password
+// $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+// $mail->Port = 587;                                    // TCP port to connect to
+
+// $mail->From = 'hiz1991@mail.ru';
+// $mail->FromName = 'Mailer';
+// $mail->addAddress('khizir.putcygov@student.manchester.ac.uk', 'Joe User');     // Add a recipient
+// // $mail->addAddress('ellen@example.com');               // Name is optional
+// $mail->addReplyTo('info@example.com', 'Information');
+// $mail->addCC('cc@example.com');
+// $mail->addBCC('bcc@example.com');
+
+// // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+// // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+// // $mail->isHTML(true);                                  // Set email format to HTML
+
+// $mail->Subject = 'Here is the subject';
+// $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+// $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+// if(!$mail->send()) {
+//     echo 'Message could not be sent.';
+//     echo 'Mailer Error: ' . $mail->ErrorInfo;
+// } else {
+//     echo 'Message has been sent';
+// }
+
+// Put your device token here (without spaces):
+$deviceToken = 'faea4c902da6dea138c15e35b8f016396a5debfc6ccbc0faa8ae6455acda6786';
+
+// Put your private key's passphrase here:
+$passphrase = '19910728Aa';
+
+// Put your alert message here:
+$lightning = html_entity_decode('&#57661;',ENT_NOQUOTES,'UTF-8');
+//add this to the 'alert' portion of your APNS payload:
+// $message = "You just got the {$lightning}SHOCKER{$lightning}!";
+$message = "{$lightning} Hello there";
+
+////////////////////////////////////////////////////////////////////////////////
+
+$ctx = stream_context_create();
+stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
+stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+// Open a connection to the APNS server
+$fp = stream_socket_client(
+  'ssl://gateway.sandbox.push.apple.com:2195', $err,
+  $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+if (!$fp)
+  exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+echo 'Connected to APNS' . PHP_EOL;
+
+// Create the payload body
+$body['aps'] = array(
+  'alert' => array("action-loc-key"=> "Open", "body"=>$message),
+  'sound' => "default"
+  );
+
+// Encode the payload as JSON
+$payload = json_encode($body);
+
+// Build the binary notification
+$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+// Send it to the server
+$result = fwrite($fp, $msg, strlen($msg));
+
+if (!$result)
+  echo 'Message not delivered' . PHP_EOL;
+else
+  echo 'Message successfully delivered' . PHP_EOL;
+
+// Close the connection to the server
+fclose($fp);
 ?>

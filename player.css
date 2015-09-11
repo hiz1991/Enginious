@@ -27,13 +27,14 @@ body {
   padding-right: 3%;
   min-width: 700px;
   bottom: 0 !important;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  borderleft-radius: 10px;
-  borderright-radius: 10px;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  borderleft-radius: 5px;
+  borderright-radius: 5px;
+  background-color: rgba(255,255,255,0.9);
+  background-clip: padding-box;
 }
 .player div:not(.jquery-ui-like) {
   margin-left: 1%;
@@ -150,8 +151,8 @@ body {
   margin: 0px auto;
   height: 704px;
   margin-top: 5%;
-  border-radius: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
+  border-radius: 5px;
 }
 #playedContainer {
   overflow: hidden;
@@ -671,8 +672,19 @@ body {
   background: url("images/ribbon.png") center center;
   width: 148px;
   transform: rotate(45deg) !important;
+  -webkit-transform: rotate(45deg) !important;
+  -moz-transform: rotate(45deg) !important;
+  -o-transform: rotate(45deg) !important;
+  -ms-transform: rotate(45deg) !important;
   background-size: cover;
   top: 29px;
+}
+.favourite {
+  cursor: pointer;
+  left: 2px;
+  bottom: 2px;
+  position: absolute;
+  width: 20px !important;
 }
 #youtube {
   max-height: 595px !important;
@@ -729,7 +741,6 @@ body {
   height: 100%;
 }
 #YTPlayer {
-  position: absolute;
   z-index: 6000;
 }
 .flip {
@@ -798,17 +809,18 @@ body {
 }
 .settings {
   border-bottom: 1px solid #bfbfbf;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  borderleft-radius: 10px;
-  borderright-radius: 10px;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  borderleft-radius: 5px;
+  borderright-radius: 5px;
   padding-top: 10px;
   width: 1000px;
   height: 40px;
   z-index: 2000 !important;
+  background-color: rgba(255,255,255,0.9);
+  background-clip: padding-box;
 }
 #VKConnectbutton {
   display: none;

@@ -47,7 +47,7 @@ $( document ).ready(function()
           {
               if($( "#emailInput" ).val().length>4)
               {
-                  showError("#emailErrorsDisplayer", "greenColor", "Checking if already registered...", "#emailErrorsSpan");
+                  showError("#emailErrorsDisplayer", "greenColor", translate("Checking if already registered")+"...", "#emailErrorsSpan");
                   checkIfUserExists("#emailErrorsDisplayer");
                   emailError=false;
               }
