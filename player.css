@@ -556,7 +556,10 @@ body {
   border-left: 3px solid rgba(124,177,201,0.82) !important;
 }
 .recActive {
-  border: 1px solid #3491bf !important;
+  border: 1px solid rgba(52, 145, 191, 0.52) !important;
+  /* background: rgba(52, 145, 191, 0.28) !important; */
+  color: black;
+  box-shadow: inset 0px 0px 15px rgba(52, 145, 191, 0.35);
 }
 .playlist span,
 .facebook span {
@@ -643,21 +646,51 @@ body {
 }
 #recContainer > div img {
   width: 105px;
-  border-radius: 5px;
+  border-radius: 60px;
+}
+.recContainerControls{
+  display: none;
+  /*background: rgba(0, 0, 0, 0.39);*/
+  /*background:rgba(254, 184, 79, 0.69);*/
+  background-color: rgba(40, 40, 40, 0.27);
+  position: absolute;
+  width: 100%;
+  /* top: 28px; */
+  /* left: 35px; */
+  border-radius: 56px;
+  width: 105px;
+  height: 105px;
+}
+.recContainerControls>img{
+  width: 48px !important;
+  margin-top: 28px;
+  margin-left: 0px;
+  border-radius: 0px !important;
 }
 #recContainer > div span {
-  display: inline-block;
-  font-size: 12pt;
-  max-width: 105px;
-  height: 40px;
-  overflow: hidden;
+    float: left;
+    display: inline-block;
+    font-size: 10pt;
+    max-width: 105px;
+    height: 39px;
+    overflow: hidden;
 }
 #recContainer > div:hover {
   border: 1px solid #949494;
 }
-#recContainer > div:hover .recBuyButton {
+/*#recContainer > div:hover .recArt>img {
+      -webkit-filter: blur(2px);
+}*/
+#recContainer > div:hover .favourite {
   display: block;
 }
+#recContainer > div:hover .recContainerControls {
+  display: block;
+}
+#recContainer > div:hover div span{
+      max-width: 87px;
+}
+
 .recControls {
   position: absolute;
 }
@@ -680,11 +713,13 @@ body {
   top: 29px;
 }
 .favourite {
+  display: none;
   cursor: pointer;
-  left: 2px;
-  bottom: 2px;
+  left: 100px;
+  bottom: 12px;
   position: absolute;
-  width: 20px !important;
+  width: 17px !important;
+  border-radius: 0px !important;
 }
 #youtube {
   max-height: 595px !important;

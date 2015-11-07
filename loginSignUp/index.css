@@ -2,6 +2,7 @@
 body {
     background: #4e4e4e;
     background-image:url(../images/bgs/green.jpg);
+    background: url(../images/bgs/01.jpg);
 }
 #fLoginButton
 {
@@ -42,6 +43,7 @@ h3 {
     text-align: center;
     font-family:sans-serif;
     font-weight: 300;
+    color: grey;
 }
 h4 {
     margin: 20px;
@@ -50,6 +52,7 @@ h4 {
     text-align: center;
     font-family:sans-serif;
     font-weight: 300;
+    color: grey;
 }
 .relative {
    position: relative;
@@ -72,7 +75,8 @@ h4 {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #f0f1f4;
+    /*background: #f0f1f4;*/
+    background: rgba(255, 255, 255, 0.42);
     transition: background ease .2s;
     -ms-transition: background ease .2s;
     -webkit-transition: background ease .2s;

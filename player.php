@@ -39,14 +39,13 @@ $bs=getTransBase("player.php");?>
   <!-- <link rel="stylesheet" href="../lang/languageswitcher.css"> -->
   <!-- // <script src="facebook.js"></script> -->
   <!-- // <script type="text/javascript" src="progressBar/progressbar.js"></script> -->
-  <!-- // <script type="text/javascript" src="http://blurjs.com/blur.js"></script> -->
-  <!-- <link rel="stylesheet" href="popover/jquery.webui-popover.css"> -->
-  <!-- // <script src="popover/jquery.webui-popover.js"></script> -->
+  <script type="text/javascript" src="http://blurjs.com/blur.js"></script>
+  <link rel="stylesheet" href="popover/jquery.webui-popover.css">
+  <script src="popover/jquery.webui-popover.js"></script>
   <script src="recPanel/icheck.min.js"></script>
   <link href="recPanel/skins/all.css" rel="stylesheet">
   <link href="recPanel/test.css" rel="stylesheet">
   <script src="recPanel/ch.js"></script>
-
 <script>
   var translObj;
   var language = "<?php echo $clientLang;?>";

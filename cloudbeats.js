@@ -403,8 +403,11 @@ function getRecsFromJson(file, where){
 	recData = parseIntoObject(file);
 	$("#recContainer").empty();
 	initiateRendering( recData, "recs" );
+	$('#recContainer').css("background", "none");
 	$(".recBuyButton").on("click", function(e){e.stopPropagation();});
 	$(".favourite").on("click", function(e){e.stopPropagation();});
+
+	$(".recStats").webuiPopover({title:"Music characteristics comparison",type:'iframe',url:'/test/test', width:350,height:200});
 }
 function dragoverHandler(e) {
 	// console.log(e.)

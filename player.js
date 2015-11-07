@@ -186,6 +186,7 @@ function changeMode(mode) {
             $('#lyricsButton').addClass('buttonPressed');
             // searchLyricsVK(fileData.title[fileNumber]+" "+fileData.artist[fileNumber]);
             $('#recContainer').empty();
+            $('#recContainer').css("background", "url('images/gears.svg') center center no-repeat");
             setTimeout(function() {
                 getUser("recs");
             }, 350);
@@ -750,6 +751,7 @@ function initiateRendering(object, table) {
         for (var x = 0; x < object.url.length; x++) {
             renderPlaylistItem(x, table, object);
         }
+        // alert("finshed");
 
 }
 
@@ -764,7 +766,23 @@ function renderPlaylistItem(index, table, object) {
         });
     }
     if (table == "recs") {
-        $("#recContainer").append("<div draggable=true id='recomm" + index + "' onclick='playRecomm(this)'>" + "<div id='recBuyButton" + index + "' onclick='buyButtonAction(this)' class='recBuyButton translatable'>" + buyButtonLabel + "</div>" + "<div class='recArt'><img src='" + cl(convertToThumbURL(object.urlOfArt[index])) + "' alt='art' /></div>" + "<div><span>" + cl(object.artist[index]) + " - " + cl(object.title[index]) + "</span></div>" + "<img src='defaultTheme/images/fav-empty.svg'  class='favourite' onclick='favAction(this)' id='fav" + index + "'>" + "</div>");
+        $("#recContainer").append("<div draggable=true id='recomm" 
+            + index + "' onclick='playRecomm(this)'>" 
+            // + "<div id='recBuyButton" 
+            // + index + "' onclick='buyButtonAction(this)' class='recBuyButton translatable'>" 
+            // + buyButtonLabel + "</div>" 
+             + "<img id='recBuyButton"  + index + "'src='defaultTheme/images/PlusButton.svg'  class='favourite' onclick='buyButtonAction(this)' title='Add to your library' style='bottom: 31px;' id='fav" 
+             + index + "'>"
+
+            +"<div class='recArt'><div class='recContainerControls'><img src='defaultTheme/images/play-white.svg' onclick='toggleWhiteControls(this)'></div><img src='"
+              + cl(convertToThumbURL(object.urlOfArt[index])) + "' alt='art' /></div>" 
+             + "<div><span>" + cl(object.artist[index]) + " - " + cl(object.title[index]) 
+             + "</span></div>" 
+             + "<img src='defaultTheme/images/statsSvg.svg'  class='favourite recStats'  title='Compare with your music profile' id='fav" 
+             + index + "'>" 
+             // + "<img src='defaultTheme/images/PlusButton.svg'  class='favourite' onclick='buyButtonAction(this)' style='bottom: 31px;' id='fav" 
+             // + index + "'>" 
+             + "</div>");
     }
 
 }
@@ -1293,4 +1311,9 @@ function isPlaying() {
 
 function isNextEnabled() {
     return autoNext
+}
+// var whiteControlState=true
+function toggleWhiteControls(item){
+    // if(whiteControlState)
+        $(item).attr("src","defaultTheme/images/pause-white.svg");
 }
