@@ -336,7 +336,7 @@
 $deviceToken = 'faea4c902da6dea138c15e35b8f016396a5debfc6ccbc0faa8ae6455acda6786';
 
 // Put your private key's passphrase here:
-$passphrase = '19910728Aa';
+$passphrase = 'hidden';
 
 // Put your alert message here:
 $lightning = html_entity_decode('&#57661;',ENT_NOQUOTES,'UTF-8');
