@@ -305,7 +305,7 @@
 // $mail->Host = 'smtp.mail.ru';  // Specify main and backup SMTP servers
 // $mail->SMTPAuth = true;                               // Enable SMTP authentication
 // $mail->Username = 'hiz1991@mail.ru';                 // SMTP username
-// $mail->Password = '19910728AaA';                           // SMTP password
+// $mail->Password = 'hidden';                           // SMTP password
 // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 // $mail->Port = 587;                                    // TCP port to connect to
 
